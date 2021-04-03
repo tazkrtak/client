@@ -1,0 +1,15 @@
+include: package:lint/analysis_options.yaml
+
+linter:
+  rules:
+    # Easier to type
+    prefer_single_quotes: true
+
+    # Better to know what's imported from local files and what's from dependencies
+    prefer_relative_imports: true
+
+    # Sometimes it's okay to use it, like with Formz package
+    avoid_positional_boolean_parameters: false
+
+    # The onTap parameter of InkWell is always assigned to void
+    void_checks: false
