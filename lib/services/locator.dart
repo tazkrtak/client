@@ -8,5 +8,5 @@ final locator = GetIt.instance;
 void registerServices() {
   const baseUrl = 'https://tazkrtak-api-demo.herokuapp.com/';
   final client = Dio(BaseOptions(baseUrl: baseUrl));
-  locator.registerLazySingleton(() => HelloService(client));
+  locator.registerLazySingleton(() => UserService(client));
 }
