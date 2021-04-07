@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../models/user.dart';
 import '../account/account_page.dart';
+import '../register/cubits/register_cubit.dart';
+import '../register/register_page.dart';
 import '../wallet/wallet_page.dart';
 
 class HomePage extends StatefulWidget {
-  final User user;
-
-  const HomePage({Key? key, required this.user}) : super(key: key);
-
   @override
   State<StatefulWidget> createState() => _HomePageState();
 }
@@ -25,7 +23,7 @@ class _HomePageState extends State<HomePage> {
         pageChanged(index);
       },
       children: <Widget>[
-        WalletPage(user: widget.user),
+        WalletPage(),
         AccountPage(),
       ],
     );
@@ -55,7 +53,17 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         actions: <Widget>[
-          IconButton(icon: const Icon(Icons.logout), onPressed: () => {})
+          IconButton(
+              icon: const Icon(Icons.logout),
+              onPressed: () => {
+                    BlocProvider.of<RegisterCubit>(context)
+                        .signOut()
+                        .then((value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterPage()),
+                            ))
+                  })
         ],
       ),
       body: buildPageView(),

@@ -17,8 +17,7 @@ class RegisterPage extends StatelessWidget {
             } else if (state is RegisterSucess) {
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => HomePage(user: state.user)),
+                MaterialPageRoute(builder: (context) => HomePage()),
               );
             } else {
               Text(tr(context).error_generic);
