@@ -7,7 +7,7 @@ import '../register/cubits/register_cubit.dart';
 
 class RegisterPage extends StatelessWidget {
   static Route route() {
-    return MaterialPageRoute<void>(builder: (_) => HomePage());
+    return MaterialPageRoute<void>(builder: (_) => RegisterPage());
   }
 
   @override

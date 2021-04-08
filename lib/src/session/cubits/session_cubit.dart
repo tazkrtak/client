@@ -8,6 +8,15 @@ part 'session_state.dart';
 class SessionCubit extends HydratedCubit<SessionState> {
   SessionCubit() : super(SessionLoading());
 
+  void loadSession() {
+    emit(SessionLoading());
+    try {
+      emit(state);
+    } catch (_) {
+      emit(SessionUnknown());
+    }
+  }
+
   void clearSession() {
     clear();
     emit(SessionUnknown());

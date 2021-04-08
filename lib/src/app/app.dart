@@ -6,12 +6,13 @@ import '../../l10n/tr.dart';
 import '../register/register_page.dart';
 import '../session/cubits/session_cubit.dart';
 import 'home_page.dart';
+import 'splash_page.dart';
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SessionCubit>(
-      create: (_) => SessionCubit(),
+      create: (_) => SessionCubit()..loadSession(),
       child: AppView(),
     );
   }
@@ -34,27 +35,35 @@ class _AppViewState extends State<AppView> {
       navigatorKey: _navigatorKey,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: BlocListener<SessionCubit, SessionState>(
-        listener: (context, state) {
-          if (state is SessionLoading) {
-            print("here");
-            Text(tr(context).common_loading);
-          } else if (state is SessionSuccess) {
-            print("here2");
-            _navigator.pushAndRemoveUntil<void>(
-              HomePage.route(),
-              (route) => false,
-            );
-          } else if (state is SessionUnknown) {
-            _navigator.pushAndRemoveUntil<void>(
-              RegisterPage.route(),
-              (route) => false,
-            );
-          } else {
-            Text(tr(context).error_generic);
-          }
-        },
-      ),
+      debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        print("yarab1");
+        return BlocListener<SessionCubit, SessionState>(
+          listener: (context, state) {
+            print("yarab2");
+            if (state is SessionLoading) {
+              print("SessionLoading");
+              Text(tr(context).common_loading);
+            } else if (state is SessionSuccess) {
+              print("SessionSuccess");
+              _navigator.pushAndRemoveUntil<void>(
+                HomePage.route(),
+                (route) => false,
+              );
+            } else if (state is SessionUnknown) {
+              print("SessionUnknown");
+              _navigator.pushAndRemoveUntil<void>(
+                RegisterPage.route(),
+                (route) => false,
+              );
+            } else {
+              Text(tr(context).error_generic);
+            }
+          },
+          child: child,
+        );
+      },
+      onGenerateRoute: (_) => HomePage.route(),
     );
   }
 }
