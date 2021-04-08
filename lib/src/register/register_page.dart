@@ -47,6 +47,7 @@ class RegisterView extends StatelessWidget {
       },
       child: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _RegisterButton(),
           ],
@@ -60,19 +61,16 @@ class _RegisterButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterCubit, RegisterState>(
-      buildWhen: (previous, current) => current is SessionUnknown,
       builder: (context, state) {
-        return Center(
-          child: ElevatedButton(
-            onPressed: state is RegisterLoading
-                ? null
-                : () => {
-                      context.read<RegisterCubit>().register(),
-                    },
-            child: state is RegisterLoading
-                ? const CircularProgressIndicator()
-                : Text(tr(context).register_title),
-          ),
+        return ElevatedButton(
+          onPressed: state is RegisterLoading
+              ? null
+              : () => {
+                    context.read<RegisterCubit>().register(),
+                  },
+          child: state is RegisterLoading
+              ? const CircularProgressIndicator()
+              : Text(tr(context).register_title),
         );
       },
     );
