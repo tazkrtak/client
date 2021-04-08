@@ -7,6 +7,10 @@ import '../ticket/ticket.dart';
 import '../wallet/wallet_page.dart';
 
 class HomePage extends StatefulWidget {
+  static Route route() {
+    return MaterialPageRoute<void>(builder: (_) => HomePage());
+  }
+
   @override
   State<StatefulWidget> createState() => _HomePageState();
 }

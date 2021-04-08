@@ -1,24 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
-import '../../../api/user/models/user.dart';
-import '../../../api/user/user_service.dart';
-import '../../../services/locator.dart';
+import '../../../api/api.dart';
 
 part 'session_state.dart';
 
 class SessionCubit extends HydratedCubit<SessionState> {
   SessionCubit() : super(SessionLoading());
-
-  Future<void> loadSession() async {
-    final service = locator.get<UserService>();
-    try {
-      final user = await service.register();
-      emit(SessionSuccess(user));
-    } catch (_) {
-      emit(SessionUnknown());
-    }
-  }
 
   void clearSession() {
     clear();
