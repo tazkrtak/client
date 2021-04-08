@@ -1,6 +1,7 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
-import '../models/user.dart';
+
+import 'models/user.dart';
 
 part 'user_service.g.dart';
 

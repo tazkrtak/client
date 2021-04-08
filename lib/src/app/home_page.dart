@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../account/account_page.dart';
-import '../register/cubits/register_cubit.dart';
-import '../register/register_page.dart';
+import '../session/cubits/session_cubit.dart';
+import '../ticket/ticket.dart';
 import '../wallet/wallet_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -23,6 +23,7 @@ class _HomePageState extends State<HomePage> {
         pageChanged(index);
       },
       children: <Widget>[
+        TicketPage(),
         WalletPage(),
         AccountPage(),
       ],
@@ -54,16 +55,12 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         actions: <Widget>[
           IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () => {
-                    BlocProvider.of<RegisterCubit>(context)
-                        .signOut()
-                        .then((value) => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()),
-                            ))
-                  })
+            icon: const Icon(Icons.logout),
+            onPressed: () => {
+              //BlocProvider.of<SessionCubit>(context).clearSession(),
+              context.read<SessionCubit>().clearSession()
+            },
+          )
         ],
       ),
       body: buildPageView(),
@@ -72,6 +69,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code),
             label: 'Ticket',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.money),
+            label: 'Wallet',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
