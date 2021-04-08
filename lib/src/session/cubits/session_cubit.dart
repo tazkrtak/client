@@ -8,10 +8,11 @@ part 'session_state.dart';
 class SessionCubit extends HydratedCubit<SessionState> {
   SessionCubit() : super(SessionLoading());
 
-  void loadSession() {
-    emit(SessionLoading());
+  Future<void> loadSession() async {
+    await Future<void>.delayed(const Duration(milliseconds: 50));
     try {
-      emit(state);
+      final user = (state as SessionSuccess).user;
+      emit(SessionSuccess(user));
     } catch (_) {
       emit(SessionUnknown());
     }
