@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../l10n/tr.dart';
 import '../account/account_page.dart';
-import '../session/cubits/session_cubit.dart';
 import '../ticket/ticket.dart';
 import '../wallet/wallet_page.dart';
+import 'cubits/session_cubit.dart';
 
 class HomePage extends StatefulWidget {
   static Route route() {
@@ -16,59 +17,38 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int bottomSelectedIndex = 0;
-
-  PageController pageController = PageController();
-
-  Widget buildPageView() {
-    return PageView(
-      controller: pageController,
-      onPageChanged: (index) {
-        pageChanged(index);
-      },
-      children: <Widget>[
-        TicketPage(),
-        WalletPage(),
-        AccountPage(),
-      ],
-    );
-  }
+  int currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void pageChanged(int index) {
-    setState(() {
-      bottomSelectedIndex = index;
-    });
-  }
-
-  void onBottomTapped(int index) {
-    setState(() {
-      bottomSelectedIndex = index;
-      pageController.animateToPage(index,
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text(tr(context).appTitle),
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.logout),
-            onPressed: () => {
-              //BlocProvider.of<SessionCubit>(context).clearSession(),
-              context.read<SessionCubit>().clearSession()
-            },
+            onPressed: () => context.read<SessionCubit>().clearSession(),
           )
         ],
       ),
-      body: buildPageView(),
+      body: IndexedStack(
+        index: currentIndex,
+        children: [
+          TicketPage(),
+          WalletPage(),
+          AccountPage(),
+        ],
+      ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() {
+          currentIndex = index;
+        }),
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code),
@@ -83,9 +63,6 @@ class _HomePageState extends State<HomePage> {
             label: 'Account',
           ),
         ],
-        currentIndex: bottomSelectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: onBottomTapped,
       ),
     );
   }

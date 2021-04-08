@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../l10n/tr.dart';
+import '../app/cubits/session_cubit.dart';
 import '../register/cubits/register_cubit.dart';
-import '../session/cubits/session_cubit.dart';
 
 class RegisterPage extends StatelessWidget {
   static Route route() {
@@ -30,9 +30,7 @@ class RegisterView extends StatelessWidget {
     return BlocListener<RegisterCubit, RegisterState>(
       listener: (context, state) {
         if (state is RegisterSucess) {
-          context.read<SessionCubit>().emit(
-                SessionSuccess(state.user),
-              );
+          context.read<SessionCubit>().startSession(state.user);
         } else if (state is RegisterFailure) {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
@@ -65,9 +63,7 @@ class _RegisterButton extends StatelessWidget {
         return ElevatedButton(
           onPressed: state is RegisterLoading
               ? null
-              : () => {
-                    context.read<RegisterCubit>().register(),
-                  },
+              : () => context.read<RegisterCubit>().register(),
           child: state is RegisterLoading
               ? const CircularProgressIndicator()
               : Text(tr(context).register_title),
