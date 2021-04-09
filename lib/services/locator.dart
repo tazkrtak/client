@@ -1,12 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../api/api.dart';
 
 final locator = GetIt.instance;
 
-void registerServices() {
+Future<void> registerServices() async {
+  // BLoC Services
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getTemporaryDirectory(),
+  );
+
+  // API Services
   const baseUrl = 'https://tazkrtak-api-demo.herokuapp.com/';
   final client = Dio(BaseOptions(baseUrl: baseUrl));
-  locator.registerLazySingleton(() => HelloService(client));
+  locator.registerLazySingleton(() => UserService(client));
 }
