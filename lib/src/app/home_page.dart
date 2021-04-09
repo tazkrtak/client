@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../l10n/tr.dart';
 import '../account/account_page.dart';
@@ -7,25 +8,15 @@ import '../ticket/ticket.dart';
 import '../wallet/wallet_page.dart';
 import 'cubits/session_cubit.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends HookWidget {
   static Route route() {
     return MaterialPageRoute<void>(builder: (_) => HomePage());
   }
 
   @override
-  State<StatefulWidget> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  int currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final currentIndex = useState(0);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(tr(context).appTitle),
@@ -37,7 +28,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: IndexedStack(
-        index: currentIndex,
+        index: currentIndex.value,
         children: [
           TicketPage(),
           WalletPage(),
@@ -45,10 +36,8 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() {
-          currentIndex = index;
-        }),
+        currentIndex: currentIndex.value,
+        onTap: (index) => currentIndex.value = index,
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.qr_code),

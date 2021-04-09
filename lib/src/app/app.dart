@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../register/register_page.dart';
 import 'cubits/session_cubit.dart';
@@ -29,21 +30,14 @@ class App extends StatelessWidget {
   }
 }
 
-class AppView extends StatefulWidget {
-  @override
-  _AppViewState createState() => _AppViewState();
-}
-
-class _AppViewState extends State<AppView> {
-  final _navigatorKey = GlobalKey<NavigatorState>();
-
-  NavigatorState get _navigator => _navigatorKey.currentState!;
-
+class AppView extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final navigatorKey = useState(GlobalKey<NavigatorState>());
+
     return MaterialApp(
       title: 'Tazkrtak',
-      navigatorKey: _navigatorKey,
+      navigatorKey: navigatorKey.value,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
@@ -51,11 +45,12 @@ class _AppViewState extends State<AppView> {
       builder: (context, child) {
         return BlocListener<SessionCubit, SessionState>(
           listener: (context, state) {
+            final navigator = navigatorKey.value.currentState!;
             final route = state is SessionSuccess
                 ? HomePage.route()
                 : RegisterPage.route();
 
-            _navigator.pushAndRemoveUntil<void>(
+            navigator.pushAndRemoveUntil<void>(
               route,
               (route) => false,
             );
