@@ -25,3 +25,11 @@ should be followed using the following types:
 - The [GitHub Workflow](https://guides.github.com/introduction/flow/) should be followed.
 - PRs should be [Squashed and Merged](https://docs.github.com/en/github/collaborating-with-issues-and-pull-requests/about-pull-request-merges#squash-and-merge-your-pull-request-commits) into master.
 - It's preferred to enable auto merge on your PRs.
+
+## Getting started
+
+1. Install [derry](https://pub.dev/packages/derry): `flutter pub global activate derry`
+1. Add Pub's cache folder _`(C:\Users\USER\AppData\Roaming\Pub\Cache\bin)`_ to your `PATH`.
+1. Run `derry build`\* to get dependencies and generate missing files.
+
+> \* For Git bash: use `derry.bat` instead of `derry`
