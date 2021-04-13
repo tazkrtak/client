@@ -39,7 +39,7 @@ class TicketPage extends StatelessWidget {
             const SizedBox(height: 20),
             BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
               return QrImage(
-                data: state.ticket.value,
+                data: state.ticket.encodedValue,
                 size: 250.0,
               );
             }),

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class Ticket {
   final String userId;
   final String totp;
@@ -25,4 +27,6 @@ class Ticket {
       );
 
   String get value => '$userId:$totp:$quantity:$price';
+
+  String get encodedValue => base64Encode(utf8.encode(value));
 }
