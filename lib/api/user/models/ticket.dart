@@ -24,5 +24,5 @@ class Ticket {
         price: price ?? this.price,
       );
 
-  String get value => '$userId,$totp,$quantity,$price';
+  String get value => '$userId:$totp:$quantity:$price';
 }

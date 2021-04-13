@@ -20,7 +20,7 @@ class TicketCubit extends Cubit<TicketState> {
           ),
         );
 
-  void quantityUpdate(int quantity) {
+  void updateQuantity(int quantity) {
     emit(
       TicketState(
         state.ticket.copyWith(
@@ -32,7 +32,7 @@ class TicketCubit extends Cubit<TicketState> {
     );
   }
 
-  void priceUpdate(double price) {
+  void updatePrice(double price) {
     emit(
       TicketState(
         state.ticket.copyWith(

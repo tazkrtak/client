@@ -10,7 +10,8 @@ class TicketPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TicketCubit((context.read<SessionCubit>().state as SessionSuccess).user.id),
+      create: (_) => TicketCubit(
+          (context.read<SessionCubit>().state as SessionSuccess).user.id),
       child: Column(
         children: [
           const Icon(
@@ -21,16 +22,22 @@ class TicketPage extends StatelessWidget {
           BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
             return Picker(
               label: tr(context).ticket_quantityTitle.toString(),
-              value: state.ticket.quantity,
-              onChange: () => Null,
+              vaule: state.ticket.quantity,
+              onChange: (quantity) {
+                  context.read<TicketCubit>().updateQuantity(quantity as int);
+              },
+              minimum: TicketCubit.kMinQuantity,
             );
           }),
           const SizedBox(height: 16),
           BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
             return Picker(
               label: tr(context).ticket_priceTitle.toString(),
-              value: state.ticket.price,
-              onChange: () => Null,
+              vaule: state.ticket.price,
+              onChange: (price) {
+                  context.read<TicketCubit>().updatePrice(price as double);
+              },
+              minimum: TicketCubit.kMinPrice,
             );
           }),
         ],
