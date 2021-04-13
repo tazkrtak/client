@@ -11,8 +11,12 @@ class Ticket {
     required this.price,
   });
 
-  Ticket copyWith(
-          {String? userId, String? totp, int? quantity, double? price}) =>
+  Ticket copyWith({
+    String? userId,
+    String? totp,
+    int? quantity,
+    double? price,
+  }) =>
       Ticket(
         userId: userId ?? this.userId,
         totp: totp ?? this.totp,

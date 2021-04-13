@@ -3,6 +3,6 @@
   "common_loading": "Loading...",
   "error_generic": "Something went wrong!",
   "register_title": "Register",
-  "price_title": "Price",
-  "quantity_title": "Quantity"
+  "ticket_priceTitle": "Price",
+  "ticket_quantityTitle": "Quantity"
 }

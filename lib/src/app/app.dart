@@ -5,7 +5,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../register/register_page.dart';
-import '../ticket/cubits/ticket_cubit.dart';
 import 'cubits/session_cubit.dart';
 import 'home_page.dart';
 import 'splash_page.dart';
@@ -13,26 +12,19 @@ import 'splash_page.dart';
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<SessionCubit>(
-          create: (_) {
-            final cubit = SessionCubit();
+    return BlocProvider<SessionCubit>(
+      create: (_) {
+        final cubit = SessionCubit();
 
-            // Delay to force showing SplashPage, (works in release only).
-            const delay = kReleaseMode ? Duration(seconds: 3) : Duration();
-            Future.delayed(
-              delay,
-              () => cubit.loadSession(),
-            );
+        // Delay to force showing SplashPage, (works in release only).
+        const delay = kReleaseMode ? Duration(seconds: 3) : Duration();
+        Future.delayed(
+          delay,
+          () => cubit.loadSession(),
+        );
 
-            return cubit;
-          },
-        ),
-        BlocProvider<TicketCubit>(
-          create: (_) => TicketCubit(SessionCubit().id),
-        ),
-      ],
+        return cubit;
+      },
       child: AppView(),
     );
   }
