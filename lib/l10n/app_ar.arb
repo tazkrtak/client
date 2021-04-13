@@ -2,5 +2,7 @@
   "appTitle": "تذكرتك",
   "common_loading": "جاري التحميل...",
   "error_generic": "حدث خطأ ما!",
-  "register_title": "تسجبل"
+  "register_title": "تسجبل",
+  "price_title" : "السعر",
+  "quantity_title" : "عدد التذاكر" 
 }

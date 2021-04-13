@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../l10n/tr.dart';
 import '../account/account_page.dart';
-import '../ticket/ticket.dart';
+import '../ticket/ticket_page.dart';
 import '../wallet/wallet_page.dart';
 import 'cubits/session_cubit.dart';
 
