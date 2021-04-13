@@ -24,9 +24,7 @@ class TicketCubit extends Cubit<TicketState> {
     emit(
       TicketState(
         state.ticket.copyWith(
-          quantity: state.ticket.quantity < kMinQuantity
-              ? state.ticket.quantity
-              : kMinQuantity,
+          quantity: quantity < kMinQuantity ? kMinQuantity : quantity,
         ),
       ),
     );
@@ -36,8 +34,7 @@ class TicketCubit extends Cubit<TicketState> {
     emit(
       TicketState(
         state.ticket.copyWith(
-          price:
-              state.ticket.price < kMinPrice ? state.ticket.price : kMinPrice,
+          price: price < kMinPrice ? kMinPrice : price,
         ),
       ),
     );
@@ -47,7 +44,7 @@ class TicketCubit extends Cubit<TicketState> {
     emit(
       TicketState(
         state.ticket.copyWith(
-          totp: state.ticket.totp,
+          totp: totp,
         ),
       ),
     );
