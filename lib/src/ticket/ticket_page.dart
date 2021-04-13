@@ -24,7 +24,7 @@ class TicketPage extends StatelessWidget {
               label: tr(context).ticket_quantityTitle.toString(),
               vaule: state.ticket.quantity,
               onChange: (quantity) {
-                  context.read<TicketCubit>().updateQuantity(quantity as int);
+                context.read<TicketCubit>().updateQuantity(quantity as int);
               },
               minimum: TicketCubit.kMinQuantity,
             );
@@ -35,7 +35,7 @@ class TicketPage extends StatelessWidget {
               label: tr(context).ticket_priceTitle.toString(),
               vaule: state.ticket.price,
               onChange: (price) {
-                  context.read<TicketCubit>().updatePrice(price as double);
+                context.read<TicketCubit>().updatePrice(price as double);
               },
               minimum: TicketCubit.kMinPrice,
             );

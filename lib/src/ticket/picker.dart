@@ -29,7 +29,7 @@ class Picker extends HookWidget {
             color: Colors.red,
           ),
           onPressed: () {
-            if (valueState.value <= minimum){
+            if (valueState.value <= minimum) {
               return;
             }
             valueState.value -= step;
@@ -42,7 +42,7 @@ class Picker extends HookWidget {
             Icons.add,
             color: Colors.green,
           ),
-          onPressed:() {
+          onPressed: () {
             valueState.value += step;
             onChange(valueState.value);
           },
