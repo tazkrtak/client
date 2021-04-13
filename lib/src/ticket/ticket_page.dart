@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../l10n/tr.dart';
 import '../app/cubits/session_cubit.dart';
@@ -14,11 +15,14 @@ class TicketPage extends StatelessWidget {
           (context.read<SessionCubit>().state as SessionSuccess).user.id),
       child: Column(
         children: [
-          const Icon(
-            Icons.qr_code,
-            size: 200,
-          ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
+          BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
+            return QrImage(
+              data: state.ticket.value.toString(),
+              size: 250.0,
+            );
+          }),
+          const SizedBox(height: 20),
           BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
             return Picker(
               label: tr(context).ticket_quantityTitle.toString(),
@@ -29,7 +33,7 @@ class TicketPage extends StatelessWidget {
               minimum: TicketCubit.kMinQuantity,
             );
           }),
-          const SizedBox(height: 16),
+          const SizedBox(height: 20),
           BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
             return Picker(
               label: tr(context).ticket_priceTitle.toString(),
