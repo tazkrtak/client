@@ -5,15 +5,16 @@ extension Totp on OTP {
 
   static int get _now => DateTime.now().millisecondsSinceEpoch;
 
-  static int get expiresIn => interval - (_now ~/ 1000) % interval - 1;
+  static int get expiresIn => interval - (_now ~/ 1000) % interval;
 
   static String generateCode(String secret) {
-    return OTP
-        .generateTOTPCodeString(
-          secret,
-          _now,
-          // ignore: avoid_redundant_argument_values
-          interval: interval,
-        );
+    return OTP.generateTOTPCodeString(
+      secret,
+      _now,
+      algorithm: Algorithm.SHA1,
+      isGoogle: true,
+      // ignore: avoid_redundant_argument_values
+      interval: interval,
+    );
   }
 }
