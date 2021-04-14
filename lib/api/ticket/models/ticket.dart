@@ -1,12 +1,17 @@
 import 'dart:convert';
 
-class Ticket {
+import 'package:equatable/equatable.dart';
+
+class Ticket extends Equatable {
   final String userId;
   final String totp;
   final int quantity;
   final double price;
 
-  Ticket({
+  String get value => '$userId:$totp:$quantity:$price';
+  String get encodedValue => base64Encode(utf8.encode(value));
+
+  const Ticket({
     required this.userId,
     required this.totp,
     required this.quantity,
@@ -26,7 +31,6 @@ class Ticket {
         price: price ?? this.price,
       );
 
-  String get value => '$userId:$totp:$quantity:$price';
-
-  String get encodedValue => base64Encode(utf8.encode(value));
+  @override
+  List<Object> get props => [userId, totp, quantity, price];
 }

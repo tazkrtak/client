@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import '../../../api/ticket/models/ticket.dart';
+import '../../../api/ticket/models/models.dart';
 part 'ticket_state.dart';
 
 class TicketCubit extends Cubit<TicketState> {
