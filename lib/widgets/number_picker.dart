@@ -1,25 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-class Picker extends HookWidget {
-  final num vaule;
-  final num minimum;
-  final num step;
+class NumberPicker<T extends num> extends HookWidget {
+  final T? initialValue;
+  final T minimum;
+  final T step;
   final String label;
-  final Function(num) onChange;
+  final Function(T) onChange;
 
-  const Picker({
-    required this.vaule,
+  const NumberPicker({
+    this.initialValue,
+    this.minimum = 0 as T,
+    this.step = 1 as T,
     required this.label,
     required this.onChange,
-    required this.minimum,
-    this.step = 1,
   });
 
   @override
   Widget build(BuildContext context) {
-    final valueState = useState(vaule);
+    final valueState = useState(initialValue ?? minimum);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -32,7 +32,7 @@ class Picker extends HookWidget {
             if (valueState.value <= minimum) {
               return;
             }
-            valueState.value -= step;
+            valueState.value = valueState.value - step as T;
             onChange(valueState.value);
           },
         ),
@@ -43,7 +43,7 @@ class Picker extends HookWidget {
             color: Colors.green,
           ),
           onPressed: () {
-            valueState.value += step;
+            valueState.value = valueState.value + step as T;
             onChange(valueState.value);
           },
         ),

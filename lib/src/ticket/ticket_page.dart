@@ -1,14 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:flutter/services.dart';
 
 import '../../l10n/tr.dart';
+import '../../widgets/widgets.dart';
 import '../app/cubits/session_cubit.dart';
 import 'cubits/ticker_cubit.dart';
 import 'cubits/ticket_cubit.dart';
-import 'picker.dart';
 import 'util/totp.dart';
 
 class TicketPage extends StatelessWidget {
@@ -68,41 +68,37 @@ class TicketPage extends StatelessWidget {
               );
             }),
             const SizedBox(height: 20),
-            BlocBuilder<TickerCubit, TickerState>(builder: (context, state) {
-              return Column(
-                children: [
-                  SizedBox(
-                    width: 64,
-                    child: LinearProgressIndicator(
-                      value: state.count.toDouble() / Totp.interval,
+            BlocBuilder<TickerCubit, TickerState>(
+              builder: (context, state) {
+                return Column(
+                  children: [
+                    SizedBox(
+                      width: 64,
+                      child: LinearProgressIndicator(
+                        value: state.count.toDouble() / Totp.interval,
+                      ),
                     ),
-                  ),
-                  Text(state.count.toString())
-                ],
-              );
-            }),
+                    Text(state.count.toString())
+                  ],
+                );
+              },
+            ),
             const SizedBox(height: 20),
-            BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
-              return Picker(
-                label: tr(context).ticket_quantityTitle.toString(),
-                vaule: state.ticket.quantity,
-                onChange: (quantity) {
-                  context.read<TicketCubit>().updateQuantity(quantity as int);
-                },
-                minimum: TicketCubit.kMinQuantity,
-              );
-            }),
+            NumberPicker<int>(
+              label: tr(context).ticket_quantityTitle,
+              minimum: TicketCubit.kMinQuantity,
+              onChange: (value) {
+                context.read<TicketCubit>().updateQuantity(value);
+              },
+            ),
             const SizedBox(height: 20),
-            BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
-              return Picker(
-                label: tr(context).ticket_priceTitle.toString(),
-                vaule: state.ticket.price,
-                onChange: (price) {
-                  context.read<TicketCubit>().updatePrice(price as double);
-                },
-                minimum: TicketCubit.kMinPrice,
-              );
-            }),
+            NumberPicker<double>(
+              label: tr(context).ticket_priceTitle,
+              minimum: TicketCubit.kMinPrice,
+              onChange: (value) {
+                context.read<TicketCubit>().updatePrice(value);
+              },
+            )
           ],
         ),
       ),
