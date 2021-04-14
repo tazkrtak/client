@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:flutter/services.dart';
 
 import '../../l10n/tr.dart';
 import '../app/cubits/session_cubit.dart';
@@ -38,9 +40,31 @@ class TicketPage extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
-              return QrImage(
-                data: state.ticket.encodedValue,
-                size: 250.0,
+              return GestureDetector(
+                onLongPressUp: () {
+                  // TODO: use envrinoment variables
+                  if (kReleaseMode) return;
+
+                  // Copies the Ticket's QR code to test it on CCimulator
+                  // https://ccimulator.netlify.app/
+                  Clipboard.setData(
+                    ClipboardData(
+                      text: state.ticket.encodedValue,
+                    ),
+                  );
+
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(
+                      const SnackBar(
+                        content: Text('Ticket copied to clipboard'),
+                      ),
+                    );
+                },
+                child: QrImage(
+                  data: state.ticket.encodedValue,
+                  size: 250.0,
+                ),
               );
             }),
             const SizedBox(height: 20),
