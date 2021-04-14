@@ -8,7 +8,7 @@ class TicketCubit extends Cubit<TicketState> {
   static const int kMinQuantity = 1;
   final String userId;
   final String initialTotp;
-  
+
   TicketCubit(this.userId, this.initialTotp)
       : super(
           TicketState(
