@@ -32,7 +32,9 @@ dependencies:
   hydrated_bloc: ^7.0.0
   intl: ^0.17.0
   json_annotation: ^4.0.0
+  otp: 3.0.0-nullsafety.0
   path_provider: ^2.0.1
+  qr_flutter: ^4.0.0
   retrofit: ^2.0.0-beta1
 
 dev_dependencies:

@@ -2,5 +2,7 @@
   "appTitle": "Tazkrtak",
   "common_loading": "Loading...",
   "error_generic": "Something went wrong!",
-  "register_title": "Register"
+  "register_title": "Register",
+  "ticket_priceTitle": "Price",
+  "ticket_quantityTitle": "Quantity"
 }
