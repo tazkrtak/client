@@ -97,6 +97,7 @@ class _TicketView extends StatelessWidget {
           const SizedBox(height: 20),
           NumberPicker<double>(
             label: tr(context).ticket_priceTitle,
+            step: 0.5,
             minimum: TicketCubit.kMinPrice,
             onChange: (value) {
               context.read<TicketCubit>().updatePrice(value);
