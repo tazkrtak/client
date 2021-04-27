@@ -10,13 +10,12 @@ class User {
   final String email;
   final String key;
 
-  const User({
-    required this.id,
-    required this.name,
-    required this.secret,
-    required this.email,
-    required this.key
-  });
+  const User(
+      {required this.id,
+      required this.name,
+      required this.secret,
+      required this.email,
+      required this.key});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);

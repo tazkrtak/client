@@ -41,7 +41,7 @@ class Ticket extends Equatable {
 
   @override
   List<Object> get props => [userId, userKey, totp, quantity, price];
-  
+
   Map<String, dynamic> toJson() => _$TicketToJson(this);
 
   String _toJsonString() {
