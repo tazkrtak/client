@@ -21,6 +21,7 @@ class TicketPage extends StatelessWidget {
         builder: (context) => BlocProvider(
           create: (_) => TicketCubit(
             user.id,
+            user.key,
             context.read<TotpCubit>().state.totp,
           ),
           child: _TicketView(),
