@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'ticket.g.dart';
+
+@JsonSerializable()
 class Ticket extends Equatable {
   final String userId;
   final String totp;
@@ -9,8 +13,7 @@ class Ticket extends Equatable {
   final int quantity;
   final double price;
 
-  String get value => '$userId:$totp:$quantity:$price:$userKey';
-
+  String get value => _toJsonString();
   String get encodedValue => base64Encode(utf8.encode(value));
 
   const Ticket({
@@ -39,4 +42,9 @@ class Ticket extends Equatable {
   @override
   List<Object> get props => [userId, userKey, totp, quantity, price];
   
+  Map<String, dynamic> toJson() => _$TicketToJson(this);
+
+  String _toJsonString() {
+    return const JsonEncoder.withIndent(null).convert(toJson());
+  }
 }
