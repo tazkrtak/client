@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'ticket.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(createFactory: false)
 class Ticket extends Equatable {
   final String userId;
   final String totp;
