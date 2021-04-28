@@ -15,6 +15,7 @@ class AppTheme {
         errorColor: _AppColors.error,
         backgroundColor: _AppColors.background,
         accentColor: _AppColors.accent,
+        highlightColor: _AppColors.inputFill,
 
         // Buttons
         elevatedButtonTheme: ElevatedButtonThemeData(

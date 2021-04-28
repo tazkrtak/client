@@ -3,6 +3,6 @@
   "common_loading": "جاري التحميل...",
   "error_generic": "حدث خطأ ما!",
   "register_title": "تسجبل",
-  "ticket_priceTitle" : "السعر",
-  "ticket_quantityTitle" : "عدد التذاكر" 
+  "ticket_priceTitle" : "ج.م.",
+  "ticket_quantityTitle" : "تذكرة" 
 }
