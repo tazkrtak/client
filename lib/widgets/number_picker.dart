@@ -60,16 +60,22 @@ class NumberPicker<T extends num> extends HookWidget {
                       fontSize: 24),
                 ),
                 const Spacer(),
-                CircularIconButton(
-                  color: Theme.of(context).errorColor,
-                  icon: LineAwesomeIcons.minus,
-                  onPressed: () {
-                    if (state.value <= minimum) {
-                      return;
-                    }
-                    state.value = state.value - defaultStep as T;
-                    onChange(state.value);
+                GestureDetector(
+                  onLongPress: () {
+                    state.value = minimum;
+                    onChange(minimum);
                   },
+                  child: CircularIconButton(
+                    color: Theme.of(context).errorColor,
+                    icon: LineAwesomeIcons.minus,
+                    onPressed: () {
+                      if (state.value <= minimum) {
+                        return;
+                      }
+                      state.value = state.value - defaultStep as T;
+                      onChange(state.value);
+                    },
+                  ),
                 ),
                 const SizedBox(width: 8),
                 CircularIconButton(
