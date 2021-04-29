@@ -51,7 +51,6 @@ class _TicketView extends StatelessWidget {
                   builder: (context, state) {
                     return RRectProgressIndicator(
                       size: 280,
-                      stroke: 8,
                       value: state.progress,
                     );
                   },

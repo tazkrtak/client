@@ -3,26 +3,47 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class RRectProgressIndicator extends StatelessWidget {
-  final double? size;
-  final double? stroke;
-
+class RRectProgressIndicator extends ImplicitlyAnimatedWidget {
+  final double size;
+  final double stroke;
+  final double borderRadius;
   final double value;
 
   const RRectProgressIndicator({
-    Key? key,
     this.size = 200,
-    this.stroke = 10,
+    this.stroke = 8,
+    this.borderRadius = 16,
+    Duration duration = const Duration(seconds: 1),
     required this.value,
-  }) : super(key: key);
+  }) : super(
+          duration: duration,
+          curve: Curves.linear,
+        );
+
+  @override
+  ImplicitlyAnimatedWidgetState<ImplicitlyAnimatedWidget> createState() =>
+      _AnimatedPaddingState();
+}
+
+class _AnimatedPaddingState
+    extends AnimatedWidgetBaseState<RRectProgressIndicator> {
+  Tween<double>? _value;
+
+  @override
+  void forEachTween(TweenVisitor<dynamic> visitor) {
+    _value = visitor(_value, widget.value,
+            (dynamic value) => Tween<double>(begin: value as double))
+        as Tween<double>?;
+  }
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      size: Size(size!, size!),
+      size: Size(widget.size, widget.size),
       foregroundPainter: _RRectProgressIndicatorPainter(
-        stroke: stroke!,
-        value: value,
+        stroke: widget.stroke,
+        value: _value!.evaluate(animation).clamp(0, 1),
+        borderRadius: widget.borderRadius,
         color: Theme.of(context).primaryColor,
       ),
     );
@@ -33,11 +54,13 @@ class _RRectProgressIndicatorPainter extends CustomPainter {
   final double stroke;
   final Color color;
   final double value;
+  final double borderRadius;
 
   _RRectProgressIndicatorPainter({
     required this.stroke,
     required this.color,
     required this.value,
+    required this.borderRadius,
   });
 
   @override
@@ -50,7 +73,7 @@ class _RRectProgressIndicatorPainter extends CustomPainter {
 
     final roundedRectangle = RRect.fromRectAndRadius(
       rectangle,
-      const Radius.circular(10),
+      Radius.circular(borderRadius),
     );
 
     final path = Path()..addRRect(roundedRectangle);
@@ -61,55 +84,23 @@ class _RRectProgressIndicatorPainter extends CustomPainter {
       ..strokeCap = StrokeCap.round;
     canvas.drawPath(path, pathPaint);
 
-    final percentPath = _createAnimatedPath(path, value);
-    final percentagePaint = Paint()
+    final percentPath = Path();
+    final percentPaint = Paint()
       ..color = color
-      ..strokeWidth = stroke + 5
+      ..strokeWidth = stroke + 8
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
-    canvas.drawPath(percentPath, percentagePaint);
+
+    for (final PathMetric pathMetric in path.computeMetrics()) {
+      percentPath.addPath(
+        pathMetric.extractPath(0, pathMetric.length * value),
+        Offset.zero,
+      );
+    }
+
+    canvas.drawPath(percentPath, percentPaint);
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
-
-  Path _createAnimatedPath(Path originalPath, double animationPercent) {
-    final totalLength = originalPath.computeMetrics().fold(
-          0.0,
-          (double prev, PathMetric metric) => prev + metric.length,
-        );
-
-    final currentLength = totalLength * animationPercent;
-
-    return _extractPathUntilLength(originalPath, currentLength);
-  }
-
-  Path _extractPathUntilLength(Path originalPath, double length) {
-    var currentLength = 0.0;
-
-    final path = Path();
-
-    final metricsIterator = originalPath.computeMetrics().iterator;
-
-    while (metricsIterator.moveNext()) {
-      final metric = metricsIterator.current;
-
-      final nextLength = currentLength + metric.length;
-
-      final isLastSegment = nextLength > length;
-      if (isLastSegment) {
-        final remainingLength = length - currentLength;
-        final pathSegment = metric.extractPath(0.0, remainingLength);
-        path.addPath(pathSegment, Offset.zero);
-        break;
-      } else {
-        final pathSegment = metric.extractPath(0.0, metric.length);
-        path.addPath(pathSegment, Offset.zero);
-      }
-
-      currentLength = nextLength;
-    }
-
-    return path;
-  }
 }
