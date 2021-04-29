@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CircularIconButton extends StatelessWidget {
@@ -21,6 +20,7 @@ class CircularIconButton extends StatelessWidget {
       ),
       child: IconButton(
         splashColor: Colors.transparent,
+        padding: const EdgeInsets.all(0),
         icon: Icon(
           icon,
           color: Colors.white,
