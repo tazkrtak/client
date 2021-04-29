@@ -48,10 +48,12 @@ class AppTheme {
           ),
           border: InputBorder.none,
         ),
-        textSelectionTheme:
-            const TextSelectionThemeData(cursorColor: _AppColors.accent),
+        textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: _AppColors.accent,
+        ),
         // SnackBar
-        snackBarTheme:
-            const SnackBarThemeData(backgroundColor: _AppColors.accent),
+        snackBarTheme: const SnackBarThemeData(
+          backgroundColor: _AppColors.accent,
+        ),
       );
 }
