@@ -4,7 +4,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../l10n/tr.dart';
 
-
 import '../account/account_page.dart';
 import '../ticket/ticket_page.dart';
 import '../wallet/wallet_page.dart';
@@ -44,7 +43,7 @@ class HomePage extends HookWidget {
           tabBackgroundColor: Theme.of(context).primaryColor,
           tabBorder: Border.all(color: Colors.transparent, width: 3),
           color: Colors.black,
-          tabs:[
+          tabs: [
             GButton(
               icon: LineAwesomeIcons.alternate_ticket,
               text: tr(context).bottomNav_ticket.toString(),
