@@ -29,8 +29,6 @@ class NumberPicker<T extends num> extends HookWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).highlightColor,
         borderRadius: BorderRadius.circular(10),
-
-        // color: Colors.black26,
       ),
       child: Row(
         children: [
