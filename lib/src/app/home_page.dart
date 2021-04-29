@@ -30,7 +30,7 @@ class HomePage extends HookWidget {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
         child: GNav(
-          hoverColor: Theme.of(context).accentColor,
+          hoverColor: Theme.of(context).primaryColor,
           onTabChange: (index) => currentIndex.value = index,
           tabBorderRadius: 16,
           tabMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
@@ -39,7 +39,7 @@ class HomePage extends HookWidget {
           iconSize: 30,
           padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
           duration: const Duration(milliseconds: 400),
-          tabBackgroundColor: Theme.of(context).accentColor,
+          tabBackgroundColor: Theme.of(context).primaryColor,
           tabBorder: Border.all(color: Colors.transparent, width: 3),
           color: Colors.black,
           tabs: const [
