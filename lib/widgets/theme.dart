@@ -4,7 +4,7 @@ class _AppColors {
   static const primary = Color(0xFF09B44D);
   static const accent = Color(0xFF3AC371);
   static const error = Color(0xFFFF0033);
-  static const background = Color(0xFFEFEFEF);
+  static const background = Color(0xFFFFFFFF);
   static const inputFill = Color(0xFFF5F6F8);
 }
 
