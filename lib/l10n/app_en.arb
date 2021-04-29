@@ -4,5 +4,8 @@
   "error_generic": "Something went wrong!",
   "register_title": "Register",
   "ticket_priceTitle": "EGP",
-  "ticket_quantityTitle": "Ticket(s)"
+  "ticket_quantityTitle": "Ticket(s)",
+  "bottomNav_ticket": "Ticket",
+  "bottomNav_wallet": "Wallet",
+  "bottomNav_account": "Account"
 }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import '../../l10n/tr.dart';
+
 
 import '../account/account_page.dart';
 import '../ticket/ticket_page.dart';
@@ -42,18 +44,18 @@ class HomePage extends HookWidget {
           tabBackgroundColor: Theme.of(context).primaryColor,
           tabBorder: Border.all(color: Colors.transparent, width: 3),
           color: Colors.black,
-          tabs: const [
+          tabs:[
             GButton(
               icon: LineAwesomeIcons.alternate_ticket,
-              text: 'Ticket',
+              text: tr(context).bottomNav_ticket.toString(),
             ),
             GButton(
               icon: LineAwesomeIcons.wallet,
-              text: 'Wallet',
+              text: tr(context).bottomNav_wallet.toString(),
             ),
             GButton(
               icon: LineAwesomeIcons.user_circle,
-              text: 'Account',
+              text: tr(context).bottomNav_account.toString(),
             ),
           ],
         ),

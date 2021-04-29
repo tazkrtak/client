@@ -4,5 +4,8 @@
   "error_generic": "حدث خطأ ما!",
   "register_title": "تسجبل",
   "ticket_priceTitle" : "ج.م.",
-  "ticket_quantityTitle" : "تذكرة" 
+  "ticket_quantityTitle" : "تذكرة",
+  "bottomNav_ticket": "التذكرة",
+  "bottomNav_wallet": "المحفظة",
+  "bottomNav_account": "الحساب"
 }
