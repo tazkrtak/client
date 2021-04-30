@@ -81,7 +81,6 @@ class _RRectProgressIndicatorPainter extends CustomPainter {
       ..strokeWidth = stroke
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
-    canvas.drawPath(path, pathPaint);
 
     final percentPath = Path();
     final percentPaint = Paint()
@@ -97,6 +96,7 @@ class _RRectProgressIndicatorPainter extends CustomPainter {
       );
     }
 
+    canvas.drawPath(path, pathPaint);
     canvas.drawPath(percentPath, percentPaint);
   }
 

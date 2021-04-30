@@ -40,71 +40,68 @@ class _TicketView extends StatelessWidget {
           context.read<TicketCubit>().updateTotp(state.totp);
         }
       },
-      child: Padding(
-        padding: const EdgeInsets.all(24.0),
-        child: Column(
-          children: [
-            Stack(
-              alignment: Alignment.center,
-              children: [
-                BlocBuilder<TotpCubit, TotpState>(
+      child: Column(
+        children: [
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              BlocBuilder<TotpCubit, TotpState>(
+                builder: (context, state) {
+                  return RRectProgressIndicator(
+                    size: 280,
+                    value: state.progress,
+                  );
+                },
+              ),
+              BlocBuilder<TicketCubit, TicketState>(
                   builder: (context, state) {
-                    return RRectProgressIndicator(
-                      size: 280,
-                      value: state.progress,
-                    );
-                  },
-                ),
-                BlocBuilder<TicketCubit, TicketState>(
-                    builder: (context, state) {
-                  return GestureDetector(
-                    onLongPressUp: () {
-                      // TODO: use envrinoment variables
-                      if (kReleaseMode) return;
+                return GestureDetector(
+                  onLongPressUp: () {
+                    // TODO: use envrinoment variables
+                    if (kReleaseMode) return;
 
-                      // Copies the Ticket's QR code to test it on CCimulator
-                      // https://ccimulator.netlify.app/
-                      Clipboard.setData(
-                        ClipboardData(
-                          text: state.ticket.encodedValue,
+                    // Copies the Ticket's QR code to test it on CCimulator
+                    // https://ccimulator.netlify.app/
+                    Clipboard.setData(
+                      ClipboardData(
+                        text: state.ticket.encodedValue,
+                      ),
+                    );
+
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        const SnackBar(
+                          content: Text('Ticket copied to clipboard'),
                         ),
                       );
-
-                      ScaffoldMessenger.of(context)
-                        ..hideCurrentSnackBar()
-                        ..showSnackBar(
-                          const SnackBar(
-                            content: Text('Ticket copied to clipboard'),
-                          ),
-                        );
-                    },
-                    child: QrImage(
-                      data: state.ticket.encodedValue,
-                      size: 250.0,
-                    ),
-                  );
-                }),
-              ],
-            ),
-            const SizedBox(height: 20),
-            NumberPicker<int>(
-              label: tr(context).ticket_quantityTitle,
-              minimum: TicketCubit.kMinQuantity,
-              onChange: (value) {
-                context.read<TicketCubit>().updateQuantity(value);
-              },
-            ),
-            const SizedBox(height: 20),
-            NumberPicker<double>(
-              label: tr(context).ticket_priceTitle,
-              step: 0.5,
-              minimum: TicketCubit.kMinPrice,
-              onChange: (value) {
-                context.read<TicketCubit>().updatePrice(value);
-              },
-            )
-          ],
-        ),
+                  },
+                  child: QrImage(
+                    data: state.ticket.encodedValue,
+                    size: 250.0,
+                  ),
+                );
+              }),
+            ],
+          ),
+          const SizedBox(height: 20),
+          NumberPicker<int>(
+            label: tr(context).ticket_quantityTitle,
+            minimum: TicketCubit.kMinQuantity,
+            onChange: (value) {
+              context.read<TicketCubit>().updateQuantity(value);
+            },
+          ),
+          const SizedBox(height: 20),
+          NumberPicker<double>(
+            label: tr(context).ticket_priceTitle,
+            step: 0.5,
+            minimum: TicketCubit.kMinPrice,
+            onChange: (value) {
+              context.read<TicketCubit>().updatePrice(value);
+            },
+          )
+        ],
       ),
     );
   }

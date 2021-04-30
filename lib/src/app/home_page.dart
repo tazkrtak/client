@@ -19,42 +19,42 @@ class HomePage extends HookWidget {
 
     return Scaffold(
       body: SafeArea(
-        child: IndexedStack(
-          index: currentIndex.value,
-          children: [
-            TicketPage(),
-            WalletPage(),
-            AccountPage(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: IndexedStack(
+            index: currentIndex.value,
+            children: [
+              TicketPage(),
+              WalletPage(),
+              AccountPage(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         child: GNav(
-          hoverColor: Theme.of(context).primaryColor,
-          onTabChange: (index) => currentIndex.value = index,
+          gap: 12,
+          iconSize: 32,
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
           tabBorderRadius: 16,
-          tabMargin: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-          gap: 8,
-          activeColor: Theme.of(context).highlightColor,
-          iconSize: 30,
-          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
-          duration: const Duration(milliseconds: 400),
           tabBackgroundColor: Theme.of(context).primaryColor,
-          tabBorder: Border.all(color: Colors.transparent, width: 3),
           color: Colors.black,
+          activeColor: Theme.of(context).backgroundColor,
+          duration: const Duration(milliseconds: 400),
+          onTabChange: (index) => currentIndex.value = index,
           tabs: [
             GButton(
               icon: LineAwesomeIcons.alternate_ticket,
-              text: tr(context).bottomNav_ticket.toString(),
+              text: tr(context).bottomNav_ticket,
             ),
             GButton(
               icon: LineAwesomeIcons.wallet,
-              text: tr(context).bottomNav_wallet.toString(),
+              text: tr(context).bottomNav_wallet,
             ),
             GButton(
               icon: LineAwesomeIcons.user_circle,
-              text: tr(context).bottomNav_account.toString(),
+              text: tr(context).bottomNav_account,
             ),
           ],
         ),

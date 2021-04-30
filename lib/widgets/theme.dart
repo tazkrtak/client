@@ -9,7 +9,8 @@ class _AppColors {
 }
 
 class AppTheme {
-  ThemeData get data => ThemeData(
+  ThemeData get data =>
+      ThemeData(
         // Colors
         primaryColor: _AppColors.primary,
         errorColor: _AppColors.error,
@@ -48,9 +49,11 @@ class AppTheme {
           ),
           border: InputBorder.none,
         ),
+
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: _AppColors.accent,
         ),
+
         // SnackBar
         snackBarTheme: const SnackBarThemeData(
           backgroundColor: _AppColors.accent,
