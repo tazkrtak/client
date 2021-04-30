@@ -54,34 +54,35 @@ class _TicketView extends StatelessWidget {
                 },
               ),
               BlocBuilder<TicketCubit, TicketState>(
-                  builder: (context, state) {
-                return GestureDetector(
-                  onLongPressUp: () {
-                    // TODO: use envrinoment variables
-                    if (kReleaseMode) return;
+                builder: (context, state) {
+                  return GestureDetector(
+                    onLongPressUp: () {
+                      // TODO: use envrinoment variables
+                      if (kReleaseMode) return;
 
-                    // Copies the Ticket's QR code to test it on CCimulator
-                    // https://ccimulator.netlify.app/
-                    Clipboard.setData(
-                      ClipboardData(
-                        text: state.ticket.encodedValue,
-                      ),
-                    );
-
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        const SnackBar(
-                          content: Text('Ticket copied to clipboard'),
+                      // Copies the Ticket's QR code to test it on CCimulator
+                      // https://ccimulator.netlify.app/
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: state.ticket.encodedValue,
                         ),
                       );
-                  },
-                  child: QrImage(
-                    data: state.ticket.encodedValue,
-                    size: 250.0,
-                  ),
-                );
-              }),
+
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          const SnackBar(
+                            content: Text('Ticket copied to clipboard'),
+                          ),
+                        );
+                    },
+                    child: QrImage(
+                      data: state.ticket.encodedValue,
+                      size: 250.0,
+                    ),
+                  );
+                },
+              ),
             ],
           ),
           const SizedBox(height: 20),

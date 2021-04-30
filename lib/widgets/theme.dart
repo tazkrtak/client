@@ -9,8 +9,7 @@ class _AppColors {
 }
 
 class AppTheme {
-  ThemeData get data =>
-      ThemeData(
+  ThemeData get data => ThemeData(
         // Colors
         primaryColor: _AppColors.primary,
         errorColor: _AppColors.error,

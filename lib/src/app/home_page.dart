@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import '../../l10n/tr.dart';
 
+import '../../l10n/tr.dart';
 import '../account/account_page.dart';
 import '../ticket/ticket_page.dart';
 import '../wallet/wallet_page.dart';
