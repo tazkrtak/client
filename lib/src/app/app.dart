@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../widgets/widgets.dart';
 import '../register/register_page.dart';
 import 'cubits/session_cubit.dart';
 import 'home_page.dart';
@@ -41,6 +42,7 @@ class AppView extends HookWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
+      theme: AppTheme().data,
       onGenerateRoute: (_) => SplashPage.route(),
       builder: (context, child) {
         return BlocListener<SessionCubit, SessionState>(

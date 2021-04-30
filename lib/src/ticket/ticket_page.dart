@@ -42,50 +42,48 @@ class _TicketView extends StatelessWidget {
       },
       child: Column(
         children: [
-          const SizedBox(height: 20),
-          BlocBuilder<TicketCubit, TicketState>(builder: (context, state) {
-            return GestureDetector(
-              onLongPressUp: () {
-                // TODO: use envrinoment variables
-                if (kReleaseMode) return;
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              BlocBuilder<TotpCubit, TotpState>(
+                builder: (context, state) {
+                  return RRectProgressIndicator(
+                    size: 280,
+                    value: state.progress,
+                  );
+                },
+              ),
+              BlocBuilder<TicketCubit, TicketState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                    onLongPressUp: () {
+                      // TODO: use envrinoment variables
+                      if (kReleaseMode) return;
 
-                // Copies the Ticket's QR code to test it on CCimulator
-                // https://ccimulator.netlify.app/
-                Clipboard.setData(
-                  ClipboardData(
-                    text: state.ticket.encodedValue,
-                  ),
-                );
+                      // Copies the Ticket's QR code to test it on CCimulator
+                      // https://ccimulator.netlify.app/
+                      Clipboard.setData(
+                        ClipboardData(
+                          text: state.ticket.encodedValue,
+                        ),
+                      );
 
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    const SnackBar(
-                      content: Text('Ticket copied to clipboard'),
+                      ScaffoldMessenger.of(context)
+                        ..hideCurrentSnackBar()
+                        ..showSnackBar(
+                          const SnackBar(
+                            content: Text('Ticket copied to clipboard'),
+                          ),
+                        );
+                    },
+                    child: QrImage(
+                      data: state.ticket.encodedValue,
+                      size: 250.0,
                     ),
                   );
-              },
-              child: QrImage(
-                data: state.ticket.encodedValue,
-                size: 250.0,
+                },
               ),
-            );
-          }),
-          const SizedBox(height: 20),
-          BlocBuilder<TotpCubit, TotpState>(
-            builder: (context, state) {
-              return Column(
-                children: [
-                  SizedBox(
-                    width: 64,
-                    child: LinearProgressIndicator(
-                      value: state.progress,
-                    ),
-                  ),
-                  Text(state.expiresIn.toString())
-                ],
-              );
-            },
+            ],
           ),
           const SizedBox(height: 20),
           NumberPicker<int>(
