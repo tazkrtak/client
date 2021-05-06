@@ -13,5 +13,5 @@ class FormResult<T> extends Equatable {
   const FormResult.failure(this.error) : value = null;
 
   @override
-  List<Object> get props => [value!, error!];
+  List<Object?> get props => [value, error];
 }

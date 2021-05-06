@@ -1,14 +1,14 @@
 part of 'form_cubit.dart';
 
 class FormState<TInputs extends FormzInputs, TResult> extends Equatable {
-  final TInputs? inputs;
+  final TInputs inputs;
   final FormResult<TResult>? result;
   final FormzStatus status;
 
   const FormState({
     required this.inputs,
-    this.result,
     required this.status,
+    this.result,
   });
 
   FormState<TInputs, TResult> copyWith({
@@ -18,8 +18,10 @@ class FormState<TInputs extends FormzInputs, TResult> extends Equatable {
   }) {
     return FormState(
       inputs: inputs ?? this.inputs,
-      result: result ?? this.result,
-      status: status ?? this.status,
+      status: status ?? (inputs != null? inputs.validate() : FormzStatus.invalid),
+      // do not copy old results because when the state changes,
+      // they need to be recomputed.
+      result: result ?? FormResult<TResult>.unknown(),
     );
   }
 

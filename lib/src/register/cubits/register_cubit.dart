@@ -13,31 +13,31 @@ class RegisterCubit extends FormCubit<RegisterInputs, User> {
   RegisterCubit() : super(const RegisterInputs());
 
   void updateNationalId(NationalId nationalId) => updateInputs(
-        state.inputs!.copyWith(
+        state.inputs.copyWith(
           nationalId: nationalId,
         ),
       );
 
   void updateEmail(Email email) => updateInputs(
-        state.inputs!.copyWith(
+        state.inputs.copyWith(
           email: email,
         ),
       );
 
   void updatePhoneNumber(PhoneNumber phoneNumber) => updateInputs(
-        state.inputs!.copyWith(
+        state.inputs.copyWith(
           phoneNumber: phoneNumber,
         ),
       );
 
   void updateFullName(FullName fullName) => updateInputs(
-        state.inputs!.copyWith(
+        state.inputs.copyWith(
           fullName: fullName,
         ),
       );
 
   void updatePassword(Password password) => updateInputs(
-        state.inputs!.copyWith(
+        state.inputs.copyWith(
           password: password,
         ),
       );

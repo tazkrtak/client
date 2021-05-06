@@ -1,5 +1,4 @@
 import 'package:formz/formz.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 import '../../../common/forms/formz_inputs.dart';
 import '../models/models.dart';
@@ -18,9 +17,6 @@ class RegisterInputs extends FormzInputs {
     this.fullName = const FullName.pure(),
     this.password = const Password.pure(),
   });
-  @override
-  List<FormzInput> get inputs =>
-      [nationalId, email, phoneNumber, fullName, password];
 
   RegisterInputs copyWith({
     NationalId? nationalId,
@@ -37,4 +33,13 @@ class RegisterInputs extends FormzInputs {
       password: password ?? this.password,
     );
   }
+
+  @override
+  List<FormzInput> get inputs => [
+        nationalId,
+        email,
+        phoneNumber,
+        fullName,
+        password,
+      ];
 }

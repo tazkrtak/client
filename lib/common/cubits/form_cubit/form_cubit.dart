@@ -31,12 +31,20 @@ abstract class FormCubit<TInputs extends FormzInputs, TResult>
     );
   }
 
-  void emitFailure({required TInputs inputs, required String error}) {
+  void emitFailure(String error) {
     emit(
       state.copyWith(
           status: FormzStatus.submissionFailure,
-          inputs: inputs,
           result: FormResult<TResult>.failure(error)),
+    );
+  }
+
+  void emitInvalid(TInputs inputs) {
+    emit(
+      state.copyWith(
+          status: FormzStatus.invalid,
+          inputs: inputs,
+      )
     );
   }
 }
