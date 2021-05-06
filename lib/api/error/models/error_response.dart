@@ -8,12 +8,14 @@ part 'error_response.g.dart';
 class ErrorResponse {
   final int statusCode;
   final String message;
-  final List<FieldValidationError> validationErrors;
+  final String? error;
+  final List<FieldValidationError>? validationErrors;
 
-  ErrorResponse({
+  const ErrorResponse({
     required this.statusCode,
     required this.message,
-    required this.validationErrors,
+    this.validationErrors,
+    this.error,
   });
 
   factory ErrorResponse.fromJson(Map<String, dynamic> json) =>
