@@ -10,5 +10,5 @@ abstract class UserService {
   factory UserService(Dio dio) = _UserService;
 
   @POST('/users/register')
-  Future<User> register(@Body() Map<String, dynamic> registerInputs);
+  Future<User> register(@Body() RegisterBody registerBody);
 }

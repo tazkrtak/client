@@ -1,5 +1,6 @@
+import '../../../api/api.dart';
+
 import '../../../api/error/exceptions/exceptions.dart';
-// import 'package:tazkrtak/common/forms/external_formz_input.dart';
 
 import '../../../api/user/models/user.dart';
 import '../../../api/user/user_service.dart';
@@ -41,76 +42,35 @@ class RegisterCubit extends FormCubit<RegisterInputs, User> {
         ),
       );
 
-  Future<User> _register(RegisterInputs inputs) async {
-    final service = locator.get<UserService>();
-    final registeredUser = await service.register({
-      'nationalId': inputs.nationalId.value,
-      'email': inputs.email.value,
-      'phoneNumber': inputs.phoneNumber.value,
-      'fullName': inputs.fullName.value,
-      'password': inputs.password.value,
-    });
-    return registeredUser;
-  }
-
   @override
   Future<void> submitForm() async {
     if (!canSubmit) return;
     emitInProgress();
 
     try {
-      final registeredUser = await _register(state.inputs!);
+      final registeredUser = await _register(state.inputs);
       emitSuccess(registeredUser);
+    } on ServerException catch (e) {
+      emitFailure(e.message);
+    } on FieldsValidationException catch (e) {
+      // TODO: emitInvalid with inputs with external error
+      print(e.errors.keys);
+    } catch (e) {
+      // TODO: Emit Failure wil no message
     }
-//      on ServerException catch (e) {
-//       emitFailure(error: e.message);
-//       // TODO: Check error types
-//       // emitFailure(inputs: state.inputs.copyWith(password: state.inputs.password.copyWiExternal...(message))
-// // ) : e.toString());
-//     }
-    on FieldsValidationException catch (e) {
-      e.errors.forEach((field, error) {
-        print(field);
-        // emitFailure();
-        // switch (field) {
-        //   case "national_id":
-        //     emitFailure(
-        //         inputs: state.inputs.copyWith(
-        //             // nationalId: state.inputs.nationalId.copyWithExternalError(error as ExternalError<NationalId>)
-        //             ),
-        //         error: '');
-        //     break;
-        //   case "email":
-        //     emitFailure(
-        //         inputs: state.inputs.copyWith(
-        //             // email: state.inputs.email.copyWithExternalError(error))
-        //             ),
-        //         error: '');
-        //     break;
-        //   case "phone_number":
-        //     emitFailure(
-        //         inputs: state.inputs.copyWith(
-        //             // phoneNumber: state.inputs.phoneNumber.copyWithExternalError(error)
-        //             ),
-        //         error: '');
-        //     break;
-        //   case "full_name":
-        //     emitFailure(
-        //         inputs: state.inputs.copyWith(
-        //             // fullName: state.inputs.fullName.copyWithExternalError(error)
-        //             ),
-        //         error: '');
-        //     break;
-        //   case "password":
-        //     emitFailure(
-        //         inputs: state.inputs.copyWith(
-        //             // password:state.inputs.password.copyWithExternalError(error)
-        //             ),
-        //         error: '');
-        //     break;
-        //   default:
-        // }
-      });
-    } catch (e) {}
+  }
+
+  Future<User> _register(RegisterInputs inputs) async {
+    final service = locator.get<UserService>();
+    final body = RegisterBody(
+      email: inputs.email.value,
+      fullName: inputs.fullName.value,
+      nationalId: inputs.fullName.value,
+      password: inputs.password.value,
+      phoneNumber: inputs.phoneNumber.value,
+    );
+
+    final registeredUser = await service.register(body);
+    return registeredUser;
   }
 }
