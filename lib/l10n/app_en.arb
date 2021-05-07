@@ -7,5 +7,16 @@
   "ticket_quantityTitle": "Ticket(s)",
   "bottomNav_ticket": "Ticket",
   "bottomNav_wallet": "Wallet",
-  "bottomNav_account": "Account"
+  "bottomNav_account": "Account",
+  "register_passwordHint": "Password",
+  "register_phoneNumberHint": "Phone Number",
+  "register_fullNameHint": "Full Name",
+  "register_emailHint": "Email",
+  "register_nationalIdHint": "National Id",
+  "register_agree": "I agree on the ",
+  "register_terms": "Terms of Service ",
+  "register_and": "and ",
+  "register_privacyPolicy": "Privacy Policy",
+  "widgets_showPassword": "Show",
+  "widgets_hidePassword": "Hide"
 }

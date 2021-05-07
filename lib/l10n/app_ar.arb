@@ -7,5 +7,16 @@
   "ticket_quantityTitle" : "تذكرة",
   "bottomNav_ticket": "التذكرة",
   "bottomNav_wallet": "المحفظة",
-  "bottomNav_account": "الحساب"
+  "bottomNav_account": "الحساب",
+  "register_passwordHint": "كلمة السر",
+  "register_phoneNumberHint": "رقم الهاتف",
+  "register_fullNameHint": "الاسم بالكامل",
+  "register_emailHint": "البريد الإلكتروني",
+  "register_nationalIdHint": "الرقم القومى",
+  "register_agree": "أوافق على ",
+  "register_terms": "شروط الخدمة ",
+  "register_and": " و",
+  "register_privacyPolicy": "سياسة الخصوصية",
+  "widgets_showPassword": "اظهار",
+  "widgets_hidePassword": "اخفاء"
 }

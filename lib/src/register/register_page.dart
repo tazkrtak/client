@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,6 +8,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../api/user/models/user.dart';
 import '../../common/cubits/form_cubit/form_cubit.dart' as cubit;
 import '../../l10n/tr.dart';
+import '../../widgets/widgets.dart' as widgets;
 import '../app/cubits/session_cubit.dart';
 import '../register/cubits/register_cubit.dart';
 import 'cubits/register_inputs.dart';
@@ -52,11 +54,44 @@ class RegisterView extends StatelessWidget {
       },
       child: Column(
         children: [
-          _EmailField(),
-          _NationalIdField(),
           _FullNameField(),
+          const SizedBox(height: 10),
           _PhoneNumberField(),
+          const SizedBox(height: 10),
+          _EmailField(),
+          const SizedBox(height: 10),
+          _NationalIdField(),
+          const SizedBox(height: 10),
           _PasswordField(),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Checkbox(value: false, onChanged: (val) {}),
+              RichText(
+                text: TextSpan(
+                  text: tr(context).register_agree,
+                  style: const TextStyle(
+                    color: Colors.black,
+                  ),
+                  children: <TextSpan>[
+                    TextSpan(
+                        text: tr(context).register_terms,
+                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        )),
+                    TextSpan(text: tr(context).register_and),
+                    TextSpan(
+                        text: tr(context).register_privacyPolicy,
+                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        )),
+                  ],
+                ),
+              )
+            ],
+          ),
           _RegisterButton(),
         ],
       ),
@@ -68,21 +103,13 @@ class _EmailField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterCubit, cubit.FormState<RegisterInputs, User>>(
-      // buildWhen: (previous, current) {
-      //   return previous.inputs!.email != current.inputs!.email;
-      // },
       builder: (context, state) {
-        return TextField(
-          onChanged: (email) {
-            print(email);
-            context.read<RegisterCubit>().updateEmail(Email.dirty(email));
-          },
-          // context.read<RegisterCubit>().updateEmail(Email.dirty(email)),
-          decoration: InputDecoration(
-            prefixIcon: const Icon(LineAwesomeIcons.at),
-            // hintText: tr(context).login_emailHint,
-            errorText: state.inputs.email.getErrorText(context),
-          ),
+        return widgets.FilledTextField(
+          prefixIcon: const Icon(LineAwesomeIcons.at),
+          onChanged: (email) =>
+              context.read<RegisterCubit>().updateEmail(Email.dirty(email)),
+          errorText: state.inputs.email.getErrorText(context),
+          hintText: tr(context).register_emailHint,
         );
       },
     );
@@ -93,19 +120,14 @@ class _FullNameField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterCubit, cubit.FormState<RegisterInputs, User>>(
-      buildWhen: (previous, current) {
-        return previous.inputs.fullName != current.inputs.fullName;
-      },
       builder: (context, state) {
-        return TextField(
+        return widgets.FilledTextField(
+          prefixIcon: const Icon(LineAwesomeIcons.user_circle_1),
           onChanged: (fullName) => context
               .read<RegisterCubit>()
               .updateFullName(FullName.dirty(fullName)),
-          decoration: InputDecoration(
-            prefixIcon: const Icon(LineAwesomeIcons.user_circle_1),
-            // hintText: tr(context).login_emailHint,
-            errorText: state.inputs.email.getErrorText(context),
-          ),
+          errorText: state.inputs.fullName.getErrorText(context),
+          hintText: tr(context).register_fullNameHint,
         );
       },
     );
@@ -116,19 +138,15 @@ class _PhoneNumberField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<RegisterCubit, cubit.FormState<RegisterInputs, User>>(
-      buildWhen: (previous, current) {
-        return previous.inputs.phoneNumber != current.inputs.phoneNumber;
-      },
       builder: (context, state) {
-        return TextField(
+        return widgets.FilledTextField(
+          keyboardType: TextInputType.phone,
+          prefixIcon: const Icon(LineAwesomeIcons.phone),
           onChanged: (phoneNumber) => context
               .read<RegisterCubit>()
               .updatePhoneNumber(PhoneNumber.dirty(phoneNumber)),
-          decoration: InputDecoration(
-            prefixIcon: const Icon(LineAwesomeIcons.phone),
-            // hintText: tr(context).login_emailHint,
-            errorText: state.inputs.email.getErrorText(context),
-          ),
+          errorText: state.inputs.phoneNumber.getErrorText(context),
+          hintText: tr(context).register_phoneNumberHint,
         );
       },
     );
@@ -143,15 +161,14 @@ class _NationalIdField extends HookWidget {
         return previous.inputs.nationalId != current.inputs.nationalId;
       },
       builder: (context, state) {
-        return TextField(
+        return widgets.FilledTextField(
+          keyboardType: TextInputType.number,
+          prefixIcon: const Icon(LineAwesomeIcons.identification_card_1),
           onChanged: (nationalId) => context
               .read<RegisterCubit>()
               .updateNationalId(NationalId.dirty(nationalId)),
-          decoration: InputDecoration(
-            prefixIcon: const Icon(LineAwesomeIcons.envelope),
-            // hintText: tr(context).login_emailHint,
-            errorText: state.inputs.email.getErrorText(context),
-          ),
+          errorText: state.inputs.nationalId.getErrorText(context),
+          hintText: tr(context).register_nationalIdHint,
         );
       },
     );
@@ -166,15 +183,14 @@ class _PasswordField extends HookWidget {
         return previous.inputs.password != current.inputs.password;
       },
       builder: (context, state) {
-        return TextField(
-          obscureText: true,
+        return widgets.PasswordTextField(
           onChanged: (password) => context
               .read<RegisterCubit>()
               .updatePassword(Password.dirty(password)),
           decoration: InputDecoration(
-            prefixIcon: const Icon(LineAwesomeIcons.eye),
-            // hintText: tr(context).login_emailHint,
-            errorText: state.inputs.email.getErrorText(context),
+            prefixIcon: const Icon(LineAwesomeIcons.unlock),
+            hintText: tr(context).register_passwordHint,
+            errorText: state.inputs.password.getErrorText(context),
           ),
         );
       },
