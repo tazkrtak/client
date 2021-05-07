@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:validators/validators.dart';
 
+import '../../../l10n/tr.dart';
+
 enum NationalIdError { empty, short, nonDigit }
 
 class NationalId extends FormzInput<String, NationalIdError> {
@@ -24,13 +26,13 @@ class NationalId extends FormzInput<String, NationalIdError> {
     if (pure || valid) return null;
     switch (error) {
       case NationalIdError.empty:
-        return "tr(context).error_required";
+        return tr(context).error_required;
       case NationalIdError.short:
-        return "tr(context).idLengthError";
+        return tr(context).register_nationalIdLengthError;
       case NationalIdError.nonDigit:
-        return "tr(context).14digit";
+        return tr(context).register_nationalIdFormatError;
       default:
-        return "tr(context).register_idError";
+        return tr(context).register_nationalIdError;
     }
   }
 }

@@ -52,48 +52,65 @@ class RegisterView extends StatelessWidget {
           return;
         }
       },
-      child: Column(
-        children: [
-          _FullNameField(),
-          const SizedBox(height: 10),
-          _PhoneNumberField(),
-          const SizedBox(height: 10),
-          _EmailField(),
-          const SizedBox(height: 10),
-          _NationalIdField(),
-          const SizedBox(height: 10),
-          _PasswordField(),
-          const SizedBox(height: 10),
-          Row(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Checkbox(value: false, onChanged: (val) {}),
-              RichText(
-                text: TextSpan(
-                  text: tr(context).register_agree,
-                  style: const TextStyle(
-                    color: Colors.black,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: tr(context).register_terms,
-                        recognizer: TapGestureRecognizer()..onTap = () {},
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        )),
-                    TextSpan(text: tr(context).register_and),
-                    TextSpan(
-                        text: tr(context).register_privacyPolicy,
-                        recognizer: TapGestureRecognizer()..onTap = () {},
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                        )),
-                  ],
-                ),
-              )
+              const SizedBox(height: 30),
+              CircleAvatar(
+                backgroundColor: Colors.transparent,
+                radius: 65,
+                child: Image.asset('assets/logo.png'),
+              ),
+              const SizedBox(height: 64),
+              _FullNameField(),
+              const SizedBox(height: 10),
+              _PhoneNumberField(),
+              const SizedBox(height: 10),
+              _EmailField(),
+              const SizedBox(height: 10),
+              _NationalIdField(),
+              const SizedBox(height: 10),
+              _PasswordField(),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  _AgreeOnTermsCheckBox(),
+                  Flexible(
+                    child: RichText(
+                      text: TextSpan(
+                        text: '${tr(context).register_agree} ',
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: '${tr(context).register_terms} ',
+                              recognizer: TapGestureRecognizer()..onTap = () {},
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              )),
+                          TextSpan(text: '${tr(context).register_and} '),
+                          TextSpan(
+                              text: tr(context).register_privacyPolicy,
+                              recognizer: TapGestureRecognizer()..onTap = () {},
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                              )),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 32),
+              _RegisterButton(),
             ],
           ),
-          _RegisterButton(),
-        ],
+        ),
       ),
     );
   }
@@ -212,6 +229,18 @@ class _RegisterButton extends StatelessWidget {
               : Text(tr(context).register_title),
         );
       },
+    );
+  }
+}
+
+class _AgreeOnTermsCheckBox extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    final checked = useState<bool>(false);
+    // TODO: Pass checkbox value to submit form
+    return Checkbox(
+      value: checked.value,
+      onChanged: (value) async => checked.value = value!,
     );
   }
 }

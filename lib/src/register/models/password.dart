@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:validators/validators.dart';
 
+import '../../../l10n/tr.dart';
+
 enum PasswordError {
   empty,
   short,
@@ -36,19 +38,19 @@ class Password extends FormzInput<String, PasswordError> {
 
     switch (error) {
       case PasswordError.empty:
-        return "tr(context).error_required";
+        return tr(context).error_required;
       case PasswordError.short:
-        return "tr(context).login_passwordLengthError";
+        return tr(context).register_passwordLengthError;
       case PasswordError.missingLowerCaseLetter:
-        return "tr(context).login_passwordLowercaseError";
+        return tr(context).register_passwordLowercaseError;
       case PasswordError.missingUpperCaseLetter:
-        return "tr(context).login_passwordUppercaseError";
+        return tr(context).register_passwordUppercaseError;
       case PasswordError.missingDigit:
-        return "tr(context).login_passwordDigitError";
+        return tr(context).register_passwordDigitError;
       case PasswordError.missingSymbol:
-        return "tr(context).login_passwordSymbolError";
+        return tr(context).register_passwordSymbolError;
       default:
-        return "tr(context).login_passwordError";
+        return tr(context).register_passwordError;
     }
   }
 }

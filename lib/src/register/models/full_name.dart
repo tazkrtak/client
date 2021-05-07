@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:formz/formz.dart';
 import 'package:validators/validators.dart';
 
+import '../../../l10n/tr.dart';
+
 // import '../../../common/forms/external_formz_input.dart';
 
 enum FullNameError { empty, short }
@@ -26,11 +28,11 @@ class FullName extends FormzInput<String, FullNameError> {
 
     switch (error) {
       case FullNameError.empty:
-        return "tr(context).error_required";
+        return tr(context).error_required;
       case FullNameError.short:
-        return "tr(context).register_passwordLengthError";
+        return tr(context).register_fullNameLengthError;
       default:
-        return "tr(context).register_passwordError";
+        return tr(context).register_fullNameError;
     }
   }
 }
