@@ -7,5 +7,6 @@
   "ticket_quantityTitle" : "تذكرة",
   "bottomNav_ticket": "التذكرة",
   "bottomNav_wallet": "المحفظة",
-  "bottomNav_account": "الحساب"
+  "bottomNav_account": "الحساب",
+  "ticket_totalAmount": "الاجمالي"
 }
