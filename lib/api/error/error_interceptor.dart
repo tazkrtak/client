@@ -9,7 +9,7 @@ class ErrorInterceptor extends Interceptor {
     if (err.type == DioErrorType.response) {
       final bodyMap = err.response!.data as Map<String, dynamic>;
       final body = ErrorResponse.fromJson(bodyMap);
-      if (body.validationErrors == null) {
+      if (body.validationErrors != null) {
         throw FieldsValidationException(body.validationErrors!);
       } else {
         throw ServerException(

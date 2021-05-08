@@ -1,7 +1,7 @@
+import 'package:dio/dio.dart';
+
 import '../../../api/api.dart';
-
 import '../../../api/error/exceptions/exceptions.dart';
-
 import '../../../api/user/models/user.dart';
 import '../../../api/user/user_service.dart';
 import '../../../common/cubits/form_cubit/form_cubit.dart';
@@ -50,27 +50,35 @@ class RegisterCubit extends FormCubit<RegisterInputs, User> {
     try {
       final registeredUser = await _register(state.inputs);
       emitSuccess(registeredUser);
-    } on ServerException catch (e) {
-      emitFailure(e.message);
-    } on FieldsValidationException catch (e) {
-      // TODO: emitInvalid with inputs with external error
-      print(e.errors.keys);
     } catch (e) {
-      // TODO: Emit Failure wil no message
+      if (e is DioError) {
+        if (e.error is FieldsValidationException) {
+          final inputsState = state.inputs.copyWith(
+            email: state.inputs.email
+                .copyWithExternalError(e.error.errors['email'] as String?),
+            //TODO: fullName: state.inputs.fullName.copyWithExternalError(e.error.errors['email'] as String?), ..., etc.
+          );
+          emitInvalid(inputsState);
+        } else if (e.error is ServerException) {
+          emitFailure(e.error.message as String);
+        }
+      } else {
+        emitFailure("Something wrong happened!");
+      }
     }
   }
+}
 
-  Future<User> _register(RegisterInputs inputs) async {
-    final service = locator.get<UserService>();
-    final body = RegisterBody(
-      email: inputs.email.value,
-      fullName: inputs.fullName.value,
-      nationalId: inputs.fullName.value,
-      password: inputs.password.value,
-      phoneNumber: inputs.phoneNumber.value,
-    );
+Future<User> _register(RegisterInputs inputs) async {
+  final service = locator.get<UserService>();
+  final body = RegisterBody(
+    email: inputs.email.value,
+    fullName: inputs.fullName.value,
+    nationalId: inputs.fullName.value,
+    password: inputs.password.value,
+    phoneNumber: inputs.phoneNumber.value,
+  );
 
-    final registeredUser = await service.register(body);
-    return registeredUser;
-  }
+  final registeredUser = service.register(body);
+  return registeredUser;
 }
