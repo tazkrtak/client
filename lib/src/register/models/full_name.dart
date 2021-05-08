@@ -4,7 +4,7 @@ import 'package:validators/validators.dart';
 import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
-enum FullNameError { empty, short, server }
+enum FullNameError { empty, short }
 
 class FullName extends ExternalFormzInput<String, FullNameError> {
   const FullName.pure() : super.pure('');
@@ -16,7 +16,6 @@ class FullName extends ExternalFormzInput<String, FullNameError> {
   FullNameError? validator(String value) {
     if (value.isEmpty == true) return FullNameError.empty;
     if (!isLength(value, 4)) return FullNameError.short;
-    if (externalError != null) return FullNameError.server;
 
     return null;
   }
@@ -28,14 +27,13 @@ class FullName extends ExternalFormzInput<String, FullNameError> {
 
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
+    if (externalError != null) return externalError;
 
     switch (error) {
       case FullNameError.empty:
         return tr(context).error_required;
       case FullNameError.short:
         return tr(context).register_fullNameLengthError;
-      case FullNameError.server:
-        return externalError;
       default:
         return tr(context).register_fullNameError;
     }

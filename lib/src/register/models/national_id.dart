@@ -4,7 +4,7 @@ import 'package:validators/validators.dart';
 import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
-enum NationalIdError { empty, short, nonDigit, server }
+enum NationalIdError { empty, short, nonDigit }
 
 class NationalId extends ExternalFormzInput<String, NationalIdError> {
   const NationalId.pure() : super.pure('');
@@ -17,7 +17,6 @@ class NationalId extends ExternalFormzInput<String, NationalIdError> {
     if (value.isEmpty == true) return NationalIdError.empty;
     if (!isLength(value, 14)) return NationalIdError.short;
     if (!matches(value, r'\d{14}')) return NationalIdError.nonDigit;
-    if (externalError != null) return NationalIdError.server;
 
     return null;
   }
@@ -31,6 +30,8 @@ class NationalId extends ExternalFormzInput<String, NationalIdError> {
 
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
+    if (externalError != null) return externalError;
+
     switch (error) {
       case NationalIdError.empty:
         return tr(context).error_required;
@@ -38,8 +39,6 @@ class NationalId extends ExternalFormzInput<String, NationalIdError> {
         return tr(context).register_nationalIdLengthError;
       case NationalIdError.nonDigit:
         return tr(context).register_nationalIdFormatError;
-      case NationalIdError.server:
-        return externalError;
       default:
         return tr(context).register_nationalIdError;
     }

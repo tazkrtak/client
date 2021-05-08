@@ -11,7 +11,6 @@ enum PasswordError {
   missingUpperCaseLetter,
   missingDigit,
   missingSymbol,
-  server
 }
 
 class Password extends ExternalFormzInput<String, PasswordError> {
@@ -28,7 +27,6 @@ class Password extends ExternalFormzInput<String, PasswordError> {
     if (!matches(value, '[A-Z]')) return PasswordError.missingUpperCaseLetter;
     if (!matches(value, r'\d')) return PasswordError.missingDigit;
     if (!matches(value, r'[@$!%#?&]')) return PasswordError.missingSymbol;
-    if (externalError != null) return PasswordError.server;
 
     return null;
   }
@@ -40,7 +38,8 @@ class Password extends ExternalFormzInput<String, PasswordError> {
 
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
-
+    if (externalError != null) return externalError;
+    
     switch (error) {
       case PasswordError.empty:
         return tr(context).error_required;
@@ -54,8 +53,6 @@ class Password extends ExternalFormzInput<String, PasswordError> {
         return tr(context).register_passwordDigitError;
       case PasswordError.missingSymbol:
         return tr(context).register_passwordSymbolError;
-      case PasswordError.server:
-        return externalError;
       default:
         return tr(context).register_passwordError;
     }

@@ -4,7 +4,7 @@ import 'package:validators/validators.dart';
 import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
-enum EmailError { empty, format, server }
+enum EmailError { empty, format }
 
 class Email extends ExternalFormzInput<String, EmailError> {
   const Email.pure() : super.pure('');
@@ -16,7 +16,6 @@ class Email extends ExternalFormzInput<String, EmailError> {
   EmailError? validator(String value) {
     if (value.isEmpty == true) return EmailError.empty;
     if (!isEmail(value)) return EmailError.format;
-    if (externalError != null) return EmailError.server;
 
     return null;
   }
@@ -28,13 +27,13 @@ class Email extends ExternalFormzInput<String, EmailError> {
 
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
+    if (externalError != null) return externalError;
+
     switch (error) {
       case EmailError.empty:
         return tr(context).error_required;
       case EmailError.format:
         return tr(context).register_emailFormatError;
-      case EmailError.server:
-        return externalError;
       default:
         return tr(context).register_emailError;
     }
