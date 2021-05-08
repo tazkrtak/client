@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:formz/formz.dart';
 import 'package:validators/validators.dart';
 
+import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
 enum PasswordError {
@@ -11,12 +11,14 @@ enum PasswordError {
   missingUpperCaseLetter,
   missingDigit,
   missingSymbol,
+  server
 }
 
-class Password extends FormzInput<String, PasswordError> {
+class Password extends ExternalFormzInput<String, PasswordError> {
   const Password.pure() : super.pure('');
 
-  const Password.dirty(String value) : super.dirty(value);
+  const Password.dirty(String value, [String? externalError])
+      : super.dirty(value, externalError);
 
   @override
   PasswordError? validator(String value) {
@@ -26,12 +28,15 @@ class Password extends FormzInput<String, PasswordError> {
     if (!matches(value, '[A-Z]')) return PasswordError.missingUpperCaseLetter;
     if (!matches(value, r'\d')) return PasswordError.missingDigit;
     if (!matches(value, r'[@$!%#?&]')) return PasswordError.missingSymbol;
+    if (externalError != null) return PasswordError.server;
+
     return null;
   }
 
-  // Password copyWithExternalError(ExternalError<PasswordError> error) {
-  //   return error.isValid ? Password.dirty(value, error) : this;
-  // }
+  @override
+  Password copyWithExternalError(String? externalError) {
+    return externalError != null ? Password.dirty(value, externalError) : this;
+  }
 
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
@@ -49,6 +54,8 @@ class Password extends FormzInput<String, PasswordError> {
         return tr(context).register_passwordDigitError;
       case PasswordError.missingSymbol:
         return tr(context).register_passwordSymbolError;
+      case PasswordError.server:
+        return externalError;
       default:
         return tr(context).register_passwordError;
     }

@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:formz/formz.dart';
 import 'package:validators/validators.dart';
 
+import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
-// import '../../../common/forms/external_formz_input.dart';
+enum FullNameError { empty, short, server }
 
-enum FullNameError { empty, short }
-
-class FullName extends FormzInput<String, FullNameError> {
+class FullName extends ExternalFormzInput<String, FullNameError> {
   const FullName.pure() : super.pure('');
 
-  const FullName.dirty(String value) : super.dirty(value);
+  const FullName.dirty(String value, [String? externalError])
+      : super.dirty(value, externalError);
 
   @override
   FullNameError? validator(String value) {
     if (value.isEmpty == true) return FullNameError.empty;
     if (!isLength(value, 4)) return FullNameError.short;
+    if (externalError != null) return FullNameError.server;
+
+    return null;
   }
 
-  // FullName copyWithExternalError(ExternalError<FullNameError> error) {
-  //   return error.isValid ? FullName.dirty(value, error) : this;
-  // }
+  @override
+  FullName copyWithExternalError(String? externalError) {
+    return externalError != null ? FullName.dirty(value, externalError) : this;
+  }
 
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
@@ -31,6 +34,8 @@ class FullName extends FormzInput<String, FullNameError> {
         return tr(context).error_required;
       case FullNameError.short:
         return tr(context).register_fullNameLengthError;
+      case FullNameError.server:
+        return externalError;
       default:
         return tr(context).register_fullNameError;
     }

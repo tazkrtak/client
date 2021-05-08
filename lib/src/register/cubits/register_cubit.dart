@@ -56,14 +56,21 @@ class RegisterCubit extends FormCubit<RegisterInputs, User> {
           final inputsState = state.inputs.copyWith(
             email: state.inputs.email
                 .copyWithExternalError(e.error.errors['email'] as String?),
-            //TODO: fullName: state.inputs.fullName.copyWithExternalError(e.error.errors['email'] as String?), ..., etc.
+            fullName: state.inputs.fullName
+                .copyWithExternalError(e.error.errors['full_name'] as String?),
+            nationalId: state.inputs.nationalId.copyWithExternalError(
+                e.error.errors['national_id'] as String?),
+            password: state.inputs.password
+                .copyWithExternalError(e.error.errors['password'] as String?),
+            phoneNumber: state.inputs.phoneNumber.copyWithExternalError(
+                e.error.errors['phoneNumber'] as String?),
           );
           emitInvalid(inputsState);
         } else if (e.error is ServerException) {
           emitFailure(e.error.message as String);
         }
       } else {
-        emitFailure("Something wrong happened!");
+        emitFailure('Something wrong happened!');
       }
     }
   }
