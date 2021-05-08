@@ -5,7 +5,7 @@ class _AppColors {
   static const accent = Color(0xFF3AC371);
   static const error = Color(0xFFFF0033);
   static const background = Color(0xFFFFFFFF);
-  static const inputFill = Color(0xFFF5F6F8);
+  static const inputFill = Color(0xFFEBEDEE);
 }
 
 class AppTheme {
@@ -35,18 +35,23 @@ class AppTheme {
         ),
 
         // Text Field
-        inputDecorationTheme: const InputDecorationTheme(
+        inputDecorationTheme: InputDecorationTheme(
           filled: true,
+          alignLabelWithHint: true,
           fillColor: _AppColors.inputFill,
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          contentPadding: EdgeInsets.all(8),
-          hintStyle: TextStyle(
+          contentPadding: const EdgeInsets.all(8),
+          hintStyle: const TextStyle(
             color: Colors.black38,
           ),
-          errorStyle: TextStyle(
+          errorStyle: const TextStyle(
             color: _AppColors.error,
           ),
-          border: InputBorder.none,
+          // border: InputBorder.none,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(16),
+            borderSide: BorderSide.none,
+          ),
         ),
 
         textSelectionTheme: const TextSelectionThemeData(

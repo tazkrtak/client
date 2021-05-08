@@ -16,6 +16,7 @@ class PasswordTextField extends HookWidget {
   Widget build(BuildContext context) {
     final obscureState = useState<bool>(true);
     return TextField(
+      textAlignVertical: TextAlignVertical.center,
       obscureText: obscureState.value,
       onChanged: onChanged,
       decoration: decoration.copyWith(

@@ -1,22 +1,22 @@
-part of 'form_cubit.dart';
+part of 'base_form_cubit.dart';
 
-class FormState<TInputs extends FormzInputs, TResult> extends Equatable {
+class BaseFormState<TInputs extends FormzInputs, TResult> extends Equatable {
   final TInputs inputs;
   final FormResult<TResult>? result;
   final FormzStatus status;
 
-  const FormState({
+  const BaseFormState({
     required this.inputs,
     required this.status,
     this.result,
   });
 
-  FormState<TInputs, TResult> copyWith({
+  BaseFormState<TInputs, TResult> copyWith({
     TInputs? inputs,
     FormResult<TResult>? result,
     FormzStatus? status,
   }) {
-    return FormState(
+    return BaseFormState(
       inputs: inputs ?? this.inputs,
       status: status ?? (inputs != null? inputs.validate() : FormzStatus.invalid),
       // do not copy old results because when the state changes,
