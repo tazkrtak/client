@@ -90,7 +90,7 @@ Future<User> _register(RegisterInputs inputs) async {
   final body = RegisterBody(
     email: inputs.email.value,
     fullName: inputs.fullName.value,
-    nationalId: inputs.fullName.value,
+    nationalId: inputs.nationalId.value,
     password: inputs.password.value,
     phoneNumber: inputs.phoneNumber.value,
   );
