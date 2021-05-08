@@ -6,14 +6,14 @@ import '../../../l10n/tr.dart';
 enum AgreeOnTermsAndConditionsError { notChecked }
 
 class AgreeOnTermsAndConditions
-    extends FormzInput<String, AgreeOnTermsAndConditionsError> {
-  const AgreeOnTermsAndConditions.pure() : super.pure('');
+    extends FormzInput<bool, AgreeOnTermsAndConditionsError> {
+  const AgreeOnTermsAndConditions.pure() : super.pure(false);
 
-  const AgreeOnTermsAndConditions.dirty(String value) : super.dirty(value);
+  const AgreeOnTermsAndConditions.dirty(bool value) : super.dirty(value);
 
   @override
-  AgreeOnTermsAndConditionsError? validator(String value) {
-    if (value == '') return AgreeOnTermsAndConditionsError.notChecked;
+  AgreeOnTermsAndConditionsError? validator(bool value) {
+    return !value ? AgreeOnTermsAndConditionsError.notChecked : null;
   }
 
   String? getErrorText(BuildContext context) {

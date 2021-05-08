@@ -1,3 +1,4 @@
+export 'checkbox_field.dart';
 export 'circular_icon_button.dart';
 export 'number_picker.dart';
 export 'password_textfield.dart';

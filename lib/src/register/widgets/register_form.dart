@@ -53,7 +53,7 @@ class RegisterForm extends StatelessWidget {
             _NationalIdField(),
             const SizedBox(height: 8),
             _PasswordField(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             _AgreeOnTermsCheckBox(),
             const SizedBox(height: 32),
             _RegisterButton(),
@@ -178,15 +178,19 @@ class _PasswordField extends HookWidget {
 class _AgreeOnTermsCheckBox extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    final checked = useState<bool>(false);
-    // TODO: Pass checkbox value to submit form
-    return Row(
-      children: [
-        Checkbox(
-          value: checked.value,
-          onChanged: (value) async => checked.value = value!,
-        ),
-        Flexible(
+    return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
+      buildWhen: (previous, current) =>
+          previous.inputs.agreeOnTermsAndConditions !=
+          current.inputs.agreeOnTermsAndConditions,
+      builder: (context, state) {
+        return CheckboxField(
+          value: state.inputs.agreeOnTermsAndConditions.value,
+          onChanged: (value) =>
+              context.read<RegisterCubit>().updateAgreeOnTermsAndConditions(
+                    AgreeOnTermsAndConditions.dirty(value!),
+                  ),
+          errorText:
+              state.inputs.agreeOnTermsAndConditions.getErrorText(context),
           child: RichText(
             text: TextSpan(
               text: '${tr(context).register_agree} ',
@@ -195,23 +199,25 @@ class _AgreeOnTermsCheckBox extends HookWidget {
               ),
               children: <TextSpan>[
                 TextSpan(
-                    text: '${tr(context).register_terms} ',
-                    recognizer: TapGestureRecognizer()..onTap = () {},
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    )),
+                  text: '${tr(context).register_terms} ',
+                  recognizer: TapGestureRecognizer()..onTap = () {},
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
                 TextSpan(text: '${tr(context).register_and} '),
                 TextSpan(
-                    text: tr(context).register_privacyPolicy,
-                    recognizer: TapGestureRecognizer()..onTap = () {},
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    )),
+                  text: tr(context).register_privacyPolicy,
+                  recognizer: TapGestureRecognizer()..onTap = () {},
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
               ],
             ),
           ),
-        )
-      ],
+        );
+      },
     );
   }
 }
