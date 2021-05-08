@@ -22,6 +22,7 @@ class Ticket extends Equatable {
   @JsonKey()
   final double price;
 
+  double get totalAmount => quantity * price;
   String get value => json.encode(toJson());
 
   String get encodedValue => base64Encode(utf8.encode(value));

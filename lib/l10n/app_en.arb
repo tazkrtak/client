@@ -7,5 +7,6 @@
   "ticket_quantityTitle": "Ticket(s)",
   "bottomNav_ticket": "Ticket",
   "bottomNav_wallet": "Wallet",
-  "bottomNav_account": "Account"
+  "bottomNav_account": "Account",
+  "ticket_totalAmount": "Total Amount"
 }
