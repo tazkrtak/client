@@ -12,11 +12,12 @@ class ApiClient {
     final options = BaseOptions(baseUrl: baseUrl);
     final client = Dio(options);
 
-    client.interceptors.add(errorObserver);
-
+    // Logging interceptor must be first to log server error response
     if (observer != null) {
       client.interceptors.add(observer!);
     }
+
+    client.interceptors.add(errorObserver);
 
     return client;
   }
