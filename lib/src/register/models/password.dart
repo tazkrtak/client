@@ -39,7 +39,7 @@ class Password extends ExternalFormzInput<String, PasswordError> {
   String? getErrorText(BuildContext context) {
     if (pure || valid) return null;
     if (externalError != null) return externalError;
-    
+
     switch (error) {
       case PasswordError.empty:
         return tr(context).error_required;

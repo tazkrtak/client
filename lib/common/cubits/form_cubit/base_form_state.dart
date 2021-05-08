@@ -18,7 +18,8 @@ class BaseFormState<TInputs extends FormzInputs, TResult> extends Equatable {
   }) {
     return BaseFormState(
       inputs: inputs ?? this.inputs,
-      status: status ?? (inputs != null? inputs.validate() : FormzStatus.invalid),
+      status:
+          status ?? (inputs != null ? inputs.validate() : FormzStatus.invalid),
       // do not copy old results because when the state changes,
       // they need to be recomputed.
       result: result ?? FormResult<TResult>.unknown(),
