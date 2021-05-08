@@ -237,10 +237,21 @@ class _AgreeOnTermsCheckBox extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final checked = useState<bool>(false);
-    // TODO: Pass checkbox value to submit form
-    return Checkbox(
-      value: checked.value,
-      onChanged: (value) async => checked.value = value!,
+    return BlocBuilder<RegisterCubit, cubit.FormState<RegisterInputs, User>>(
+      buildWhen: (previous, current) {
+        return previous.inputs.agreeOnTermsAndConditions !=
+            current.inputs.agreeOnTermsAndConditions;
+      },
+      builder: (context, state) {
+        return Checkbox(
+            value: checked.value,
+            onChanged: (value) {
+              checked.value = value!;
+              context.read<RegisterCubit>().updateAgreeOnTermsAndConditions(
+                  AgreeOnTermsAndConditions.dirty(
+                      value == false ? '' : 'Checked'));
+            });
+      },
     );
   }
 }

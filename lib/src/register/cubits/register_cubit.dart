@@ -6,6 +6,7 @@ import '../../../api/user/models/user.dart';
 import '../../../api/user/user_service.dart';
 import '../../../common/cubits/form_cubit/form_cubit.dart';
 import '../../../services/locator.dart';
+import '../models/agree_on_terms_and_conditions.dart';
 import '../models/models.dart';
 import 'register_inputs.dart';
 
@@ -39,6 +40,14 @@ class RegisterCubit extends FormCubit<RegisterInputs, User> {
   void updatePassword(Password password) => updateInputs(
         state.inputs.copyWith(
           password: password,
+        ),
+      );
+
+  void updateAgreeOnTermsAndConditions(
+          AgreeOnTermsAndConditions agreeOnTermsAndConditions) =>
+      updateInputs(
+        state.inputs.copyWith(
+          agreeOnTermsAndConditions: agreeOnTermsAndConditions,
         ),
       );
 

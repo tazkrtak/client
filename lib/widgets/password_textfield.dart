@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../l10n/tr.dart';
+import '../l10n/tr.dart';
 
 class PasswordTextField extends HookWidget {
   final ValueChanged<String> onChanged;
