@@ -7,6 +7,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../api/user/models/models.dart';
 import '../../../common/cubits/form_cubit/form_cubit.dart';
+import '../../../common/hooks/debounce.dart';
 import '../../../l10n/tr.dart';
 import '../../../widgets/widgets.dart';
 import '../cubits/register_cubit.dart';
@@ -64,38 +65,21 @@ class RegisterForm extends StatelessWidget {
   }
 }
 
-class _EmailField extends HookWidget {
-  @override
-  Widget build(BuildContext context) {
-    return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
-      buildWhen: (previous, current) =>
-          previous.inputs.email != current.inputs.email,
-      builder: (context, state) {
-        return TextField(
-          onChanged: (email) =>
-              context.read<RegisterCubit>().updateEmail(Email.dirty(email)),
-          decoration: InputDecoration(
-            prefixIcon: const Icon(LineAwesomeIcons.at),
-            errorText: state.inputs.email.getErrorText(context),
-            hintText: tr(context).register_emailHint,
-          ),
-        );
-      },
-    );
-  }
-}
-
 class _FullNameField extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final debounce = useDebounce();
+
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
           previous.inputs.fullName != current.inputs.fullName,
       builder: (context, state) {
         return TextField(
-          onChanged: (fullName) => context
-              .read<RegisterCubit>()
-              .updateFullName(FullName.dirty(fullName)),
+          onChanged: (fullName) => debounce(
+            () => context.read<RegisterCubit>().updateFullName(
+                  FullName.dirty(fullName),
+                ),
+          ),
           decoration: InputDecoration(
             prefixIcon: const Icon(LineAwesomeIcons.user_circle_1),
             errorText: state.inputs.fullName.getErrorText(context),
@@ -110,15 +94,19 @@ class _FullNameField extends HookWidget {
 class _PhoneNumberField extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final debounce = useDebounce();
+
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
           previous.inputs.phoneNumber != current.inputs.phoneNumber,
       builder: (context, state) {
         return TextField(
           keyboardType: TextInputType.phone,
-          onChanged: (phoneNumber) => context
-              .read<RegisterCubit>()
-              .updatePhoneNumber(PhoneNumber.dirty(phoneNumber)),
+          onChanged: (phoneNumber) => debounce(
+            () => context.read<RegisterCubit>().updatePhoneNumber(
+                  PhoneNumber.dirty(phoneNumber),
+                ),
+          ),
           decoration: InputDecoration(
             prefixIcon: const Icon(LineAwesomeIcons.phone),
             errorText: state.inputs.phoneNumber.getErrorText(context),
@@ -130,17 +118,47 @@ class _PhoneNumberField extends HookWidget {
   }
 }
 
+class _EmailField extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    final debounce = useDebounce();
+
+    return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
+      buildWhen: (previous, current) =>
+          previous.inputs.email != current.inputs.email,
+      builder: (context, state) {
+        return TextField(
+          onChanged: (email) => debounce(
+            () => context.read<RegisterCubit>().updateEmail(
+                  Email.dirty(email),
+                ),
+          ),
+          decoration: InputDecoration(
+            prefixIcon: const Icon(LineAwesomeIcons.at),
+            errorText: state.inputs.email.getErrorText(context),
+            hintText: tr(context).register_emailHint,
+          ),
+        );
+      },
+    );
+  }
+}
+
 class _NationalIdField extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final debounce = useDebounce();
+
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
           previous.inputs.nationalId != current.inputs.nationalId,
       builder: (context, state) {
         return TextField(
-          onChanged: (nationalId) => context
-              .read<RegisterCubit>()
-              .updateNationalId(NationalId.dirty(nationalId)),
+          onChanged: (nationalId) => debounce(
+            () => context.read<RegisterCubit>().updateNationalId(
+                  NationalId.dirty(nationalId),
+                ),
+          ),
           decoration: InputDecoration(
             prefixIcon: const Icon(LineAwesomeIcons.identification_card_1),
             errorText: state.inputs.nationalId.getErrorText(context),
@@ -156,14 +174,18 @@ class _NationalIdField extends HookWidget {
 class _PasswordField extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final debounce = useDebounce();
+
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
           previous.inputs.password != current.inputs.password,
       builder: (context, state) {
         return PasswordTextField(
-          onChanged: (password) => context
-              .read<RegisterCubit>()
-              .updatePassword(Password.dirty(password)),
+          onChanged: (password) => debounce(
+            () => context.read<RegisterCubit>().updatePassword(
+                  Password.dirty(password),
+                ),
+          ),
           decoration: InputDecoration(
             prefixIcon: const Icon(LineAwesomeIcons.unlock),
             hintText: tr(context).register_passwordHint,
@@ -175,7 +197,7 @@ class _PasswordField extends HookWidget {
   }
 }
 
-class _AgreeOnTermsCheckBox extends HookWidget {
+class _AgreeOnTermsCheckBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
