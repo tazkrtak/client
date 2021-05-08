@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import '../l10n/tr.dart';
+import '../../../l10n/tr.dart';
 
-class TotalAmount extends StatelessWidget {
-  final double totalAmount;
-  const TotalAmount({required this.totalAmount});
+class TotalAmountCard extends StatelessWidget {
+  final double value;
+  const TotalAmountCard({required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TotalAmount extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            '${_format(totalAmount)}\t${tr(context).ticket_priceTitle}',
+            '${_format(value)} ${tr(context).ticket_priceTitle}',
             style: TextStyle(
               color: Theme.of(context).highlightColor,
               fontSize: 24,

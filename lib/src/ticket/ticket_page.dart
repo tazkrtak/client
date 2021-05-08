@@ -5,11 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../l10n/tr.dart';
-import '../../widgets/total_amount.dart';
 import '../../widgets/widgets.dart';
 import '../app/cubits/session_cubit.dart';
 import 'cubits/ticket_cubit.dart';
 import 'cubits/totp_cubit.dart';
+import 'widgets/total_amount_card.dart';
 
 class TicketPage extends StatelessWidget {
   @override
@@ -90,8 +90,8 @@ class _TicketView extends StatelessWidget {
           const SizedBox(height: 48),
           BlocBuilder<TicketCubit, TicketState>(
             builder: (context, state) {
-              return TotalAmount(
-                totalAmount: state.ticket.totalAmount,
+              return TotalAmountCard(
+                value: state.ticket.totalAmount,
               );
             },
           ),
