@@ -40,19 +40,19 @@ class LoginForm extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 30),
+            const SizedBox(height: 64),
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 65,
               child: Image.asset('assets/logo.png'),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 72),
             _NationalIdField(),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             _PasswordField(),
-            const SizedBox(height: 32),
+            const SizedBox(height: 88),
             _LoginButton(),
-            const SizedBox(height: 32),
+            const SizedBox(height: 64),
             _RegisterText(),
           ],
         ),
@@ -134,12 +134,12 @@ class _LoginButton extends StatelessWidget {
   }
 }
 
-class _RegisterText extends StatelessWidget {
+class _RegisterText extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return RichText(
       text: TextSpan(
-        text: tr(context).login_dontHaveAccount,
+        text: '${tr(context).login_dontHaveAccount} ',
         style: const TextStyle(
           color: Colors.black,
         ),
@@ -147,7 +147,9 @@ class _RegisterText extends StatelessWidget {
           TextSpan(
             text: tr(context).register_title,
             recognizer: TapGestureRecognizer()
-              ..onTap = () => RegisterPage.route(),
+              ..onTap = () => Navigator.of(context).push(
+                    RegisterPage.route(),
+                  ),
             style: TextStyle(
               color: Theme.of(context).primaryColor,
             ),
