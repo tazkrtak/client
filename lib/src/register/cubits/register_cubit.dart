@@ -62,7 +62,7 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
             e.errors['full_name'],
           ),
           phoneNumber: state.inputs.phoneNumber.copyWithExternalError(
-            e.errors['phoneNumber'],
+            e.errors['phone_number'],
           ),
           email: state.inputs.email.copyWithExternalError(
             e.errors['email'],

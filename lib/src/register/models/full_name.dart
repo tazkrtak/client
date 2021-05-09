@@ -14,7 +14,7 @@ class FullName extends ExternalFormzInput<String, FullNameError> {
 
   @override
   FullNameError? validator(String value) {
-    if (value.isEmpty == true) return FullNameError.empty;
+    if (value.isEmpty) return FullNameError.empty;
     if (!isLength(value, 4)) return FullNameError.short;
 
     return null;

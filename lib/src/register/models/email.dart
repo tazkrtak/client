@@ -14,7 +14,7 @@ class Email extends ExternalFormzInput<String, EmailError> {
 
   @override
   EmailError? validator(String value) {
-    if (value.isEmpty == true) return EmailError.empty;
+    if (value.isEmpty) return EmailError.empty;
     if (!isEmail(value)) return EmailError.format;
 
     return null;

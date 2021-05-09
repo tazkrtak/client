@@ -4,7 +4,7 @@ import 'package:validators/validators.dart';
 import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
-enum NationalIdError { empty, short, nonDigit }
+enum NationalIdError { empty, short }
 
 class NationalId extends ExternalFormzInput<String, NationalIdError> {
   // Egyptian national id format
@@ -19,9 +19,8 @@ class NationalId extends ExternalFormzInput<String, NationalIdError> {
 
   @override
   NationalIdError? validator(String value) {
-    if (value.isEmpty == true) return NationalIdError.empty;
+    if (value.isEmpty) return NationalIdError.empty;
     if (!isLength(value, 14)) return NationalIdError.short;
-    if (!matches(value, r'\d{14}')) return NationalIdError.nonDigit;
 
     return null;
   }
@@ -42,8 +41,6 @@ class NationalId extends ExternalFormzInput<String, NationalIdError> {
         return tr(context).error_required;
       case NationalIdError.short:
         return tr(context).register_nationalIdLengthError;
-      case NationalIdError.nonDigit:
-        return tr(context).register_nationalIdFormatError;
       default:
         return tr(context).register_nationalIdError;
     }

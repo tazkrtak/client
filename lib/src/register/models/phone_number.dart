@@ -4,7 +4,7 @@ import 'package:validators/validators.dart';
 import '../../../common/forms/external_formz_input.dart';
 import '../../../l10n/tr.dart';
 
-enum PhoneNumberError { empty, short, invalid }
+enum PhoneNumberError { empty, invalid }
 
 class PhoneNumber extends ExternalFormzInput<String, PhoneNumberError> {
   // Egyptian phone number format
@@ -18,9 +18,9 @@ class PhoneNumber extends ExternalFormzInput<String, PhoneNumberError> {
 
   @override
   PhoneNumberError? validator(String value) {
-    if (value.isEmpty == true) return PhoneNumberError.empty;
-    if (!isLength(value, 13)) return PhoneNumberError.short;
-    if (!matches(value, r'\+2[0-9]{11}')) return PhoneNumberError.invalid;
+    final phoneVal = value.replaceAll(' ', '');
+    if (phoneVal.isEmpty) return PhoneNumberError.empty;
+    if (!matches(phoneVal, r'\+20[0-9]{10}')) return PhoneNumberError.invalid;
 
     return null;
   }
@@ -39,8 +39,6 @@ class PhoneNumber extends ExternalFormzInput<String, PhoneNumberError> {
     switch (error) {
       case PhoneNumberError.empty:
         return tr(context).error_required;
-      case PhoneNumberError.short:
-        return tr(context).register_phoneNumberLengthError;
       case PhoneNumberError.invalid:
         return tr(context).register_phoneNumberInvalidError;
       default:
