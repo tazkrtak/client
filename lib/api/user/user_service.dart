@@ -9,6 +9,6 @@ part 'user_service.g.dart';
 abstract class UserService {
   factory UserService(Dio dio) = _UserService;
 
-  @GET('/users/register')
-  Future<User> register();
+  @POST('/users/register')
+  Future<User> register(@Body() RegisterBody registerBody);
 }
