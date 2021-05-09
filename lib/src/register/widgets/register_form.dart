@@ -95,10 +95,7 @@ class _PhoneNumberField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final debounce = useDebounce();
-
-    // Egyptian phone number format
-    // https://en.wikipedia.org/wiki/Telephone_numbers_in_Egypt
-    final maskFormatter = MaskTextInputFormatter(mask: '+2 #### #### ###');
+    final maskFormatter = MaskTextInputFormatter(mask: PhoneNumber.kMaskFormat);
 
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
@@ -107,9 +104,9 @@ class _PhoneNumberField extends HookWidget {
         return TextField(
           inputFormatters: [maskFormatter],
           keyboardType: TextInputType.number,
-          onChanged: (_) => debounce(
+          onChanged: (phoneNumber) => debounce(
             () => context.read<RegisterCubit>().updatePhoneNumber(
-                  PhoneNumber.dirty(maskFormatter.getUnmaskedText()),
+                  PhoneNumber.dirty(phoneNumber),
                 ),
           ),
           decoration: InputDecoration(
@@ -150,15 +147,10 @@ class _EmailField extends HookWidget {
 }
 
 class _NationalIdField extends HookWidget {
-
   @override
   Widget build(BuildContext context) {
     final debounce = useDebounce();
-
-    // Egyptian national id format
-    // x - yymmdd - ss - iiig - z
-    // https://codereview.stackexchange.com/questions/221899
-    final maskFormatter = MaskTextInputFormatter(mask: '# ###### ## #### #');
+    final maskFormatter = MaskTextInputFormatter(mask: NationalId.kMaskFormat);
 
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>

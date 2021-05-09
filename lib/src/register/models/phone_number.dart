@@ -7,6 +7,10 @@ import '../../../l10n/tr.dart';
 enum PhoneNumberError { empty, short, invalid }
 
 class PhoneNumber extends ExternalFormzInput<String, PhoneNumberError> {
+  // Egyptian phone number format
+  // https://en.wikipedia.org/wiki/Telephone_numbers_in_Egypt
+  static const kMaskFormat = '+2 #### #### ###';
+
   const PhoneNumber.pure() : super.pure('');
 
   const PhoneNumber.dirty(String value, [String? externalError])

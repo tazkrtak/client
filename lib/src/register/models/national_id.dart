@@ -7,6 +7,11 @@ import '../../../l10n/tr.dart';
 enum NationalIdError { empty, short, nonDigit }
 
 class NationalId extends ExternalFormzInput<String, NationalIdError> {
+  // Egyptian national id format
+  // x - yymmdd - ss - iiig - z
+  // https://codereview.stackexchange.com/questions/221899
+  static const kMaskFormat = '# ###### ## #### #';
+
   const NationalId.pure() : super.pure('');
 
   const NationalId.dirty(String value, [String? externalError])
