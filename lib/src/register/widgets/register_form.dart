@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formz/formz.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../../api/api.dart';
 import '../../../common/cubits/form_cubit/form_cubit.dart';
@@ -96,15 +97,20 @@ class _PhoneNumberField extends HookWidget {
   Widget build(BuildContext context) {
     final debounce = useDebounce();
 
+    // Egyptian phone number format
+    // https://en.wikipedia.org/wiki/Telephone_numbers_in_Egypt
+    final maskFormatter = MaskTextInputFormatter(mask: '+2 #### #### ###');
+
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
           previous.inputs.phoneNumber != current.inputs.phoneNumber,
       builder: (context, state) {
         return TextField(
-          keyboardType: TextInputType.phone,
-          onChanged: (phoneNumber) => debounce(
+          inputFormatters: [maskFormatter],
+          keyboardType: TextInputType.number,
+          onChanged: (_) => debounce(
             () => context.read<RegisterCubit>().updatePhoneNumber(
-                  PhoneNumber.dirty(phoneNumber),
+                  PhoneNumber.dirty(maskFormatter.getUnmaskedText()),
                 ),
           ),
           decoration: InputDecoration(
@@ -145,18 +151,26 @@ class _EmailField extends HookWidget {
 }
 
 class _NationalIdField extends HookWidget {
+
   @override
   Widget build(BuildContext context) {
     final debounce = useDebounce();
+
+    // Egyptian national id format
+    // x - yymmdd - ss - iiig - z
+    // https://codereview.stackexchange.com/questions/221899
+    final maskFormatter = MaskTextInputFormatter(mask: '# ###### ## #### #');
 
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
           previous.inputs.nationalId != current.inputs.nationalId,
       builder: (context, state) {
         return TextField(
-          onChanged: (nationalId) => debounce(
+          inputFormatters: [maskFormatter],
+          keyboardType: TextInputType.number,
+          onChanged: (_) => debounce(
             () => context.read<RegisterCubit>().updateNationalId(
-                  NationalId.dirty(nationalId),
+                  NationalId.dirty(maskFormatter.getUnmaskedText()),
                 ),
           ),
           decoration: InputDecoration(
@@ -164,7 +178,6 @@ class _NationalIdField extends HookWidget {
             errorText: state.inputs.nationalId.getErrorText(context),
             hintText: tr(context).register_nationalIdHint,
           ),
-          keyboardType: TextInputType.number,
         );
       },
     );
@@ -211,8 +224,7 @@ class _TermsAndConditionsCheckBox extends StatelessWidget {
               context.read<RegisterCubit>().updateTermsAndConditions(
                     TermsAndConditions.dirty(value!),
                   ),
-          errorText:
-              state.inputs.termsAndConditions.getErrorText(context),
+          errorText: state.inputs.termsAndConditions.getErrorText(context),
           child: RichText(
             text: TextSpan(
               text: '${tr(context).register_agree} ',
