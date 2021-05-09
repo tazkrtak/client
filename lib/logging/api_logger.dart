@@ -40,6 +40,7 @@ class ApiLogger extends Interceptor {
     message.writeAll([
       '[ ERROR ] : ${err.requestOptions.uri}\n',
       err.message,
+      '\n${prettyJson(err.response?.data)}',
     ], '\n');
 
     logger.e(message);
