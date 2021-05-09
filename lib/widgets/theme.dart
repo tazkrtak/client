@@ -40,7 +40,7 @@ class AppTheme {
           alignLabelWithHint: true,
           fillColor: _AppColors.inputFill,
           floatingLabelBehavior: FloatingLabelBehavior.never,
-          contentPadding: const EdgeInsets.all(8),
+          contentPadding: const EdgeInsets.all(16),
           hintStyle: const TextStyle(
             color: Colors.black38,
           ),

@@ -15,6 +15,7 @@ class PasswordTextField extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final obscureState = useState<bool>(true);
+
     return TextField(
       textAlignVertical: TextAlignVertical.center,
       obscureText: obscureState.value,
@@ -27,7 +28,10 @@ class PasswordTextField extends HookWidget {
                 ? tr(context).widgets_showPassword
                 : tr(context).widgets_hidePassword,
             style: const TextStyle(
-                fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
           ),
         ),
       ),

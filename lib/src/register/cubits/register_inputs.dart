@@ -9,7 +9,7 @@ class RegisterInputs extends FormzInputs {
   final PhoneNumber phoneNumber;
   final FullName fullName;
   final Password password;
-  final AgreeOnTermsAndConditions agreeOnTermsAndConditions;
+  final TermsAndConditions termsAndConditions;
 
   const RegisterInputs({
     this.nationalId = const NationalId.pure(),
@@ -17,24 +17,24 @@ class RegisterInputs extends FormzInputs {
     this.phoneNumber = const PhoneNumber.pure(),
     this.fullName = const FullName.pure(),
     this.password = const Password.pure(),
-    this.agreeOnTermsAndConditions = const AgreeOnTermsAndConditions.pure(),
+    this.termsAndConditions = const TermsAndConditions.pure(),
   });
 
-  RegisterInputs copyWith(
-      {NationalId? nationalId,
-      Email? email,
-      PhoneNumber? phoneNumber,
-      FullName? fullName,
-      Password? password,
-      AgreeOnTermsAndConditions? agreeOnTermsAndConditions}) {
+  RegisterInputs copyWith({
+    NationalId? nationalId,
+    Email? email,
+    PhoneNumber? phoneNumber,
+    FullName? fullName,
+    Password? password,
+    TermsAndConditions? termsAndConditions,
+  }) {
     return RegisterInputs(
       nationalId: nationalId ?? this.nationalId,
       email: email ?? this.email,
       phoneNumber: phoneNumber ?? this.phoneNumber,
       fullName: fullName ?? this.fullName,
       password: password ?? this.password,
-      agreeOnTermsAndConditions:
-          agreeOnTermsAndConditions ?? this.agreeOnTermsAndConditions,
+      termsAndConditions: termsAndConditions ?? this.termsAndConditions,
     );
   }
 
@@ -45,6 +45,6 @@ class RegisterInputs extends FormzInputs {
         phoneNumber,
         fullName,
         password,
-        agreeOnTermsAndConditions
+        termsAndConditions,
       ];
 }

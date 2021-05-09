@@ -27,9 +27,9 @@ class CheckboxField extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               child,
-              if (errorText != null && errorText!.isNotEmpty) ...{
+              if (errorText != null) ...{
                 Text(
-                  errorText ?? '',
+                  errorText!,
                   style: Theme.of(context).inputDecorationTheme.errorStyle,
                 ),
               }

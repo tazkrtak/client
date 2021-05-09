@@ -5,7 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:formz/formz.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import '../../../api/user/models/models.dart';
+import '../../../api/api.dart';
 import '../../../common/cubits/form_cubit/form_cubit.dart';
 import '../../../common/hooks/debounce.dart';
 import '../../../l10n/tr.dart';
@@ -55,7 +55,7 @@ class RegisterForm extends StatelessWidget {
             const SizedBox(height: 8),
             _PasswordField(),
             const SizedBox(height: 16),
-            _AgreeOnTermsCheckBox(),
+            _TermsAndConditionsCheckBox(),
             const SizedBox(height: 32),
             _RegisterButton(),
           ],
@@ -197,22 +197,22 @@ class _PasswordField extends HookWidget {
   }
 }
 
-class _AgreeOnTermsCheckBox extends StatelessWidget {
+class _TermsAndConditionsCheckBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FieldBlocBuilder<RegisterCubit, RegisterInputs>(
       buildWhen: (previous, current) =>
-          previous.inputs.agreeOnTermsAndConditions !=
-          current.inputs.agreeOnTermsAndConditions,
+          previous.inputs.termsAndConditions !=
+          current.inputs.termsAndConditions,
       builder: (context, state) {
         return CheckboxField(
-          value: state.inputs.agreeOnTermsAndConditions.value,
+          value: state.inputs.termsAndConditions.value,
           onChanged: (value) =>
-              context.read<RegisterCubit>().updateAgreeOnTermsAndConditions(
-                    AgreeOnTermsAndConditions.dirty(value!),
+              context.read<RegisterCubit>().updateTermsAndConditions(
+                    TermsAndConditions.dirty(value!),
                   ),
           errorText:
-              state.inputs.agreeOnTermsAndConditions.getErrorText(context),
+              state.inputs.termsAndConditions.getErrorText(context),
           child: RichText(
             text: TextSpan(
               text: '${tr(context).register_agree} ',

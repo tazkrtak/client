@@ -1,12 +1,8 @@
 import 'package:dio/dio.dart';
 
 import '../../../api/api.dart';
-import '../../../api/error/exceptions/exceptions.dart';
-import '../../../api/user/models/user.dart';
-import '../../../api/user/user_service.dart';
 import '../../../common/cubits/form_cubit/base_form_cubit.dart';
 import '../../../services/locator.dart';
-import '../models/agree_on_terms_and_conditions.dart';
 import '../models/models.dart';
 import 'register_inputs.dart';
 
@@ -43,11 +39,10 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
         ),
       );
 
-  void updateAgreeOnTermsAndConditions(
-          AgreeOnTermsAndConditions agreeOnTermsAndConditions) =>
+  void updateTermsAndConditions(TermsAndConditions termsAndConditions) =>
       updateInputs(
         state.inputs.copyWith(
-          agreeOnTermsAndConditions: agreeOnTermsAndConditions,
+          termsAndConditions: termsAndConditions,
         ),
       );
 
@@ -62,7 +57,7 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
     } on DioError catch (dioError) {
       final e = dioError.error;
       if (e is FieldsValidationException) {
-        final inputsState = state.inputs.copyWith(
+        final inputs = state.inputs.copyWith(
           email: state.inputs.email.copyWithExternalError(
             e.errors['email'],
           ),
@@ -79,7 +74,7 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
             e.errors['phoneNumber'],
           ),
         );
-        emitInvalid(inputsState);
+        emitInvalid(inputs);
       } else if (e is ServerException) {
         emitFailure(e.message);
       } else {
