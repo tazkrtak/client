@@ -34,6 +34,7 @@
   "register_title": "Sign Up",
   "ticket_priceTitle": "EGP",
   "ticket_quantityTitle": "Ticket(s)",
+  "ticket_totalAmount": "Total Amount",
   "widgets_hidePassword": "Hide",
   "widgets_showPassword": "Show"
 }
