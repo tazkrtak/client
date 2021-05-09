@@ -10,22 +10,22 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
   RegisterCubit() : super(const RegisterInputs());
 
   void updateFullName(FullName fullName) => updateInputs(
-    state.inputs.copyWith(
-      fullName: fullName,
-    ),
-  );
+        state.inputs.copyWith(
+          fullName: fullName,
+        ),
+      );
 
   void updatePhoneNumber(PhoneNumber phoneNumber) => updateInputs(
-    state.inputs.copyWith(
-      phoneNumber: phoneNumber,
-    ),
-  );
+        state.inputs.copyWith(
+          phoneNumber: phoneNumber,
+        ),
+      );
 
   void updateEmail(Email email) => updateInputs(
-    state.inputs.copyWith(
-      email: email,
-    ),
-  );
+        state.inputs.copyWith(
+          email: email,
+        ),
+      );
 
   void updateNationalId(NationalId nationalId) => updateInputs(
         state.inputs.copyWith(
