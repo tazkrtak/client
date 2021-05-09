@@ -13,22 +13,24 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocProvider<RegisterCubit>(
-        create: (_) => RegisterCubit(),
-        child: RegisterForm(
-          onFormFailure: (error) {
-            ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                SnackBar(
-                  content: Text(error ?? tr(context).error_generic),
-                ),
-              );
-          },
-          onFormSucces: (user) {
-            context.read<SessionCubit>().startSession(user);
-          },
+    return SafeArea(
+      child: Scaffold(
+        body: BlocProvider<RegisterCubit>(
+          create: (_) => RegisterCubit(),
+          child: RegisterForm(
+            onFormSuccess: (user) {
+              context.read<SessionCubit>().startSession(user);
+            },
+            onFormFailure: (error) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text(error ?? tr(context).error_generic),
+                  ),
+                );
+            },
+          ),
         ),
       ),
     );

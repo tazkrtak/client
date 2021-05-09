@@ -9,27 +9,27 @@ import 'register_inputs.dart';
 class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
   RegisterCubit() : super(const RegisterInputs());
 
+  void updateFullName(FullName fullName) => updateInputs(
+    state.inputs.copyWith(
+      fullName: fullName,
+    ),
+  );
+
+  void updatePhoneNumber(PhoneNumber phoneNumber) => updateInputs(
+    state.inputs.copyWith(
+      phoneNumber: phoneNumber,
+    ),
+  );
+
+  void updateEmail(Email email) => updateInputs(
+    state.inputs.copyWith(
+      email: email,
+    ),
+  );
+
   void updateNationalId(NationalId nationalId) => updateInputs(
         state.inputs.copyWith(
           nationalId: nationalId,
-        ),
-      );
-
-  void updateEmail(Email email) => updateInputs(
-        state.inputs.copyWith(
-          email: email,
-        ),
-      );
-
-  void updatePhoneNumber(PhoneNumber phoneNumber) => updateInputs(
-        state.inputs.copyWith(
-          phoneNumber: phoneNumber,
-        ),
-      );
-
-  void updateFullName(FullName fullName) => updateInputs(
-        state.inputs.copyWith(
-          fullName: fullName,
         ),
       );
 
@@ -52,26 +52,26 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
     emitInProgress();
 
     try {
-      final registeredUser = await _register(state.inputs);
-      emitSuccess(registeredUser);
+      final user = await _register(state.inputs);
+      emitSuccess(user);
     } on DioError catch (dioError) {
       final e = dioError.error;
       if (e is FieldsValidationException) {
         final inputs = state.inputs.copyWith(
-          email: state.inputs.email.copyWithExternalError(
-            e.errors['email'],
-          ),
           fullName: state.inputs.fullName.copyWithExternalError(
             e.errors['full_name'],
+          ),
+          phoneNumber: state.inputs.phoneNumber.copyWithExternalError(
+            e.errors['phoneNumber'],
+          ),
+          email: state.inputs.email.copyWithExternalError(
+            e.errors['email'],
           ),
           nationalId: state.inputs.nationalId.copyWithExternalError(
             e.errors['national_id'],
           ),
           password: state.inputs.password.copyWithExternalError(
             e.errors['password'],
-          ),
-          phoneNumber: state.inputs.phoneNumber.copyWithExternalError(
-            e.errors['phoneNumber'],
           ),
         );
         emitInvalid(inputs);
@@ -86,14 +86,13 @@ class RegisterCubit extends BaseFormCubit<RegisterInputs, User> {
   Future<User> _register(RegisterInputs inputs) async {
     final service = locator.get<UserService>();
     final body = RegisterBody(
-      email: inputs.email.value,
       fullName: inputs.fullName.value,
+      phoneNumber: inputs.phoneNumber.value,
+      email: inputs.email.value,
       nationalId: inputs.nationalId.value,
       password: inputs.password.value,
-      phoneNumber: inputs.phoneNumber.value,
     );
 
-    final registeredUser = service.register(body);
-    return registeredUser;
+    return service.register(body);
   }
 }

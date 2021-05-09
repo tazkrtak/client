@@ -16,11 +16,11 @@ import '../cubits/register_inputs.dart';
 import '../models/models.dart';
 
 class RegisterForm extends StatelessWidget {
-  final ValueChanged<User> onFormSucces;
+  final ValueChanged<User> onFormSuccess;
   final ValueChanged<String?> onFormFailure;
 
   const RegisterForm({
-    required this.onFormSucces,
+    required this.onFormSuccess,
     required this.onFormFailure,
   });
 
@@ -29,7 +29,7 @@ class RegisterForm extends StatelessWidget {
     return FieldBlocListener<RegisterCubit, RegisterInputs, User>(
       listener: (context, state) {
         if (state.status.isSubmissionSuccess) {
-          onFormSucces(state.result!.value!);
+          onFormSuccess(state.result!.value!);
         } else if (state.status.isSubmissionFailure) {
           onFormFailure(state.result?.error);
         }
@@ -39,7 +39,6 @@ class RegisterForm extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 30),
             CircleAvatar(
               backgroundColor: Colors.transparent,
               radius: 65,

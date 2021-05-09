@@ -4,35 +4,35 @@ import '../../../common/forms/formz_inputs.dart';
 import '../models/models.dart';
 
 class RegisterInputs extends FormzInputs {
-  final NationalId nationalId;
-  final Email email;
-  final PhoneNumber phoneNumber;
   final FullName fullName;
+  final PhoneNumber phoneNumber;
+  final Email email;
+  final NationalId nationalId;
   final Password password;
   final TermsAndConditions termsAndConditions;
 
   const RegisterInputs({
-    this.nationalId = const NationalId.pure(),
-    this.email = const Email.pure(),
-    this.phoneNumber = const PhoneNumber.pure(),
     this.fullName = const FullName.pure(),
+    this.phoneNumber = const PhoneNumber.pure(),
+    this.email = const Email.pure(),
+    this.nationalId = const NationalId.pure(),
     this.password = const Password.pure(),
     this.termsAndConditions = const TermsAndConditions.pure(),
   });
 
   RegisterInputs copyWith({
-    NationalId? nationalId,
-    Email? email,
-    PhoneNumber? phoneNumber,
     FullName? fullName,
+    PhoneNumber? phoneNumber,
+    Email? email,
+    NationalId? nationalId,
     Password? password,
     TermsAndConditions? termsAndConditions,
   }) {
     return RegisterInputs(
-      nationalId: nationalId ?? this.nationalId,
-      email: email ?? this.email,
-      phoneNumber: phoneNumber ?? this.phoneNumber,
       fullName: fullName ?? this.fullName,
+      phoneNumber: phoneNumber ?? this.phoneNumber,
+      email: email ?? this.email,
+      nationalId: nationalId ?? this.nationalId,
       password: password ?? this.password,
       termsAndConditions: termsAndConditions ?? this.termsAndConditions,
     );
@@ -40,10 +40,10 @@ class RegisterInputs extends FormzInputs {
 
   @override
   List<FormzInput> get inputs => [
-        nationalId,
-        email,
-        phoneNumber,
         fullName,
+        phoneNumber,
+        email,
+        nationalId,
         password,
         termsAndConditions,
       ];
