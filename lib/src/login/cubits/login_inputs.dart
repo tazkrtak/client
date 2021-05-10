@@ -12,7 +12,10 @@ class LoginInputs extends FormzInputs {
     this.password = const Password.pure(),
   });
 
-  LoginInputs copyWith({NationalId? nationalId, Password? password}) {
+  LoginInputs copyWith({
+    NationalId? nationalId,
+    Password? password,
+  }) {
     return LoginInputs(
       nationalId: nationalId ?? this.nationalId,
       password: password ?? this.password,

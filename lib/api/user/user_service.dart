@@ -12,6 +12,6 @@ abstract class UserService {
   @POST('/users/register')
   Future<User> register(@Body() RegisterBody registerBody);
 
-  @GET('/users/login')
+  @POST('/users/login')
   Future<User> login(@Body() LoginBody loginBody);
 }

@@ -1,10 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../api/error/exceptions/fields_validation_exception.dart';
-import '../../../api/error/exceptions/server_exception.dart';
-import '../../../api/user/models/login_body.dart';
-import '../../../api/user/models/user.dart';
-import '../../../api/user/user_service.dart';
+import '../../../api/api.dart';
 import '../../../common/cubits/form_cubit/form_cubit.dart';
 import '../../../services/locator.dart';
 import '../../register/models/models.dart';
@@ -24,6 +20,7 @@ class LoginCubit extends BaseFormCubit<LoginInputs, User> {
           password: password,
         ),
       );
+
   @override
   Future<void> submitForm() async {
     if (!canSubmit) return;
@@ -49,14 +46,14 @@ class LoginCubit extends BaseFormCubit<LoginInputs, User> {
       }
     }
   }
-}
 
-Future<User> _login(LoginInputs inputs) async {
-  final service = locator.get<UserService>();
-  final body = LoginBody(
-    nationalId: inputs.nationalId.value,
-    password: inputs.password.value,
-  );
+  Future<User> _login(LoginInputs inputs) async {
+    final service = locator.get<UserService>();
+    final body = LoginBody(
+      nationalId: inputs.nationalId.value,
+      password: inputs.password.value,
+    );
 
-  return service.login(body);
+    return service.login(body);
+  }
 }
