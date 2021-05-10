@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../widgets/widgets.dart';
-import '../register/register_page.dart';
+import '../login/login_page.dart';
 import 'cubits/session_cubit.dart';
 import 'home_page.dart';
 import 'splash_page.dart';
@@ -48,9 +48,8 @@ class AppView extends HookWidget {
         return BlocListener<SessionCubit, SessionState>(
           listener: (context, state) {
             final navigator = navigatorKey.value.currentState!;
-            final route = state is SessionSuccess
-                ? HomePage.route()
-                : RegisterPage.route();
+            final route =
+                state is SessionSuccess ? HomePage.route() : LoginPage.route();
 
             navigator.pushAndRemoveUntil<void>(
               route,
