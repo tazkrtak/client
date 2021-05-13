@@ -7,7 +7,7 @@ class BaseFormState<TInputs extends FormzInputs, TResult> extends Equatable {
 
   const BaseFormState({
     required this.inputs,
-    required this.status,
+    this.status = FormzStatus.pure,
     this.result,
   });
 

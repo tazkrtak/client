@@ -8,8 +8,7 @@ part 'base_form_state.dart';
 
 abstract class BaseFormCubit<TInputs extends FormzInputs, TResult>
     extends Cubit<BaseFormState<TInputs, TResult>> {
-  BaseFormCubit(TInputs inputs)
-      : super(BaseFormState(inputs: inputs, status: FormzStatus.valid));
+  BaseFormCubit(TInputs inputs) : super(BaseFormState(inputs: inputs));
 
   bool get canSubmit => state.status.isValidated;
 
