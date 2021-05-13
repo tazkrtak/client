@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import '../../../l10n/tr.dart';
 
 class OverViewCards extends StatelessWidget {
   @override
@@ -53,9 +54,9 @@ class _BalanceCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Current Balance',
-              style: TextStyle(
+            Text(
+              tr(context).wallet_currentBalance,
+              style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 16,
               ),
@@ -69,9 +70,9 @@ class _BalanceCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            const Text(
-              'EGP',
-              style: TextStyle(
+            Text(
+              tr(context).wallet_egpCurrency,
+              style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 16,
                 fontWeight: FontWeight.normal,
@@ -103,15 +104,15 @@ class _RechargeActionCard extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
+            children: [
               Text(
-                'Recharge',
-                style: TextStyle(
+                tr(context).wallet_recharge,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                 ),
               ),
-              Icon(
+              const Icon(
                 LineAwesomeIcons.chevron_circle_right,
                 color: Colors.white,
                 size: 32,
@@ -143,28 +144,28 @@ class _RechargedCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Recharged',
-                  style: TextStyle(
+                Text(
+                  tr(context).wallet_recharged,
+                  style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 8),
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: <TextSpan>[
-                      TextSpan(
+                      const TextSpan(
                         text: '109',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                             fontSize: 24),
                       ),
-                      TextSpan(text: ' '),
+                      const TextSpan(text: ' '),
                       TextSpan(
-                        text: 'EGP',
-                        style: TextStyle(
+                        text: tr(context).wallet_egpCurrency,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.black87,
                         ),
@@ -200,8 +201,8 @@ class _SpentCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
-                  'Spent',
+                Text(
+                  tr(context).wallet_spent,
                   style: TextStyle(
                     color: Colors.black87,
                     fontSize: 16,
@@ -209,19 +210,19 @@ class _SpentCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 RichText(
-                  text: const TextSpan(
+                  text: TextSpan(
                     children: <TextSpan>[
-                      TextSpan(
+                      const TextSpan(
                         text: '10',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                             fontSize: 24),
                       ),
-                      TextSpan(text: ' '),
+                      const TextSpan(text: ' '),
                       TextSpan(
-                        text: 'EGP',
-                        style: TextStyle(
+                        text: tr(context).wallet_egpCurrency,
+                        style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.black87,
                         ),
