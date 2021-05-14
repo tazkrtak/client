@@ -34,7 +34,7 @@ class NumberPicker<T extends num> extends HookWidget {
       child: Row(
         children: [
           Text(
-            trNumber(state.value),
+            trNumber(context, state.value),
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,

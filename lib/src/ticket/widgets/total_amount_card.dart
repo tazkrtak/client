@@ -29,7 +29,7 @@ class TotalAmountCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            '${trNumber(value)} ${tr(context).ticket_priceTitle}',
+            '${trNumber(context, value)} ${tr(context).ticket_priceTitle}',
             style: TextStyle(
               color: Theme.of(context).highlightColor,
               fontSize: 24,
