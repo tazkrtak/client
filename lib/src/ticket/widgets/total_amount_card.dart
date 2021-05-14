@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../../l10n/tr.dart';
 
 class TotalAmountCard extends StatelessWidget {
@@ -28,7 +29,7 @@ class TotalAmountCard extends StatelessWidget {
             textAlign: TextAlign.center,
           ),
           Text(
-            '${_format(value)} ${tr(context).ticket_priceTitle}',
+            '${trNumber(context, value)} ${tr(context).ticket_priceTitle}',
             style: TextStyle(
               color: Theme.of(context).highlightColor,
               fontSize: 24,
@@ -39,7 +40,4 @@ class TotalAmountCard extends StatelessWidget {
       ),
     );
   }
-
-  String _format(double n) =>
-      n.toStringAsFixed(n.truncateToDouble() == n ? 0 : 1);
 }

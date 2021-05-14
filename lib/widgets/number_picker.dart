@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import '../l10n/tr.dart';
 import 'widgets.dart';
 
 class NumberPicker<T extends num> extends HookWidget {
@@ -33,7 +34,7 @@ class NumberPicker<T extends num> extends HookWidget {
       child: Row(
         children: [
           Text(
-            '${state.value}',
+            trNumber(context, state.value),
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontWeight: FontWeight.bold,
