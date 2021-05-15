@@ -1,24 +1,32 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 
 import 'error/error_interceptor.dart';
 
 class ApiClient {
   static Interceptor? observer;
-  static Interceptor errorObserver = ErrorInterceptor();
+  final Dio dio;
 
-  ApiClient._();
-
-  static Dio create(String baseUrl) {
-    final options = BaseOptions(baseUrl: baseUrl);
-    final client = Dio(options);
-
-    // Logging interceptor must be first to log server error response
+  ApiClient(String baseUrl)
+      : dio = Dio(
+          BaseOptions(
+            baseUrl: baseUrl,
+          ),
+        ) {
     if (observer != null) {
-      client.interceptors.add(observer!);
+      // Logging interceptor must be added first, to log server error response
+      dio.interceptors.add(observer!);
     }
 
-    client.interceptors.add(errorObserver);
+    dio.interceptors.add(ErrorInterceptor());
+  }
 
-    return client;
+  void authorize(String token) {
+    dio.options.headers[HttpHeaders.authorizationHeader] = 'Bearer $token';
+  }
+
+  void unauthorize() {
+    dio.options.headers.remove(HttpHeaders.authorizationHeader);
   }
 }

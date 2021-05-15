@@ -2,27 +2,32 @@ import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 
 import '../../../api/api.dart';
+import '../../../services/locator.dart';
 
 part 'session_state.dart';
 
 class SessionCubit extends HydratedCubit<SessionState> {
+  final client = locator.get<ApiClient>();
+
   SessionCubit() : super(SessionLoading());
 
   void loadSession() {
     try {
       final user = (state as SessionSuccess).user;
-      emit(SessionSuccess(user));
+      startSession(user);
     } catch (_) {
       emit(SessionUnknown());
     }
   }
 
   void startSession(User user) {
+    client.authorize(user.token);
     emit(SessionSuccess(user));
   }
 
   void clearSession() {
     clear();
+    client.unauthorize();
     emit(SessionUnknown());
   }
 
