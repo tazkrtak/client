@@ -18,18 +18,13 @@ class HomePage extends HookWidget {
     final currentIndex = useState(0);
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: IndexedStack(
-            index: currentIndex.value,
-            children: [
-              TicketPage(),
-              WalletPage(),
-              AccountPage(),
-            ],
-          ),
-        ),
+      body: IndexedStack(
+        index: currentIndex.value,
+        children: [
+          TicketPage(),
+          WalletPage(),
+          AccountPage(),
+        ],
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),

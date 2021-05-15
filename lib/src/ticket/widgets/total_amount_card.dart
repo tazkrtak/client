@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../../l10n/tr.dart';
 
 class TotalAmountCard extends StatelessWidget {
   final double value;
+
   const TotalAmountCard({required this.value});
 
   @override
