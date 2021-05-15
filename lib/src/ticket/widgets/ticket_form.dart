@@ -90,7 +90,7 @@ class TicketForm extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           NumberPicker<double>(
-            label: tr(context).ticket_priceTitle,
+            label: tr(context).app_currency,
             step: 0.5,
             minimum: TicketCubit.kMinPrice,
             onChange: (value) {

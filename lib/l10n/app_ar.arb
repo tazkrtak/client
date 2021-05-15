@@ -1,5 +1,6 @@
 {
   "appTitle": "تذكرتك",
+  "app_currency" : "ج.م.",
   "bottomNav_account": "الحساب",
   "bottomNav_ticket": "التذكرة",
   "bottomNav_wallet": "المحفظة",
@@ -33,13 +34,11 @@
   "register_privacyPolicy": "سياسة الخصوصية",
   "register_terms": "شروط الخدمة",
   "register_title": "تسجبل",
-  "ticket_priceTitle" : "ج.م.",
   "ticket_quantityTitle" : "تذكرة",
   "ticket_totalAmount": "الاجمالي",
   "widgets_hidePassword": "اخفاء",
   "widgets_showPassword": "اظهار",
   "wallet_currentBalance" : "الرصيد الحالي",
-  "wallet_egpCurrency" : "ج.م.",
   "wallet_recharge" : "إعادة الشحن",
   "wallet_recharged" : "تم شحن",
   "wallet_spent" : "تم صرف"

@@ -71,7 +71,7 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             Text(
-              tr(context).wallet_egpCurrency,
+              tr(context).app_currency,
               style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 16,
@@ -164,7 +164,7 @@ class _RechargedCard extends StatelessWidget {
                       ),
                       const TextSpan(text: ' '),
                       TextSpan(
-                        text: tr(context).wallet_egpCurrency,
+                        text: tr(context).app_currency,
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.black87,
@@ -221,7 +221,7 @@ class _SpentCard extends StatelessWidget {
                       ),
                       const TextSpan(text: ' '),
                       TextSpan(
-                        text: tr(context).wallet_egpCurrency,
+                        text: tr(context).app_currency,
                         style: const TextStyle(
                           fontStyle: FontStyle.italic,
                           color: Colors.black87,
