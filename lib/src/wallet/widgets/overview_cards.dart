@@ -62,9 +62,9 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            const Text(
-              '109',
-              style: TextStyle(
+            Text(
+              trNumber(context, 109),
+              style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 48,
                 fontWeight: FontWeight.bold,
@@ -155,12 +155,13 @@ class _RechargedCard extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     children: <TextSpan>[
-                      const TextSpan(
-                        text: '109',
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                            fontSize: 24),
+                      TextSpan(
+                        text: trNumber(context, 109),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                          fontSize: 24,
+                        ),
                       ),
                       const TextSpan(text: ' '),
                       TextSpan(
@@ -174,7 +175,7 @@ class _RechargedCard extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -203,7 +204,7 @@ class _SpentCard extends StatelessWidget {
               children: [
                 Text(
                   tr(context).wallet_spent,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 16,
                   ),
@@ -212,9 +213,9 @@ class _SpentCard extends StatelessWidget {
                 RichText(
                   text: TextSpan(
                     children: <TextSpan>[
-                      const TextSpan(
-                        text: '10',
-                        style: TextStyle(
+                      TextSpan(
+                        text: trNumber(context, 10),
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black87,
                             fontSize: 24),
@@ -231,7 +232,7 @@ class _SpentCard extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
