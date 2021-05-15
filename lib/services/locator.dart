@@ -14,6 +14,7 @@ Future<void> registerServices() async {
 
   // API Services
   const baseUrl = 'https://tazkrtak-api-demo.herokuapp.com/';
-  final client = ApiClient.create(baseUrl);
-  locator.registerLazySingleton(() => UserService(client));
+  final client = ApiClient(baseUrl);
+  locator.registerFactory(() => client);
+  locator.registerLazySingleton(() => UserService(client.dio));
 }
