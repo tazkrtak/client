@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import '../../src/wallet/transactions/models/transaction.dart';
+import '../../src/wallet/transactions/models/transaction_summary.dart';
 
 class DummyPage<T> {
   final int pageKey;
@@ -41,6 +42,23 @@ class TransactionsServiceMock {
           data: data,
           pageKey: page,
           pageSize: data.length,
+        );
+      },
+    );
+  }
+
+  Future<TransactionsSummary> getSummary() {
+    return Future.delayed(
+      const Duration(seconds: 2),
+          () {
+        if (_random.nextBool()) {
+          throw ('Newtork error!');
+        }
+
+        return TransactionsSummary(
+          balance: _random.nextDouble() * 100,
+          recharged: _random.nextDouble() * 100,
+          spent: _random.nextDouble() * 100
         );
       },
     );

@@ -1,8 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import '../../../l10n/tr.dart';
 
-class OverViewCards extends StatelessWidget {
+import '../../../l10n/tr.dart';
+import '../transactions/cubits/transactions_summary_cubit.dart';
+
+class OverviewCards extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
+      builder: (context, state) {
+        if (state is TransactionsSummarySuccess) {
+          return _CardsGrid(
+            balance: state.balance,
+            recharged: state.recharged,
+            spent: state.spent,
+          );
+        } else if (state is TransactionsSummaryLoading) {
+          return _SummaryLoading();
+        } else {
+          return _SummaryError();
+        }
+      },
+    );
+  }
+}
+
+class _CardsGrid extends StatelessWidget {
+  final double balance;
+  final double recharged;
+  final double spent;
+
+  const _CardsGrid({
+    required this.balance,
+    required this.recharged,
+    required this.spent,
+  });
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -14,7 +48,7 @@ class OverViewCards extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 3,
-                  child: _BalanceCard(),
+                  child: _BalanceCard(balance),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
@@ -28,11 +62,11 @@ class OverViewCards extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: _RechargedCard(),
+                  child: _RechargedCard(recharged),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
-                  child: _SpentCard(),
+                  child: _SpentCard(spent),
                 ),
               ],
             ),
@@ -44,6 +78,10 @@ class OverViewCards extends StatelessWidget {
 }
 
 class _BalanceCard extends StatelessWidget {
+  final double balance;
+
+  const _BalanceCard(this.balance);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -63,7 +101,7 @@ class _BalanceCard extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              trNumber(context, 109),
+              trNumber(context, balance.round()),
               style: const TextStyle(
                 color: Colors.black87,
                 fontSize: 48,
@@ -126,6 +164,10 @@ class _RechargeActionCard extends StatelessWidget {
 }
 
 class _RechargedCard extends StatelessWidget {
+  final double recharged;
+
+  const _RechargedCard(this.recharged);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -133,7 +175,7 @@ class _RechargedCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Icon(
               LineAwesomeIcons.arrow_up,
@@ -152,26 +194,28 @@ class _RechargedCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: trNumber(context, 109),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          fontSize: 24,
+                Flexible(
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: trNumber(context, recharged.round()),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                            fontSize: 24,
+                          ),
                         ),
-                      ),
-                      const TextSpan(text: ' '),
-                      TextSpan(
-                        text: tr(context).app_currency,
-                        style: const TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black87,
+                        const TextSpan(text: ' '),
+                        TextSpan(
+                          text: tr(context).app_currency,
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black87,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -184,6 +228,10 @@ class _RechargedCard extends StatelessWidget {
 }
 
 class _SpentCard extends StatelessWidget {
+  final double spent;
+
+  const _SpentCard(this.spent);
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -191,7 +239,7 @@ class _SpentCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Icon(
               LineAwesomeIcons.arrow_down,
@@ -210,30 +258,62 @@ class _SpentCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                RichText(
-                  text: TextSpan(
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: trNumber(context, 10),
-                        style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black87,
-                            fontSize: 24),
-                      ),
-                      const TextSpan(text: ' '),
-                      TextSpan(
-                        text: tr(context).app_currency,
-                        style: const TextStyle(
-                          fontStyle: FontStyle.italic,
-                          color: Colors.black87,
+                Flexible(
+                  child: RichText(
+                    text: TextSpan(
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: trNumber(context, spent.round()),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                              fontSize: 24),
                         ),
-                      ),
-                    ],
+                        const TextSpan(text: ' '),
+                        TextSpan(
+                          text: tr(context).app_currency,
+                          style: const TextStyle(
+                            fontStyle: FontStyle.italic,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _SummaryError extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Theme.of(context).errorColor.withOpacity(0.2),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Center(
+          child: Text(tr(context).error_generic),
+        ),
+      ),
+    );
+  }
+}
+
+class _SummaryLoading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return const Card(
+      color: Colors.transparent,
+      child: Padding(
+        padding: EdgeInsets.all(24),
+        child: Center(
+          child: CircularProgressIndicator(),
         ),
       ),
     );
