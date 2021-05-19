@@ -41,5 +41,8 @@
   "wallet_currentBalance" : "Current Balance",
   "wallet_recharge" : "Recharge",
   "wallet_recharged" : "Recharged",
-  "wallet_spent" : "Spent"
+  "wallet_spent" : "Spent",
+  "tabBar_oneWeek": "1 Week",
+  "tabBar_oneMonth": "1 Month",
+  "tabBar_ThreeMonth": "3 Month"
 }

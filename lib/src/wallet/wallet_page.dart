@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'transactions/cubits/transactions_summary_cubit.dart';
 
 import 'transactions/cubits/transactions_cubit.dart';
+import 'transactions/cubits/transactions_summary_cubit.dart';
 import 'transactions/widgets/transactions_list.dart';
+import 'widgets/horizontal_picker.dart';
 import 'widgets/overview_cards.dart';
 
 class WalletPage extends StatelessWidget {
@@ -37,6 +38,12 @@ class WalletPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
+                        HorizontalPicker(
+                          //TODO:call cubit function
+                          // ignore: avoid_print
+                          onChange: (from) => print(from),
+                        ),
+                        const SizedBox(height: 8),
                         OverviewCards(),
                         const SizedBox(height: 24),
                         TransactionsList(),

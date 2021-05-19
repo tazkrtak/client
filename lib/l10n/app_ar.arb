@@ -41,5 +41,8 @@
   "wallet_currentBalance" : "الرصيد الحالي",
   "wallet_recharge" : "إعادة الشحن",
   "wallet_recharged" : "تم شحن",
-  "wallet_spent" : "تم صرف"
+  "wallet_spent" : "تم صرف",
+  "tabBar_oneWeek": "اسبوع",
+  "tabBar_oneMonth": "شهر",
+  "tabBar_ThreeMonth": "ثلاث اشهر"
 }
