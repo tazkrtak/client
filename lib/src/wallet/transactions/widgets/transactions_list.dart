@@ -3,11 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
+import '../../../../api/api.dart';
+import '../../../../common/hooks/paging_hook.dart';
 import '../../../../l10n/tr.dart';
 import '../cubits/transactions_cubit.dart';
 import '../cubits/transactions_state.dart';
-import '../../../../common/hooks/paging_hook.dart';
-import '../models/transaction.dart';
 import 'transaction_card.dart';
 
 class TransactionsList extends HookWidget {
@@ -33,16 +33,17 @@ class TransactionsList extends HookWidget {
         BlocListener<TransactionsCubit, TransactionsState>(
           listener: (context, state) {
             if (state is TransactionSuccess) {
-              if (state.isLastPage) {
+              if (state.isLast) {
                 _pagingController.appendLastPage(state.transactions);
               } else {
                 _pagingController.appendPage(state.transactions,
-                    state.isLastPage ? null : state.nextPageKey);
+                    state.isLast ? null : state.nextPageKey);
               }
             } else if (state is TransactionsError) {
               _pagingController.error =
                   state.message ?? tr(context).error_generic;
-            } else if (state is TransactionsRefresh) {
+            } else if (state is TransactionsRefresh ||
+                state is TransactionsFilterUpdate) {
               _pagingController.refresh();
             }
           },
@@ -53,8 +54,8 @@ class TransactionsList extends HookWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 8),
             builderDelegate: PagedChildBuilderDelegate<Transaction>(
               itemBuilder: (context, transaction, index) => TransactionCard(
-                reason: transaction.reason,
-                date: transaction.date,
+                reason: transaction.title,
+                date: transaction.createdAt,
                 amount: transaction.amount,
               ),
             ),

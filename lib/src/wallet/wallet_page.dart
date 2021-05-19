@@ -2,19 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../api/api.dart';
 import 'transactions/cubits/transactions_cubit.dart';
 import 'transactions/cubits/transactions_summary_cubit.dart';
 import 'transactions/widgets/transactions_list.dart';
-import 'widgets/horizontal_picker.dart';
+import 'widgets/date_range_picker.dart';
 import 'widgets/overview_cards.dart';
 
 class WalletPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final initialDateRange = DateRangePicker.ranges['${RangeType.oneWeek}']!;
     return MultiBlocProvider(
       providers: [
         BlocProvider<TransactionsCubit>(
-          create: (_) => TransactionsCubit(),
+          create: (_) =>
+              TransactionsCubit(initialFilter: DateFilter(initialDateRange)),
         ),
         BlocProvider<TransactionsSummaryCubit>(
           create: (_) => TransactionsSummaryCubit(),
@@ -27,8 +30,7 @@ class WalletPage extends StatelessWidget {
               child: RefreshIndicator(
                 onRefresh: () => Future.sync(
                   () {
-                    context.read<TransactionsCubit>().refresh();
-                    context.read<TransactionsSummaryCubit>().getSummary();
+                    _onRefresh(context);
                   },
                 ),
                 child: SingleChildScrollView(
@@ -38,12 +40,12 @@ class WalletPage extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        HorizontalPicker(
-                          //TODO:call cubit function
-                          // ignore: avoid_print
-                          onChange: (from) => print(from),
+                        DateRangePicker(
+                          onChange: (from) {
+                            _onUpdateFilter(context, from);
+                          },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 16),
                         OverviewCards(),
                         const SizedBox(height: 24),
                         TransactionsList(),
@@ -57,5 +59,14 @@ class WalletPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void _onUpdateFilter(BuildContext context, DateTime from) {
+    context.read<TransactionsCubit>().updateFilter(DateFilter(from));
+  }
+
+  void _onRefresh(BuildContext context) {
+    context.read<TransactionsCubit>().refresh();
+    context.read<TransactionsSummaryCubit>().getSummary();
   }
 }

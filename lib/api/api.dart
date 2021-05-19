@@ -1,6 +1,9 @@
 export 'api_client.dart';
+export 'common/models/models.dart';
 export 'error/exceptions/exceptions.dart';
 export 'error/models/models.dart';
 export 'ticket/models/models.dart';
+export 'transactions/models/models.dart';
+export 'transactions/transactions_service.dart';
 export 'user/models/models.dart';
 export 'user/user_service.dart';

@@ -17,4 +17,5 @@ Future<void> registerServices() async {
   final client = ApiClient(baseUrl);
   locator.registerFactory(() => client);
   locator.registerLazySingleton(() => UserService(client.dio));
+  locator.registerLazySingleton(() => TransactionsService(client.dio));
 }

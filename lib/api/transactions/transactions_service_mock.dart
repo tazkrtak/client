@@ -50,16 +50,15 @@ class TransactionsServiceMock {
   Future<TransactionsSummary> getSummary() {
     return Future.delayed(
       const Duration(seconds: 2),
-          () {
+      () {
         if (_random.nextBool()) {
-          throw ('Newtork error!');
+          throw 'Newtork error!';
         }
 
         return TransactionsSummary(
-          balance: _random.nextDouble() * 100,
-          recharged: _random.nextDouble() * 100,
-          spent: _random.nextDouble() * 100
-        );
+            balance: _random.nextDouble() * 100,
+            recharged: _random.nextDouble() * 100,
+            spent: _random.nextDouble() * 100);
       },
     );
   }
