@@ -124,9 +124,9 @@ class _LoginButton extends StatelessWidget {
       builder: (context, state) {
         return ProgressButton(
           isLoading: state.status.isSubmissionInProgress,
-          onPressed: !state.status.isValidated
-              ? null
-              : () => context.read<LoginCubit>().submitForm(),
+          onPressed: state.status.isValidated
+              ? () => context.read<LoginCubit>().submitForm()
+              : null,
           child: Text(tr(context).login_title),
         );
       },
