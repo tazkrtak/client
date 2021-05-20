@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
+import '../../l10n/tr.dart';
 import 'transactions/cubits/date_range_cubit.dart';
 import 'transactions/cubits/transactions_cubit.dart';
 import 'transactions/cubits/transactions_summary_cubit.dart';
@@ -20,8 +21,26 @@ class WalletPage extends StatelessWidget {
       ],
       child: Builder(
         builder: (context) {
-          return BlocListener<DateRangeCubit, DateRangeState>(
-            listener: (context, state) => _reload(context),
+          return MultiBlocListener(
+            listeners: [
+              BlocListener<DateRangeCubit, DateRangeState>(
+                  listener: (context, state) => _reload(context)),
+              BlocListener<TransactionsSummaryCubit, TransactionsSummaryState>(
+                listener: (context, state) {
+                  if (state is TransactionsSummaryError) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        SnackBar(
+                          backgroundColor: Theme.of(context).errorColor,
+                          content:
+                              Text(state.message ?? tr(context).error_generic),
+                        ),
+                      );
+                  }
+                },
+              )
+            ],
             child: Scaffold(
               body: SafeArea(
                 child: RefreshIndicator(

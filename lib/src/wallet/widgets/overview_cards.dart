@@ -8,37 +8,6 @@ import '../transactions/cubits/transactions_summary_cubit.dart';
 class OverviewCards extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
-      builder: (context, state) {
-        if (state is TransactionsSummarySuccess) {
-          return _CardsGrid(
-            balance: state.balance,
-            recharged: state.recharged,
-            spent: state.spent,
-          );
-        } else if (state is TransactionsSummaryLoading) {
-          return _SummaryLoading();
-        } else {
-          return _SummaryError();
-        }
-      },
-    );
-  }
-}
-
-class _CardsGrid extends StatelessWidget {
-  final double balance;
-  final double recharged;
-  final double spent;
-
-  const _CardsGrid({
-    required this.balance,
-    required this.recharged,
-    required this.spent,
-  });
-
-  @override
-  Widget build(BuildContext context) {
     return SizedBox(
       height: 256,
       child: Row(
@@ -48,7 +17,7 @@ class _CardsGrid extends StatelessWidget {
               children: [
                 Expanded(
                   flex: 3,
-                  child: _BalanceCard(balance),
+                  child: _BalanceCard(),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
@@ -62,11 +31,11 @@ class _CardsGrid extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: _RechargedCard(recharged),
+                  child: _RechargedCard(),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
-                  child: _SpentCard(spent),
+                  child: _SpentCard(),
                 ),
               ],
             ),
@@ -78,10 +47,6 @@ class _CardsGrid extends StatelessWidget {
 }
 
 class _BalanceCard extends StatelessWidget {
-  final double balance;
-
-  const _BalanceCard(this.balance);
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -100,22 +65,37 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
-              trNumber(context, balance.round()),
-              style: const TextStyle(
-                color: Colors.black87,
-                fontSize: 48,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            Text(
-              tr(context).app_currency,
-              style: const TextStyle(
-                color: Colors.black87,
-                fontSize: 16,
-                fontWeight: FontWeight.normal,
-                fontStyle: FontStyle.italic,
-              ),
+            BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
+              builder: (context, state) {
+                return state is TransactionsSummarySuccess
+                    ? RichText(
+                        text: TextSpan(
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: trNumber(context, state.balance.round()),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black87,
+                                fontSize: 48,
+                              ),
+                            ),
+                            const TextSpan(text: '\n'),
+                            TextSpan(
+                              text: tr(context).app_currency,
+                              style: const TextStyle(
+                                fontStyle: FontStyle.italic,
+                                color: Colors.black87,
+                                fontSize: 16,
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                    : const Icon(
+                        LineAwesomeIcons.minus,
+                        color: Colors.black87,
+                      );
+              },
             ),
             const Align(
               alignment: AlignmentDirectional.bottomEnd,
@@ -164,10 +144,6 @@ class _RechargeActionCard extends StatelessWidget {
 }
 
 class _RechargedCard extends StatelessWidget {
-  final double recharged;
-
-  const _RechargedCard(this.recharged);
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -194,29 +170,37 @@ class _RechargedCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: trNumber(context, recharged.round()),
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
+                BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
+                  builder: (context, state) {
+                    return state is TransactionsSummarySuccess
+                        ? RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: trNumber(
+                                      context, state.recharged.round()),
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    fontSize: 24,
+                                  ),
+                                ),
+                                const TextSpan(text: ' '),
+                                TextSpan(
+                                  text: tr(context).app_currency,
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : const Icon(
+                            LineAwesomeIcons.minus,
                             color: Colors.black87,
-                            fontSize: 24,
-                          ),
-                        ),
-                        const TextSpan(text: ' '),
-                        TextSpan(
-                          text: tr(context).app_currency,
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
-                            color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                          );
+                  },
                 ),
               ],
             ),
@@ -228,10 +212,6 @@ class _RechargedCard extends StatelessWidget {
 }
 
 class _SpentCard extends StatelessWidget {
-  final double spent;
-
-  const _SpentCard(this.spent);
-
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -258,62 +238,39 @@ class _SpentCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                Flexible(
-                  child: RichText(
-                    text: TextSpan(
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: trNumber(context, spent.round()),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                              fontSize: 24),
-                        ),
-                        const TextSpan(text: ' '),
-                        TextSpan(
-                          text: tr(context).app_currency,
-                          style: const TextStyle(
-                            fontStyle: FontStyle.italic,
+                BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
+                  builder: (context, state) {
+                    return state is TransactionsSummarySuccess
+                        ? RichText(
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: trNumber(context, state.spent.round()),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black87,
+                                      fontSize: 24),
+                                ),
+                                const TextSpan(text: ' '),
+                                TextSpan(
+                                  text: tr(context).app_currency,
+                                  style: const TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : const Icon(
+                            LineAwesomeIcons.minus,
                             color: Colors.black87,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                          );
+                  },
                 ),
               ],
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _SummaryError extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).errorColor.withOpacity(0.2),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Center(
-          child: Text(tr(context).error_generic),
-        ),
-      ),
-    );
-  }
-}
-
-class _SummaryLoading extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const Card(
-      color: Colors.transparent,
-      child: Padding(
-        padding: EdgeInsets.all(24),
-        child: Center(
-          child: CircularProgressIndicator(),
         ),
       ),
     );
