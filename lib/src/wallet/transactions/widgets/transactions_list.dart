@@ -6,6 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../../../../api/api.dart';
 import '../../../../common/hooks/paging_hook.dart';
 import '../../../../l10n/tr.dart';
+import '../cubits/date_range_cubit.dart';
 import '../cubits/transactions_cubit.dart';
 import '../cubits/transactions_state.dart';
 import 'transaction_card.dart';
@@ -16,14 +17,18 @@ class TransactionsList extends HookWidget {
     final cubit = context.read<TransactionsCubit>();
     final _pagingController = usePagingController<Transaction>(
       1,
-      (pageIndex) => cubit.fetch(pageIndex),
+      (pageIndex) {
+        final rangeState = context.read<DateRangeCubit>().state;
+        final filter = rangeState.toDateFilter();
+        return cubit.fetch(pageIndex, filter);
+      },
     );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          'Transactions',
+          'Transactions', // TODO: localize
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
@@ -36,14 +41,15 @@ class TransactionsList extends HookWidget {
               if (state.isLast) {
                 _pagingController.appendLastPage(state.transactions);
               } else {
-                _pagingController.appendPage(state.transactions,
-                    state.isLast ? null : state.nextPageKey);
+                _pagingController.appendPage(
+                  state.transactions,
+                  state.nextPageKey,
+                );
               }
             } else if (state is TransactionsError) {
-              _pagingController.error =
-                  state.message ?? tr(context).error_generic;
-            } else if (state is TransactionsRefresh ||
-                state is TransactionsFilterUpdate) {
+              final message = state.message ?? tr(context).error_generic;
+              _pagingController.error = message;
+            } else if (state is TransactionsRefresh) {
               _pagingController.refresh();
             }
           },

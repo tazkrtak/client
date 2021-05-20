@@ -1,54 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../l10n/tr.dart';
-
-enum RangeType {
-  oneWeek,
-  oneMonth,
-  threeMonth,
-}
+import '../transactions/cubits/date_range_cubit.dart';
 
 class DateRangePicker extends StatelessWidget {
-  final void Function(DateTime) onChange;
-  static final DateTime _now = DateTime.now();
-
-  static final Map<String, DateTime> ranges = {
-    '${RangeType.oneWeek}': DateTime(
-      _now.year,
-      _now.month,
-      _now.day - _now.weekday,
-    ),
-    '${RangeType.oneMonth}': DateTime(
-      _now.year,
-      _now.month - 1,
-      _now.day,
-    ),
-    '${RangeType.threeMonth}': DateTime(
-      _now.year,
-      _now.month - 3,
-      _now.day,
-    )
-  };
-
-  const DateRangePicker({required this.onChange});
+  const DateRangePicker();
 
   @override
   Widget build(BuildContext context) {
-    final controller = AdvancedSegmentController('${RangeType.oneWeek}');
+    final controller = AdvancedSegmentController('${DateRange.oneWeek}');
 
     controller.addListener(() {
-      onChange(ranges[controller.value]!);
+      final key = controller.value;
+      final range = DateRange.values.firstWhere((r) => '$r' == key);
+      context.read<DateRangeCubit>().updateRange(range);
     });
 
     return Center(
       child: AdvancedSegment(
         controller: controller,
-        segments: {
-          '${RangeType.oneWeek}': tr(context).tabBar_oneWeek,
-          '${RangeType.oneMonth}': tr(context).tabBar_oneMonth,
-          '${RangeType.threeMonth}': tr(context).tabBar_ThreeMonth,
-        },
         inactiveStyle: const TextStyle(
           color: Colors.black45,
           fontSize: 16,
@@ -66,6 +38,11 @@ class DateRangePicker extends StatelessWidget {
           horizontal: 24,
         ),
         sliderOffset: 6,
+        segments: {
+          '${DateRange.oneWeek}': tr(context).tabBar_oneWeek,
+          '${DateRange.oneMonth}': tr(context).tabBar_oneMonth,
+          '${DateRange.threeMonth}': tr(context).tabBar_ThreeMonth,
+        },
       ),
     );
   }

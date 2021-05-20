@@ -2,41 +2,14 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../api/api.dart';
 
-abstract class TransactionsState extends Equatable {}
-
-class TransactionsLoading extends TransactionsState {
+abstract class TransactionsState extends Equatable {
   @override
   List<Object?> get props => [];
 }
 
-class TransactionSuccess extends TransactionsState {
-  final List<Transaction> transactions;
-  final int pageKey;
-  final int pageSize;
-  final int total;
-  final bool isLast;
-  final DateFilter filter;
+class TransactionsRefresh extends TransactionsState {}
 
-  int? get nextPageKey => isLast ? null : pageKey + 1;
-
-  TransactionSuccess(
-      {required this.pageSize,
-      required this.transactions,
-      required this.pageKey,
-      required this.total,
-      required this.isLast,
-      required this.filter});
-
-  @override
-  List<Object?> get props => [
-        transactions,
-        pageKey,
-        pageSize,
-        total,
-        isLast,
-        filter,
-      ];
-}
+class TransactionsLoading extends TransactionsState {}
 
 class TransactionsError extends TransactionsState {
   final String? message;
@@ -47,16 +20,32 @@ class TransactionsError extends TransactionsState {
   List<Object?> get props => [message];
 }
 
-class TransactionsRefresh extends TransactionsState {
-  @override
-  List<Object?> get props => [];
-}
-
-class TransactionsFilterUpdate extends TransactionsState {
+class TransactionSuccess extends TransactionsState {
+  final int pageKey;
+  final int pageSize;
+  final int total;
+  final bool isLast;
   final DateFilter filter;
+  final List<Transaction> transactions;
 
-  TransactionsFilterUpdate(this.filter);
+  int? get nextPageKey => isLast ? null : pageKey + 1;
+
+  TransactionSuccess({
+    required this.pageKey,
+    required this.pageSize,
+    required this.total,
+    required this.isLast,
+    required this.filter,
+    required this.transactions,
+  });
 
   @override
-  List<Object?> get props => [filter];
+  List<Object?> get props => [
+        pageKey,
+        pageSize,
+        total,
+        isLast,
+        filter,
+        transactions,
+      ];
 }
