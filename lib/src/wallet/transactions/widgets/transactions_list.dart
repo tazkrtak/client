@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../../api/api.dart';
 import '../../../../common/hooks/paging_hook.dart';
@@ -24,17 +25,21 @@ class TransactionsList extends HookWidget {
       },
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return MultiSliver(
       children: [
-        const Text(
-          'Transactions', // TODO: localize
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
+        SliverPinnedHeader(
+          child: Container(
+            padding: const EdgeInsets.only(bottom: 16),
+            color: Theme.of(context).canvasColor,
+            child: Text(
+              tr(context).wallet_transactions,
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
-        const SizedBox(height: 16),
         BlocListener<TransactionsCubit, TransactionsState>(
           listener: (context, state) {
             if (state is TransactionSuccess) {
@@ -53,9 +58,7 @@ class TransactionsList extends HookWidget {
               _pagingController.refresh();
             }
           },
-          child: PagedListView.separated(
-            primary: false,
-            shrinkWrap: true,
+          child: PagedSliverList.separated(
             pagingController: _pagingController,
             separatorBuilder: (context, index) => const SizedBox(height: 8),
             builderDelegate: PagedChildBuilderDelegate<Transaction>(

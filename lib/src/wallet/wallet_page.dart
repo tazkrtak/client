@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sliver_tools/sliver_tools.dart';
 
 import 'transactions/cubits/date_range_cubit.dart';
 import 'transactions/cubits/transactions_cubit.dart';
@@ -25,21 +26,34 @@ class WalletPage extends StatelessWidget {
               body: SafeArea(
                 child: RefreshIndicator(
                   onRefresh: () async => _reload(context),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(24),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          const DateRangePicker(),
-                          const SizedBox(height: 16),
-                          OverviewCards(),
-                          const SizedBox(height: 24),
-                          TransactionsList(),
-                        ],
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverPinnedHeader(
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          color: Theme.of(context).canvasColor,
+                          child: const DateRangePicker(),
+                        ),
                       ),
-                    ),
+                      SliverPadding(
+                        padding: const EdgeInsets.only(
+                          bottom: 24,
+                          left: 24,
+                          right: 24,
+                        ),
+                        sliver: SliverToBoxAdapter(
+                          child: OverviewCards(),
+                        ),
+                      ),
+                      SliverPadding(
+                        padding: const EdgeInsets.only(
+                          bottom: 24,
+                          left: 24,
+                          right: 24,
+                        ),
+                        sliver: TransactionsList(),
+                      ),
+                    ],
                   ),
                 ),
               ),

@@ -43,6 +43,7 @@ dependencies:
   path_provider: ^2.0.1
   qr_flutter: ^4.0.0
   retrofit: ^2.0.0-beta1
+  sliver_tools: ^0.2.2
   validators: ^3.0.0
 
 dev_dependencies:

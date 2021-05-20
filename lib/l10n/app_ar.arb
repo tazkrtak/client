@@ -42,6 +42,7 @@
   "wallet_recharge" : "إعادة الشحن",
   "wallet_recharged" : "تم شحن",
   "wallet_spent" : "تم صرف",
+  "wallet_transactions": "المعاملات",
   "tabBar_oneWeek": "اسبوع",
   "tabBar_oneMonth": "شهر",
   "tabBar_ThreeMonth": "ثلاث اشهر"
