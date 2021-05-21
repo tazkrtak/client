@@ -2,28 +2,31 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../api/transactions/transactions_service_mock.dart';
+import '../../../../api/api.dart';
+import '../../../../services/locator.dart';
 
 part 'transactions_summary_state.dart';
 
 class TransactionsSummaryCubit extends Cubit<TransactionsSummaryState> {
-  final service = TransactionsServiceMock();
-
   TransactionsSummaryCubit() : super(TransactionsSummaryLoading());
 
-  Future<void> getSummary() async {
+  Future<void> getSummary(DateFilter filter) async {
+    final service = locator.get<TransactionsService>();
+
     emit(TransactionsSummaryLoading());
     try {
-      final result = await service.getSummary();
+      final result = await service.getSummary(filter);
       emit(TransactionsSummarySuccess(
         spent: result.spent,
         recharged: result.recharged,
-        balance: result.balance,
       ));
-    } on DioError {
-      emit(TransactionsSummaryError(null));
+    } on DioError catch (dioError) {
+      final e = dioError.error;
+      if (e is ServerException) {
+        emit(TransactionsSummaryError(e.message));
+      }
     } catch (e) {
-      emit(TransactionsSummaryError(e.toString()));
+      emit(TransactionsSummaryError());
     }
   }
 }

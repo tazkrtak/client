@@ -1,7 +1,7 @@
-import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
+import 'package:retrofit/retrofit.dart';
 
-import 'models/models.dart';
+import '../api.dart';
 
 part 'user_service.g.dart';
 
@@ -14,4 +14,10 @@ abstract class UserService {
 
   @POST('/users/login')
   Future<User> login(@Body() LoginBody loginBody);
+
+  @GET('users/credit')
+  Future<Credit> getCredit();
+
+  @POST('users/recharge')
+  Future<Transaction> recharge(@Body() RechargeBody rechargeBody);
 }

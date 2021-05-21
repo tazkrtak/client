@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../l10n/tr.dart';
+import 'transactions/cubits/credit_cubit.dart';
 import 'transactions/cubits/date_range_cubit.dart';
 import 'transactions/cubits/transactions_cubit.dart';
 import 'transactions/cubits/transactions_summary_cubit.dart';
@@ -16,7 +17,9 @@ class WalletPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => DateRangeCubit()),
+        // TODO: Get summary on creating the cubit
         BlocProvider(create: (_) => TransactionsSummaryCubit()),
+        BlocProvider(create: (_) => CreditCubit()..getBalance()),
         BlocProvider(create: (_) => TransactionsCubit()),
       ],
       child: Builder(
@@ -39,7 +42,22 @@ class WalletPage extends StatelessWidget {
                       );
                   }
                 },
-              )
+              ),
+              BlocListener<CreditCubit, CreditState>(
+                listener: (context, state) {
+                  if (state is CreditError) {
+                    ScaffoldMessenger.of(context)
+                      ..hideCurrentSnackBar()
+                      ..showSnackBar(
+                        SnackBar(
+                          backgroundColor: Theme.of(context).errorColor,
+                          content:
+                              Text(state.message ?? tr(context).error_generic),
+                        ),
+                      );
+                  }
+                },
+              ),
             ],
             child: Scaffold(
               body: SafeArea(
@@ -85,6 +103,9 @@ class WalletPage extends StatelessWidget {
 
   void _reload(BuildContext context) {
     context.read<TransactionsCubit>().refresh();
-    context.read<TransactionsSummaryCubit>().getSummary();
+    final dateRangeState = context.read<DateRangeCubit>().state;
+    context
+        .read<TransactionsSummaryCubit>()
+        .getSummary(dateRangeState.toDateFilter());
   }
 }

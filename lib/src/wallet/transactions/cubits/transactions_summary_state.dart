@@ -8,25 +8,23 @@ class TransactionsSummaryLoading extends TransactionsSummaryState {
 }
 
 class TransactionsSummarySuccess extends TransactionsSummaryState {
-  final double balance;
   final double recharged;
   final double spent;
 
   TransactionsSummarySuccess({
-    required this.balance,
     required this.recharged,
     required this.spent,
   });
 
   @override
-  List<Object> get props => [balance, recharged, spent];
+  List<Object> get props => [recharged, spent];
 }
 
 class TransactionsSummaryError extends TransactionsSummaryState {
   final String? message;
 
-  TransactionsSummaryError(this.message);
+  TransactionsSummaryError([this.message]);
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [message];
 }

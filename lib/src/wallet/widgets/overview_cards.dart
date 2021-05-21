@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
+import '../../../api/api.dart';
 import '../../../l10n/tr.dart';
+import '../../../services/locator.dart';
+import '../transactions/cubits/credit_cubit.dart';
 import '../transactions/cubits/transactions_summary_cubit.dart';
 
 class OverviewCards extends StatelessWidget {
@@ -65,14 +68,14 @@ class _BalanceCard extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 8),
-            BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
+            BlocBuilder<CreditCubit, CreditState>(
               builder: (context, state) {
-                return state is TransactionsSummarySuccess
+                return state is CreditSuccess
                     ? RichText(
                         text: TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                              text: trNumber(context, state.balance.round()),
+                              text: trNumber(context, state.balance),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black87,
@@ -116,6 +119,23 @@ class _RechargeActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
+      onTap: () {
+        // TODO: Move recharge logic to Cubit after adding recharge screen
+        final service = locator.get<UserService>();
+        try {
+          service.recharge(RechargeBody(rechargeAmount: 50));
+          context.read<CreditCubit>().incrementBalance(50);
+        } catch (e) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                backgroundColor: Theme.of(context).errorColor,
+                content: Text(tr(context).error_generic),
+              ),
+            );
+        }
+      },
       child: Card(
         color: Theme.of(context).primaryColor,
         child: Padding(

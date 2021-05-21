@@ -13,5 +13,5 @@ class DateFilter extends BaseFilter {
   DateFilter(this.from);
 
   @override
-  Map<String, dynamic>? toJson() => _$DateFilterToJson(this);
+  Map<String, dynamic> toJson() => _$DateFilterToJson(this);
 }
