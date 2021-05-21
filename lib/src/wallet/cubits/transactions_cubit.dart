@@ -1,9 +1,11 @@
+import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-import '../../../../api/api.dart';
-import '../../../../services/locator.dart';
-import 'transactions_state.dart';
+import '../../../api/api.dart';
+import '../../../services/locator.dart';
+
+part 'transactions_state.dart';
 
 class TransactionsCubit extends Cubit<TransactionsState> {
   final int pageSize;

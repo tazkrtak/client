@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../api/api.dart';
-import '../../../../services/locator.dart';
+import '../../../api/api.dart';
+import '../../../services/locator.dart';
 
 part 'credit_state.dart';
 

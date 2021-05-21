@@ -9,7 +9,6 @@ import '../../../common/hooks/paging_hook.dart';
 import '../../../l10n/tr.dart';
 import '../cubits/date_range_cubit.dart';
 import '../cubits/transactions_cubit.dart';
-import '../cubits/transactions_state.dart';
 import 'transaction_card.dart';
 
 class TransactionsList extends HookWidget {

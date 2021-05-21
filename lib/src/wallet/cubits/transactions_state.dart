@@ -1,6 +1,4 @@
-import 'package:equatable/equatable.dart';
-
-import '../../../../api/api.dart';
+part of 'transactions_cubit.dart';
 
 abstract class TransactionsState extends Equatable {
   @override
