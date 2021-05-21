@@ -6,17 +6,10 @@ enum DateRange {
   threeMonth,
 }
 
-class DateRangeState extends Equatable {
-  final DateRange range;
-
-  const DateRangeState(this.range);
-
-  DateFilter toDateFilter() => DateFilter(_getDate());
-
-  DateTime _getDate() {
+extension DateRangeExtensions on DateRange {
+  DateTime get date {
     final DateTime now = DateTime.now();
-
-    switch (range) {
+    switch (this) {
       case DateRange.oneWeek:
         return DateTime(
           now.year,
@@ -38,6 +31,5 @@ class DateRangeState extends Equatable {
     }
   }
 
-  @override
-  List<Object?> get props => [range];
+  DateFilter get dateFilter => DateFilter(date);
 }

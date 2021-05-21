@@ -17,8 +17,11 @@ class WalletPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => DateRangeCubit()),
-        // TODO: Get summary on creating the cubit
-        BlocProvider(create: (_) => TransactionsSummaryCubit()),
+        BlocProvider(
+            create: (_) => TransactionsSummaryCubit()
+              ..getSummary(
+                DateRangeCubit.defaultFilter,
+              )),
         BlocProvider(create: (_) => CreditCubit()..getBalance()),
         BlocProvider(create: (_) => TransactionsCubit()),
       ],
@@ -26,7 +29,7 @@ class WalletPage extends StatelessWidget {
         builder: (context) {
           return MultiBlocListener(
             listeners: [
-              BlocListener<DateRangeCubit, DateRangeState>(
+              BlocListener<DateRangeCubit, DateRange>(
                   listener: (context, state) => _reload(context)),
               BlocListener<TransactionsSummaryCubit, TransactionsSummaryState>(
                 listener: (context, state) {
@@ -103,9 +106,10 @@ class WalletPage extends StatelessWidget {
 
   void _reload(BuildContext context) {
     context.read<TransactionsCubit>().refresh();
+    context.read<CreditCubit>().getBalance();
     final dateRangeState = context.read<DateRangeCubit>().state;
     context
         .read<TransactionsSummaryCubit>()
-        .getSummary(dateRangeState.toDateFilter());
+        .getSummary(dateRangeState.dateFilter);
   }
 }

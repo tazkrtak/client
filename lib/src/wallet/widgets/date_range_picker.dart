@@ -10,7 +10,8 @@ class DateRangePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = AdvancedSegmentController('${DateRange.oneWeek}');
+    final controller =
+        AdvancedSegmentController('${DateRangeCubit.initialState}');
 
     controller.addListener(() {
       final key = controller.value;

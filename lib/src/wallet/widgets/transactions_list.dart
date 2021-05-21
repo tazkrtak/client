@@ -20,8 +20,7 @@ class TransactionsList extends HookWidget {
       1,
       (pageIndex) {
         final rangeState = context.read<DateRangeCubit>().state;
-        final filter = rangeState.toDateFilter();
-        return cubit.fetch(pageIndex, filter);
+        return cubit.fetch(pageIndex, rangeState.dateFilter);
       },
     );
 

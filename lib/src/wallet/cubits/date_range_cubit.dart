@@ -1,14 +1,16 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
-
-import '../../../../api/api.dart';
+import 'package:tazkrtak/api/api.dart';
 
 part 'date_range_state.dart';
 
-class DateRangeCubit extends Cubit<DateRangeState> {
-  DateRangeCubit() : super(const DateRangeState(DateRange.oneWeek));
+class DateRangeCubit extends Cubit<DateRange> {
+  static DateRange get initialState => DateRange.oneWeek;
+
+  static DateFilter get defaultFilter => DateFilter(initialState.date);
+
+  DateRangeCubit() : super(initialState);
 
   void updateRange(DateRange range) {
-    emit(DateRangeState(range));
+    emit(range);
   }
 }
