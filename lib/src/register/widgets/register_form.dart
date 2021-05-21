@@ -255,9 +255,9 @@ class _RegisterButton extends StatelessWidget {
       builder: (context, state) {
         return ProgressButton(
           isLoading: state.status.isSubmissionInProgress,
-          onPressed: !state.status.isValidated
-              ? null
-              : () => context.read<RegisterCubit>().submitForm(),
+          onPressed: state.status.isValidated
+              ? () => context.read<RegisterCubit>().submitForm()
+              : null,
           child: Text(tr(context).register_title),
         );
       },
