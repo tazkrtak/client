@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'transactions_summary.g.dart';
 
-@JsonSerializable(createToJson: false,fieldRename: FieldRename.snake)
+@JsonSerializable(createToJson: false, fieldRename: FieldRename.snake)
 class TransactionsSummary {
   final double spent;
   final double recharged;

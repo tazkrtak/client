@@ -5,8 +5,8 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import '../../../api/api.dart';
 import '../../../l10n/tr.dart';
 import '../../../services/locator.dart';
-import '../transactions/cubits/credit_cubit.dart';
-import '../transactions/cubits/transactions_summary_cubit.dart';
+import '../cubits/credit_cubit.dart';
+import '../cubits/transactions_summary_cubit.dart';
 
 class OverviewCards extends StatelessWidget {
   @override

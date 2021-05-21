@@ -3,7 +3,7 @@ import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../l10n/tr.dart';
-import '../transactions/cubits/date_range_cubit.dart';
+import '../cubits/date_range_cubit.dart';
 
 class DateRangePicker extends StatelessWidget {
   const DateRangePicker();

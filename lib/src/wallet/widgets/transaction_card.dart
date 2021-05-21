@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import '../../../../l10n/tr.dart';
+import '../../../l10n/tr.dart';
 
 class TransactionCard extends StatelessWidget {
   final String reason;

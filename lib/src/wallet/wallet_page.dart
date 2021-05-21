@@ -3,13 +3,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../l10n/tr.dart';
-import 'transactions/cubits/credit_cubit.dart';
-import 'transactions/cubits/date_range_cubit.dart';
-import 'transactions/cubits/transactions_cubit.dart';
-import 'transactions/cubits/transactions_summary_cubit.dart';
-import 'transactions/widgets/transactions_list.dart';
+import 'cubits/credit_cubit.dart';
+import 'cubits/date_range_cubit.dart';
+import 'cubits/transactions_cubit.dart';
+import 'cubits/transactions_summary_cubit.dart';
 import 'widgets/date_range_picker.dart';
 import 'widgets/overview_cards.dart';
+import 'widgets/transactions_list.dart';
 
 class WalletPage extends StatelessWidget {
   @override

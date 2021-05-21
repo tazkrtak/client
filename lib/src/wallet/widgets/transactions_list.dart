@@ -4,9 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-import '../../../../api/api.dart';
-import '../../../../common/hooks/paging_hook.dart';
-import '../../../../l10n/tr.dart';
+import '../../../api/api.dart';
+import '../../../common/hooks/paging_hook.dart';
+import '../../../l10n/tr.dart';
 import '../cubits/date_range_cubit.dart';
 import '../cubits/transactions_cubit.dart';
 import '../cubits/transactions_state.dart';
