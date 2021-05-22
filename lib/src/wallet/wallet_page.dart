@@ -30,7 +30,8 @@ class WalletPage extends StatelessWidget {
           return MultiBlocListener(
             listeners: [
               BlocListener<DateRangeCubit, DateRange>(
-                  listener: (context, state) => _reload(context)),
+                listener: (context, state) => _onRangeUpdated(context),
+              ),
               BlocListener<TransactionsSummaryCubit, TransactionsSummaryState>(
                 listener: (context, state) {
                   if (state is TransactionsSummaryError) {
@@ -65,7 +66,10 @@ class WalletPage extends StatelessWidget {
             child: Scaffold(
               body: SafeArea(
                 child: RefreshIndicator(
-                  onRefresh: () async => _reload(context),
+                  onRefresh: () async {
+                    context.read<CreditCubit>().getBalance();
+                    _onRangeUpdated(context);
+                  },
                   child: CustomScrollView(
                     slivers: [
                       SliverPinnedHeader(
@@ -104,10 +108,11 @@ class WalletPage extends StatelessWidget {
     );
   }
 
-  void _reload(BuildContext context) {
+  void _onRangeUpdated(BuildContext context) {
     context.read<TransactionsCubit>().refresh();
-    context.read<CreditCubit>().getBalance();
+
     final dateRangeState = context.read<DateRangeCubit>().state;
+
     context
         .read<TransactionsSummaryCubit>()
         .getSummary(dateRangeState.dateFilter);

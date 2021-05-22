@@ -32,11 +32,21 @@ class OverviewCards extends StatelessWidget {
             child: Column(
               children: [
                 Expanded(
-                  child: _RechargedCard(),
+                  child: _SummaryCard(
+                    color: Theme.of(context).primaryColor,
+                    icon: LineAwesomeIcons.arrow_up,
+                    title: tr(context).wallet_recharged,
+                    amountResolver: (state) => state.recharged,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Expanded(
-                  child: _SpentCard(),
+                  child: _SummaryCard(
+                    color: Theme.of(context).errorColor,
+                    icon: LineAwesomeIcons.arrow_down,
+                    title: tr(context).wallet_spent,
+                    amountResolver: (state) => state.spent,
+                  ),
                 ),
               ],
             ),
@@ -55,49 +65,36 @@ class _BalanceCard extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               tr(context).wallet_currentBalance,
               style: const TextStyle(
-                color: Colors.black87,
                 fontSize: 16,
               ),
             ),
             const SizedBox(height: 8),
             BlocBuilder<CreditCubit, CreditState>(
               builder: (context, state) {
-                return state is CreditSuccess
-                    ? RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: trNumber(context, state.balance),
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                                fontSize: 48,
-                              ),
-                            ),
-                            const TextSpan(text: '\n'),
-                            TextSpan(
-                              text: tr(context).app_currency,
-                              style: const TextStyle(
-                                fontStyle: FontStyle.italic,
-                                color: Colors.black87,
-                                fontSize: 16,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const Icon(
-                        LineAwesomeIcons.minus,
-                        color: Colors.black87,
-                      );
+                return Text(
+                  state is CreditSuccess
+                      ? trNumber(context, state.balance)
+                      : '—',
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 48,
+                  ),
+                );
               },
             ),
+            Text(
+              tr(context).app_currency,
+              style: const TextStyle(
+                fontStyle: FontStyle.italic,
+                fontSize: 16,
+              ),
+            ),
+            const Spacer(),
             const Align(
               alignment: AlignmentDirectional.bottomEnd,
               child: Icon(
@@ -120,10 +117,12 @@ class _RechargeActionCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: ElevatedButton(
         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-          padding: MaterialStateProperty.all(
-            const EdgeInsets.symmetric(horizontal: 24),
-          )
-        ),
+              padding: MaterialStateProperty.all(
+                const EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+              ),
+            ),
         onPressed: () {
           // TODO: Move recharge logic to Cubit after adding recharge screen
           context.read<CreditCubit>().recharge(50);
@@ -150,133 +149,65 @@ class _RechargeActionCard extends StatelessWidget {
   }
 }
 
-class _RechargedCard extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Theme.of(context).primaryColor.withOpacity(0.2),
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Icon(
-              LineAwesomeIcons.arrow_up,
-              color: Theme.of(context).primaryColor,
-              size: 32,
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  tr(context).wallet_recharged,
-                  style: const TextStyle(
-                    color: Colors.black87,
-                    fontSize: 16,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
-                  builder: (context, state) {
-                    return state is TransactionsSummarySuccess
-                        ? RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: trNumber(
-                                    context,
-                                    state.recharged.round(),
-                                  ),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                                const TextSpan(text: ' '),
-                                TextSpan(
-                                  text: tr(context).app_currency,
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : const Icon(
-                            LineAwesomeIcons.minus,
-                            color: Colors.black87,
-                          );
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+class _SummaryCard extends StatelessWidget {
+  final IconData icon;
+  final Color color;
+  final String title;
+  final double Function(TransactionsSummarySuccess) amountResolver;
 
-class _SpentCard extends StatelessWidget {
+  const _SummaryCard({
+    required this.icon,
+    required this.color,
+    required this.title,
+    required this.amountResolver,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Theme.of(context).errorColor.withOpacity(0.2),
+      color: color.withOpacity(0.2),
       child: Padding(
         padding: const EdgeInsets.all(24),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Icon(
-              LineAwesomeIcons.arrow_down,
-              color: Theme.of(context).errorColor,
+              icon,
+              color: color,
               size: 32,
             ),
+            const SizedBox(width: 12),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  tr(context).wallet_spent,
+                  title,
                   style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 BlocBuilder<TransactionsSummaryCubit, TransactionsSummaryState>(
                   builder: (context, state) {
-                    return state is TransactionsSummarySuccess
-                        ? RichText(
-                            text: TextSpan(
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: trNumber(context, state.spent.round()),
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black87,
-                                    fontSize: 24,
-                                  ),
-                                ),
-                                const TextSpan(text: ' '),
-                                TextSpan(
-                                  text: tr(context).app_currency,
-                                  style: const TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          )
-                        : const Icon(
-                            LineAwesomeIcons.minus,
-                            color: Colors.black87,
-                          );
+                    return Text(
+                      state is TransactionsSummarySuccess
+                          ? trNumber(context, amountResolver(state).round())
+                          : '—',
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                        fontSize: 24,
+                      ),
+                    );
                   },
+                ),
+                Text(
+                  tr(context).app_currency,
+                  style: const TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
