@@ -34,7 +34,7 @@ class OverviewCards extends StatelessWidget {
                 Expanded(
                   child: _SummaryCard(
                     color: Theme.of(context).primaryColor,
-                    icon: LineAwesomeIcons.arrow_up,
+                    icon: LineAwesomeIcons.arrow_down,
                     title: tr(context).wallet_recharged,
                     amountResolver: (state) => state.recharged,
                   ),
@@ -43,7 +43,7 @@ class OverviewCards extends StatelessWidget {
                 Expanded(
                   child: _SummaryCard(
                     color: Theme.of(context).errorColor,
-                    icon: LineAwesomeIcons.arrow_down,
+                    icon: LineAwesomeIcons.arrow_up,
                     title: tr(context).wallet_spent,
                     amountResolver: (state) => state.spent,
                   ),
