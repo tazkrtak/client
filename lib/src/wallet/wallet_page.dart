@@ -20,8 +20,10 @@ class WalletPage extends StatelessWidget {
         BlocProvider(create: (_) => CreditCubit()..getBalance()),
         BlocProvider(create: (_) => TransactionsCubit()),
         BlocProvider(
-          create: (_) => TransactionsSummaryCubit()
-            ..getSummary(DateRangeCubit.initialState.dateFilter),
+          create: (_) {
+            final filter = DateRangeCubit.initialState.dateFilter;
+            return TransactionsSummaryCubit()..getSummary(filter);
+          },
         ),
       ],
       child: Builder(
@@ -31,33 +33,17 @@ class WalletPage extends StatelessWidget {
               BlocListener<DateRangeCubit, DateRange>(
                 listener: (context, state) => _onRangeUpdated(context),
               ),
-              BlocListener<TransactionsSummaryCubit, TransactionsSummaryState>(
-                listener: (context, state) {
-                  if (state is TransactionsSummaryError) {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        SnackBar(
-                          backgroundColor: Theme.of(context).errorColor,
-                          content:
-                              Text(state.message ?? tr(context).error_generic),
-                        ),
-                      );
-                  }
-                },
-              ),
               BlocListener<CreditCubit, CreditState>(
                 listener: (context, state) {
                   if (state is CreditError) {
-                    ScaffoldMessenger.of(context)
-                      ..hideCurrentSnackBar()
-                      ..showSnackBar(
-                        SnackBar(
-                          backgroundColor: Theme.of(context).errorColor,
-                          content:
-                              Text(state.message ?? tr(context).error_generic),
-                        ),
-                      );
+                    _onError(context, state.message);
+                  }
+                },
+              ),
+              BlocListener<TransactionsSummaryCubit, TransactionsSummaryState>(
+                listener: (context, state) {
+                  if (state is TransactionsSummaryError) {
+                    _onError(context, state.message);
                   }
                 },
               ),
@@ -118,5 +104,16 @@ class WalletPage extends StatelessWidget {
     final range = context.read<DateRangeCubit>().state;
     context.read<TransactionsSummaryCubit>().getSummary(range.dateFilter);
     context.read<TransactionsCubit>().refresh();
+  }
+
+  void _onError(BuildContext context, String? message) {
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(
+        SnackBar(
+          backgroundColor: Theme.of(context).errorColor,
+          content: Text(message ?? tr(context).error_generic),
+        ),
+      );
   }
 }
