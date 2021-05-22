@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../l10n/tr.dart';
 
@@ -21,8 +19,8 @@ class TransactionCard extends StatelessWidget {
       color: Theme.of(context).highlightColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 8,
+          horizontal: 24,
+          vertical: 12,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -33,35 +31,26 @@ class TransactionCard extends StatelessWidget {
                 Text(
                   reason,
                   style: const TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 18.6,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 4),
                 Text(
                   trDateTime(context, date),
                   style: const TextStyle(
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w400,
                     color: Colors.black54,
                   ),
                 ),
               ],
             ),
-            const Spacer(),
-            Icon(
-              amount.isNegative
-                  ? LineAwesomeIcons.minus
-                  : LineAwesomeIcons.plus,
-              color: amount.isNegative
-                  ? Theme.of(context).errorColor
-                  : Theme.of(context).primaryColor,
-              size: 16,
-            ),
             Text(
+              "${amount.isNegative ? '-' : '+'}"
               '${trNumber(context, amount.abs())} ${tr(context).app_currency}',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
-                fontSize: 24,
+                fontSize: 20,
                 color: amount.isNegative
                     ? Theme.of(context).errorColor
                     : Theme.of(context).primaryColor,
