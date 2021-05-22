@@ -40,9 +40,9 @@ class DateRangePicker extends StatelessWidget {
         ),
         sliderOffset: 6,
         segments: {
-          '${DateRange.oneWeek}': tr(context).tabBar_oneWeek,
-          '${DateRange.oneMonth}': tr(context).tabBar_oneMonth,
-          '${DateRange.threeMonth}': tr(context).tabBar_ThreeMonth,
+          '${DateRange.oneWeek}': tr(context).wallet_oneWeek,
+          '${DateRange.oneMonth}': tr(context).wallet_oneMonth,
+          '${DateRange.threeMonth}': tr(context).wallet_ThreeMonth,
         },
       ),
     );

@@ -43,7 +43,7 @@
   "wallet_recharged" : "Recharged",
   "wallet_spent" : "Spent",
   "wallet_transactions": "Transactions",
-  "tabBar_oneWeek": "1 Week",
-  "tabBar_oneMonth": "1 Month",
-  "tabBar_ThreeMonth": "3 Month"
+  "wallet_oneWeek": "1 Week",
+  "wallet_oneMonth": "1 Month",
+  "wallet_ThreeMonth": "3 Months"
 }
