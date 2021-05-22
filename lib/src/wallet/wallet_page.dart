@@ -17,13 +17,12 @@ class WalletPage extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => DateRangeCubit()),
-        BlocProvider(
-            create: (_) => TransactionsSummaryCubit()
-              ..getSummary(
-                DateRangeCubit.defaultFilter,
-              )),
         BlocProvider(create: (_) => CreditCubit()..getBalance()),
         BlocProvider(create: (_) => TransactionsCubit()),
+        BlocProvider(
+          create: (_) => TransactionsSummaryCubit()
+            ..getSummary(DateRangeCubit.initialState.dateFilter),
+        ),
       ],
       child: Builder(
         builder: (context) {
@@ -95,7 +94,7 @@ class WalletPage extends StatelessWidget {
                               child: Text(
                                 tr(context).wallet_transactions,
                                 style: const TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 22,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -116,10 +115,8 @@ class WalletPage extends StatelessWidget {
   }
 
   void _onRangeUpdated(BuildContext context) {
-    final dateRangeState = context.read<DateRangeCubit>().state;
-    context
-        .read<TransactionsSummaryCubit>()
-        .getSummary(dateRangeState.dateFilter);
+    final range = context.read<DateRangeCubit>().state;
+    context.read<TransactionsSummaryCubit>().getSummary(range.dateFilter);
     context.read<TransactionsCubit>().refresh();
   }
 }

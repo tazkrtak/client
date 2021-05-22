@@ -10,8 +10,9 @@ class DateRangePicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller =
-        AdvancedSegmentController('${DateRangeCubit.initialState}');
+    final controller = AdvancedSegmentController(
+      '${DateRangeCubit.initialState}',
+    );
 
     controller.addListener(() {
       final key = controller.value;
@@ -22,6 +23,14 @@ class DateRangePicker extends StatelessWidget {
     return Center(
       child: AdvancedSegment(
         controller: controller,
+        backgroundColor: Theme.of(context).highlightColor,
+        borderRadius: BorderRadius.circular(16),
+        shadow: null,
+        sliderOffset: 6,
+        itemPadding: const EdgeInsets.symmetric(
+          vertical: 16,
+          horizontal: 24,
+        ),
         inactiveStyle: const TextStyle(
           color: Colors.black45,
           fontSize: 16,
@@ -31,14 +40,6 @@ class DateRangePicker extends StatelessWidget {
           fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
-        backgroundColor: Theme.of(context).highlightColor,
-        borderRadius: BorderRadius.circular(16),
-        shadow: null,
-        itemPadding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 24,
-        ),
-        sliderOffset: 6,
         segments: {
           '${DateRange.oneWeek}': tr(context).wallet_oneWeek,
           '${DateRange.oneMonth}': tr(context).wallet_oneMonth,

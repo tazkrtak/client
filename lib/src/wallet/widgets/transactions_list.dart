@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../../api/api.dart';
 import '../../../common/hooks/paging_hook.dart';

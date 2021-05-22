@@ -7,6 +7,8 @@ enum DateRange {
 }
 
 extension DateRangeExtensions on DateRange {
+  DateFilter get dateFilter => DateFilter(date);
+
   DateTime get date {
     final DateTime now = DateTime.now();
     switch (this) {
@@ -30,6 +32,4 @@ extension DateRangeExtensions on DateRange {
         );
     }
   }
-
-  DateFilter get dateFilter => DateFilter(date);
 }
