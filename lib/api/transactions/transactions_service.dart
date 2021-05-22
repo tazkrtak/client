@@ -13,7 +13,8 @@ abstract class TransactionsService {
 
   @POST('/transactions')
   Future<PaginatedModel<Transaction>> get(
-      @Body() BasePaginatedQuery<DateFilter> registerBody);
+    @Body() BasePaginatedQuery<DateFilter> body,
+  );
 
   @POST('/transactions/summary')
   Future<TransactionsSummary> getSummary(@Body() DateFilter filter);

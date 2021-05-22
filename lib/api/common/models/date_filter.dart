@@ -10,7 +10,7 @@ part 'date_filter.g.dart';
 class DateFilter extends BaseFilter {
   final DateTime from;
 
-  DateFilter(this.from);
+  const DateFilter(this.from);
 
   @override
   Map<String, dynamic> toJson() => _$DateFilterToJson(this);

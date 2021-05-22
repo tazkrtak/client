@@ -11,13 +11,12 @@ class RechargeBody {
   final String nameOnCard;
   final double rechargeAmount;
 
-  // TODO: Remove default values after adding recharge screen
-  RechargeBody({
-    this.cardNumber = '5555555555554444',
-    this.expiryYear = '22',
-    this.expiryMonth = '05',
-    this.cvv = '123',
-    this.nameOnCard = 'Lorem Ipsum',
+  const RechargeBody({
+    required this.cardNumber,
+    required this.expiryYear,
+    required this.expiryMonth,
+    required this.cvv,
+    required this.nameOnCard,
     required this.rechargeAmount,
   });
 

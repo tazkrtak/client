@@ -9,16 +9,15 @@ class Transaction {
   final DateTime createdAt;
   final String title;
 
-  Transaction({
+  const Transaction({
     required this.id,
     required this.amount,
     required this.createdAt,
     required this.title,
   });
 
-  //TODO: Remove casting when this issue is fixed
+  // TODO: Remove casting when this issue is fixed
   // https://github.com/trevorwang/retrofit.dart/issues/330
   factory Transaction.fromJson(Object? json) =>
-      // ignore: cast_nullable_to_non_nullable
-      _$TransactionFromJson(json as Map<String, dynamic>);
+      _$TransactionFromJson(json! as Map<String, dynamic>);
 }

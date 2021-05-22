@@ -5,7 +5,7 @@ class BasePaginatedQuery<T extends BaseFilter> {
   final int pageSize;
   final T filter;
 
-  BasePaginatedQuery({
+  const BasePaginatedQuery({
     required this.page,
     required this.pageSize,
     required this.filter,

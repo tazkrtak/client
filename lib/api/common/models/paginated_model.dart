@@ -3,9 +3,10 @@ import 'package:json_annotation/json_annotation.dart';
 part 'paginated_model.g.dart';
 
 @JsonSerializable(
-    createToJson: false,
-    fieldRename: FieldRename.snake,
-    genericArgumentFactories: true)
+  createToJson: false,
+  fieldRename: FieldRename.snake,
+  genericArgumentFactories: true,
+)
 class PaginatedModel<T> {
   final int page;
   final int pageSize;
@@ -13,7 +14,7 @@ class PaginatedModel<T> {
   final int total;
   final List<T> items;
 
-  PaginatedModel({
+  const PaginatedModel({
     required this.page,
     required this.pageSize,
     required this.isLast,

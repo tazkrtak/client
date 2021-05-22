@@ -7,7 +7,7 @@ class TransactionsSummary {
   final double spent;
   final double recharged;
 
-  TransactionsSummary({
+  const TransactionsSummary({
     required this.spent,
     required this.recharged,
   });

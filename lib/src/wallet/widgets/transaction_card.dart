@@ -33,13 +33,17 @@ class TransactionCard extends StatelessWidget {
                 Text(
                   reason,
                   style: const TextStyle(
-                      fontWeight: FontWeight.w300, fontSize: 20),
+                    fontWeight: FontWeight.w300,
+                    fontSize: 20,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   trDateTime(context, date),
                   style: const TextStyle(
-                      fontWeight: FontWeight.w300, color: Colors.black54),
+                    fontWeight: FontWeight.w300,
+                    color: Colors.black54,
+                  ),
                 ),
               ],
             ),

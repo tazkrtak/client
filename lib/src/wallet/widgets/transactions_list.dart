@@ -16,7 +16,6 @@ class TransactionsList extends HookWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<TransactionsCubit>();
     final _pagingController = usePagingController<Transaction>(
-      1,
       (pageIndex) {
         final rangeState = context.read<DateRangeCubit>().state;
         return cubit.fetch(pageIndex, rangeState.dateFilter);

@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import '../../../api/api.dart';
 import '../../../l10n/tr.dart';
-import '../../../services/locator.dart';
 import '../cubits/credit_cubit.dart';
 import '../cubits/transactions_summary_cubit.dart';
 
@@ -118,45 +116,34 @@ class _BalanceCard extends StatelessWidget {
 class _RechargeActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        // TODO: Move recharge logic to Cubit after adding recharge screen
-        final service = locator.get<UserService>();
-        try {
-          service.recharge(RechargeBody(rechargeAmount: 50));
-          context.read<CreditCubit>().incrementBalance(50);
-        } catch (e) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(
-              SnackBar(
-                backgroundColor: Theme.of(context).errorColor,
-                content: Text(tr(context).error_generic),
-              ),
-            );
-        }
-      },
-      child: Card(
-        color: Theme.of(context).primaryColor,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                tr(context).wallet_recharge,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-              ),
-              const Icon(
-                LineAwesomeIcons.chevron_circle_right,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: ElevatedButton(
+        style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
+          padding: MaterialStateProperty.all(
+            const EdgeInsets.symmetric(horizontal: 24),
+          )
+        ),
+        onPressed: () {
+          // TODO: Move recharge logic to Cubit after adding recharge screen
+          context.read<CreditCubit>().recharge(50);
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              tr(context).wallet_recharge,
+              style: const TextStyle(
                 color: Colors.white,
-                size: 32,
+                fontSize: 20,
               ),
-            ],
-          ),
+            ),
+            const Icon(
+              LineAwesomeIcons.chevron_circle_right,
+              color: Colors.white,
+              size: 32,
+            ),
+          ],
         ),
       ),
     );
@@ -198,7 +185,9 @@ class _RechargedCard extends StatelessWidget {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: trNumber(
-                                      context, state.recharged.round()),
+                                    context,
+                                    state.recharged.round(),
+                                  ),
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
@@ -267,9 +256,10 @@ class _SpentCard extends StatelessWidget {
                                 TextSpan(
                                   text: trNumber(context, state.spent.round()),
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black87,
-                                      fontSize: 24),
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                    fontSize: 24,
+                                  ),
                                 ),
                                 const TextSpan(text: ' '),
                                 TextSpan(

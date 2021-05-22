@@ -6,7 +6,7 @@ part 'credit.g.dart';
 class Credit {
   final double balance;
 
-  Credit(this.balance);
+  const Credit(this.balance);
 
   factory Credit.fromJson(Map<String, dynamic> json) => _$CreditFromJson(json);
 }
