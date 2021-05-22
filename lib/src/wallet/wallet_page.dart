@@ -64,41 +64,48 @@ class WalletPage extends StatelessWidget {
               ),
             ],
             child: Scaffold(
-              body: SafeArea(
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    context.read<CreditCubit>().getBalance();
-                    _onRangeUpdated(context);
-                  },
-                  child: CustomScrollView(
-                    slivers: [
-                      SliverPinnedHeader(
-                        child: Container(
-                          padding: const EdgeInsets.all(16),
-                          color: Theme.of(context).canvasColor,
-                          child: const DateRangePicker(),
-                        ),
+              appBar: AppBar(
+                toolbarHeight: 80,
+                title: const DateRangePicker(),
+                backgroundColor: Theme.of(context).canvasColor,
+                elevation: 0,
+              ),
+              body: RefreshIndicator(
+                onRefresh: () async {
+                  context.read<CreditCubit>().getBalance();
+                  _onRangeUpdated(context);
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    SliverPadding(
+                      padding: const EdgeInsets.only(
+                        bottom: 16,
+                        right: 16,
+                        left: 16,
                       ),
-                      SliverPadding(
-                        padding: const EdgeInsets.only(
-                          bottom: 24,
-                          left: 24,
-                          right: 24,
-                        ),
-                        sliver: SliverToBoxAdapter(
-                          child: OverviewCards(),
-                        ),
+                      sliver: MultiSliver(
+                        children: [
+                          OverviewCards(),
+                          SliverPinnedHeader(
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                              ),
+                              color: Theme.of(context).canvasColor,
+                              child: Text(
+                                tr(context).wallet_transactions,
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          TransactionsList(),
+                        ],
                       ),
-                      SliverPadding(
-                        padding: const EdgeInsets.only(
-                          bottom: 24,
-                          left: 24,
-                          right: 24,
-                        ),
-                        sliver: TransactionsList(),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -109,12 +116,10 @@ class WalletPage extends StatelessWidget {
   }
 
   void _onRangeUpdated(BuildContext context) {
-    context.read<TransactionsCubit>().refresh();
-
     final dateRangeState = context.read<DateRangeCubit>().state;
-
     context
         .read<TransactionsSummaryCubit>()
         .getSummary(dateRangeState.dateFilter);
+    context.read<TransactionsCubit>().refresh();
   }
 }

@@ -22,52 +22,35 @@ class TransactionsList extends HookWidget {
       },
     );
 
-    return MultiSliver(
-      children: [
-        SliverPinnedHeader(
-          child: Container(
-            padding: const EdgeInsets.only(bottom: 16),
-            color: Theme.of(context).canvasColor,
-            child: Text(
-              tr(context).wallet_transactions,
-              style: const TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+    return BlocListener<TransactionsCubit, TransactionsState>(
+      listener: (context, state) {
+        if (state is TransactionSuccess) {
+          if (state.isLast) {
+            _pagingController.appendLastPage(state.transactions);
+          } else {
+            _pagingController.appendPage(
+              state.transactions,
+              state.nextPageKey,
+            );
+          }
+        } else if (state is TransactionsError) {
+          final message = state.message ?? tr(context).error_generic;
+          _pagingController.error = message;
+        } else if (state is TransactionsRefresh) {
+          _pagingController.refresh();
+        }
+      },
+      child: PagedSliverList.separated(
+        pagingController: _pagingController,
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        builderDelegate: PagedChildBuilderDelegate<Transaction>(
+          itemBuilder: (context, transaction, index) => TransactionCard(
+            reason: transaction.title,
+            date: transaction.createdAt,
+            amount: transaction.amount,
           ),
         ),
-        BlocListener<TransactionsCubit, TransactionsState>(
-          listener: (context, state) {
-            if (state is TransactionSuccess) {
-              if (state.isLast) {
-                _pagingController.appendLastPage(state.transactions);
-              } else {
-                _pagingController.appendPage(
-                  state.transactions,
-                  state.nextPageKey,
-                );
-              }
-            } else if (state is TransactionsError) {
-              final message = state.message ?? tr(context).error_generic;
-              _pagingController.error = message;
-            } else if (state is TransactionsRefresh) {
-              _pagingController.refresh();
-            }
-          },
-          child: PagedSliverList.separated(
-            pagingController: _pagingController,
-            separatorBuilder: (context, index) => const SizedBox(height: 8),
-            builderDelegate: PagedChildBuilderDelegate<Transaction>(
-              itemBuilder: (context, transaction, index) => TransactionCard(
-                reason: transaction.title,
-                date: transaction.createdAt,
-                amount: transaction.amount,
-              ),
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 }
