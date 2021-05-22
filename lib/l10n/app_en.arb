@@ -1,5 +1,6 @@
 {
   "appTitle": "Tazkrtak",
+  "app_currency" : "EGP",
   "bottomNav_account": "Account",
   "bottomNav_ticket": "Ticket",
   "bottomNav_wallet": "Wallet",
@@ -33,9 +34,16 @@
   "register_privacyPolicy": "Privacy Policy",
   "register_terms": "Terms of Service",
   "register_title": "Sign Up",
-  "ticket_priceTitle": "EGP",
   "ticket_quantityTitle": "Ticket(s)",
   "ticket_totalAmount": "Total Amount",
   "widgets_hidePassword": "Hide",
-  "widgets_showPassword": "Show"
+  "widgets_showPassword": "Show",
+  "wallet_currentBalance" : "Current Balance",
+  "wallet_recharge" : "Recharge",
+  "wallet_recharged" : "Recharged",
+  "wallet_spent" : "Spent",
+  "wallet_transactions": "Transactions",
+  "wallet_oneWeek": "1 Week",
+  "wallet_oneMonth": "1 Month",
+  "wallet_ThreeMonth": "3 Months"
 }

@@ -1,0 +1,12 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'credit.g.dart';
+
+@JsonSerializable(createToJson: false)
+class Credit {
+  final double balance;
+
+  const Credit(this.balance);
+
+  factory Credit.fromJson(Map<String, dynamic> json) => _$CreditFromJson(json);
+}

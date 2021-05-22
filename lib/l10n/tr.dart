@@ -20,3 +20,11 @@ String trNumber(BuildContext context, num number) {
   final formatter = NumberFormat.decimalPattern(localeName);
   return formatter.format(number);
 }
+
+/// Shorthand to translate dates
+String trDateTime(BuildContext context, DateTime date) {
+  final locale = Localizations.localeOf(context);
+
+  final formatter = DateFormat.yMMMd(locale.toString()).add_jm();
+  return formatter.format(date);
+}

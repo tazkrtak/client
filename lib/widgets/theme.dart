@@ -62,5 +62,14 @@ class AppTheme {
         snackBarTheme: const SnackBarThemeData(
           backgroundColor: _AppColors.accent,
         ),
+
+        // Card
+        cardTheme: CardTheme(
+          elevation: 0,
+          margin: const EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
       );
 }
