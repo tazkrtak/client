@@ -16,8 +16,8 @@ class TransactionsList extends HookWidget {
     final cubit = context.read<TransactionsCubit>();
     final _pagingController = usePagingController<Transaction>(
       (pageIndex) {
-        final rangeState = context.read<DateRangeCubit>().state;
-        return cubit.fetch(pageIndex, rangeState.dateFilter);
+        final range = context.read<DateRangeCubit>().state;
+        return cubit.fetch(pageIndex, range.dateFilter);
       },
     );
 
@@ -41,13 +41,9 @@ class TransactionsList extends HookWidget {
       },
       child: PagedSliverList.separated(
         pagingController: _pagingController,
-        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        separatorBuilder: (_, __) => const SizedBox(height: 8),
         builderDelegate: PagedChildBuilderDelegate<Transaction>(
-          itemBuilder: (context, transaction, index) => TransactionCard(
-            reason: transaction.title,
-            date: transaction.createdAt,
-            amount: transaction.amount,
-          ),
+          itemBuilder: (_, transaction, __) => TransactionCard(transaction),
         ),
       ),
     );

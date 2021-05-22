@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../../../api/api.dart';
 import '../../../l10n/tr.dart';
 
 class TransactionCard extends StatelessWidget {
-  final String reason;
-  final DateTime date;
-  final double amount;
+  final Transaction transaction;
 
-  const TransactionCard({
-    required this.reason,
-    required this.date,
-    required this.amount,
-  });
+  const TransactionCard(this.transaction);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +24,7 @@ class TransactionCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  reason,
+                  transaction.title,
                   style: const TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 18.6,
@@ -37,7 +32,7 @@ class TransactionCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  trDateTime(context, date),
+                  trDateTime(context, transaction.createdAt),
                   style: const TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Colors.black54,
@@ -46,12 +41,13 @@ class TransactionCard extends StatelessWidget {
               ],
             ),
             Text(
-              "${amount.isNegative ? '-' : '+'}"
-              '${trNumber(context, amount.abs())} ${tr(context).app_currency}',
+              "${transaction.amount.isNegative ? '-' : '+'}"
+              '${trNumber(context, transaction.amount.abs())} '
+              '${tr(context).app_currency}',
               style: TextStyle(
                 fontWeight: FontWeight.w400,
                 fontSize: 20,
-                color: amount.isNegative
+                color: transaction.amount.isNegative
                     ? Theme.of(context).errorColor
                     : Theme.of(context).primaryColor,
               ),
