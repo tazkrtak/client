@@ -1,6 +1,7 @@
 {
   "appTitle": "Tazkrtak",
   "app_currency" : "EGP",
+  "account_sign_out": "Sign out",
   "bottomNav_account": "Account",
   "bottomNav_ticket": "Ticket",
   "bottomNav_wallet": "Wallet",

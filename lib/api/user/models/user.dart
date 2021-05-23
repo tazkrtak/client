@@ -10,6 +10,8 @@ class User {
   final String email;
   final String key;
   final String token;
+  final String phoneNumber;
+  final String nationalId;
 
   const User({
     required this.id,
@@ -18,6 +20,8 @@ class User {
     required this.email,
     required this.key,
     required this.token,
+    required this.phoneNumber,
+    required this.nationalId,
   });
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);

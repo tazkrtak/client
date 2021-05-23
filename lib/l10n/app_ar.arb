@@ -1,6 +1,7 @@
 {
   "appTitle": "تذكرتك",
   "app_currency" : "ج.م.",
+  "account_sign_out": "تسجيل خروج",
   "bottomNav_account": "الحساب",
   "bottomNav_ticket": "التذكرة",
   "bottomNav_wallet": "المحفظة",
@@ -33,7 +34,7 @@
   "register_phoneNumberInvalidError": "رقم الهاتف غير صحيح",
   "register_privacyPolicy": "سياسة الخصوصية",
   "register_terms": "شروط الخدمة",
-  "register_title": "تسجبل",
+  "register_title": "تسجيل",
   "ticket_quantityTitle" : "تذكرة",
   "ticket_totalAmount": "الاجمالي",
   "widgets_hidePassword": "اخفاء",
