@@ -1,8 +1,11 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../common/date_time_converter.dart';
+
 part 'transaction.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake, createToJson: false)
+@DateTimeConverter()
 class Transaction {
   final String id;
   final double amount;
