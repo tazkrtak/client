@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../api/api.dart';
 import '../../../l10n/tr.dart';
+import '../../../widgets/theme.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
@@ -13,10 +14,7 @@ class TransactionCard extends StatelessWidget {
     return Card(
       color: Theme.of(context).highlightColor,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 12,
-        ),
+        padding: const EdgeInsets.all(AppDimens.cardPadding),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

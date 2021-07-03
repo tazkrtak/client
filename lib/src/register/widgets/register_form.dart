@@ -35,7 +35,7 @@ class RegisterForm extends StatelessWidget {
         }
       },
       child: SingleChildScrollView(
-        padding: const EdgeInsets.all(32),
+        padding: const EdgeInsets.all(AppDimens.pagePadding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

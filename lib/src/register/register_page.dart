@@ -13,9 +13,9 @@ class RegisterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: BlocProvider<RegisterCubit>(
+    return Scaffold(
+      body: SafeArea(
+        child: BlocProvider<RegisterCubit>(
           create: (_) => RegisterCubit(),
           child: RegisterForm(
             onFormSuccess: (user) {

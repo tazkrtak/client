@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+
 import '../l10n/tr.dart';
-import 'widgets.dart';
+import 'circular_icon_button.dart';
+import 'theme.dart';
 
 class NumberPicker<T extends num> extends HookWidget {
   final T? initialValue;
@@ -26,7 +28,7 @@ class NumberPicker<T extends num> extends HookWidget {
 
     return Container(
       height: 64,
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(AppDimens.cardPadding),
       decoration: BoxDecoration(
         color: Theme.of(context).highlightColor,
         borderRadius: BorderRadius.circular(10),

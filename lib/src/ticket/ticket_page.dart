@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../widgets/widgets.dart';
 import '../app/cubits/session_cubit.dart';
 import 'cubits/ticket_cubit.dart';
 import 'cubits/totp_cubit.dart';
@@ -25,7 +26,7 @@ class TicketPage extends StatelessWidget {
             child: SafeArea(
               child: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.all(24),
+                  padding: const EdgeInsets.all(AppDimens.pagePadding),
                   child: TicketForm(),
                 ),
               ),
