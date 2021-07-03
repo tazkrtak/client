@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
 import '../../../l10n/tr.dart';
+import '../../../widgets/widgets.dart';
 import '../cubits/credit_cubit.dart';
 import '../cubits/transactions_summary_cubit.dart';
 
@@ -63,7 +64,7 @@ class _BalanceCard extends StatelessWidget {
     return Card(
       color: Theme.of(context).highlightColor,
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppDimens.cardPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -119,7 +120,7 @@ class _RechargeActionCard extends StatelessWidget {
         style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
               padding: MaterialStateProperty.all(
                 const EdgeInsets.symmetric(
-                  horizontal: 24,
+                  horizontal: 16,
                 ),
               ),
             ),
@@ -167,7 +168,7 @@ class _SummaryCard extends StatelessWidget {
     return Card(
       color: color.withOpacity(0.2),
       child: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(AppDimens.cardPadding),
         child: Row(
           children: [
             Icon(

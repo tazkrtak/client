@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../l10n/tr.dart';
+import '../../../widgets/theme.dart';
 
 class TotalAmountCard extends StatelessWidget {
   final double value;
@@ -16,7 +17,7 @@ class TotalAmountCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(
         horizontal: 64,
-        vertical: 16,
+        vertical: AppDimens.cardPadding,
       ),
       child: Column(
         children: [

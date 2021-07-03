@@ -4,6 +4,7 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 import '../../l10n/tr.dart';
+import '../../widgets/widgets.dart';
 import '../app/cubits/session_cubit.dart';
 import '../register/models/models.dart';
 
@@ -20,7 +21,7 @@ class AccountPage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppDimens.pagePadding),
           child: BlocBuilder<SessionCubit, SessionState>(
             // Prevents rebuilding the page when the user
             // signs out (i.e. state changes to SessionUnknown)

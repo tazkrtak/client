@@ -28,8 +28,8 @@ class DateRangePicker extends StatelessWidget {
         shadow: null,
         sliderOffset: 6,
         itemPadding: const EdgeInsets.symmetric(
-          vertical: 16,
-          horizontal: 24,
+          vertical: 12,
+          horizontal: 16,
         ),
         inactiveStyle: const TextStyle(
           color: Colors.black45,

@@ -27,11 +27,11 @@ class HomePage extends HookWidget {
         ],
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
         child: GNav(
           gap: 12,
           iconSize: 32,
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           tabBorderRadius: 16,
           tabBackgroundColor: Theme.of(context).primaryColor,
           color: Colors.black,

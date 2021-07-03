@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
 import '../../l10n/tr.dart';
+import '../../widgets/widgets.dart';
 import 'cubits/credit_cubit.dart';
 import 'cubits/date_range_cubit.dart';
 import 'cubits/transactions_cubit.dart';
@@ -64,9 +65,9 @@ class WalletPage extends StatelessWidget {
                   slivers: [
                     SliverPadding(
                       padding: const EdgeInsets.only(
-                        bottom: 16,
-                        right: 16,
-                        left: 16,
+                        bottom: AppDimens.pagePadding,
+                        right: AppDimens.pagePadding,
+                        left: AppDimens.pagePadding,
                       ),
                       sliver: MultiSliver(
                         children: [

@@ -8,6 +8,11 @@ class _AppColors {
   static const inputFill = Color(0xFFEBEDEE);
 }
 
+class AppDimens {
+  static const pagePadding = 16.0;
+  static const cardPadding = 16.0;
+}
+
 class AppTheme {
   ThemeData get data => ThemeData(
         // Colors
